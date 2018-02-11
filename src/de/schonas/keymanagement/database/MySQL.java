@@ -1,4 +1,4 @@
-package de.budde.km.database;
+package de.schonas.keymanagement.database;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static de.budde.km.main.MainPage.prop;
+import static de.schonas.keymanagement.main.MainPage.prop;
 
 public class MySQL {
 

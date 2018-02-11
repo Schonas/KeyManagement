@@ -1,4 +1,4 @@
-package de.budde.km.util;
+package de.schonas.keymanagement.util;
 
 import javafx.scene.text.Text;
 

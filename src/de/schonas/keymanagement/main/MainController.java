@@ -1,6 +1,6 @@
-package de.budde.km.main;
+package de.schonas.keymanagement.main;
 
-import de.budde.km.settings.SettingsPage;
+import de.schonas.keymanagement.settings.SettingsPage;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -11,18 +11,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-import static de.budde.km.main.MainPage.gStage;
-import static de.budde.km.main.MainPage.ksql;
-import static de.budde.km.main.MainPage.u;
+import static de.schonas.keymanagement.main.MainPage.u;
 
 
 public class MainController {

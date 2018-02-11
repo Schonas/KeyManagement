@@ -1,7 +1,7 @@
-package de.budde.km.main;
+package de.schonas.keymanagement.main;
 
-import de.budde.km.database.KeySQL;
-import de.budde.km.util.Utils;
+import de.schonas.keymanagement.database.KeySQL;
+import de.schonas.keymanagement.util.Utils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

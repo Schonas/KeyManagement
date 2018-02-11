@@ -1,4 +1,4 @@
-package de.budde.km.database;
+package de.schonas.keymanagement.database;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

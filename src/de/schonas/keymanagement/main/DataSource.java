@@ -1,4 +1,4 @@
-package de.budde.km.main;
+package de.schonas.keymanagement.main;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -6,7 +6,7 @@ import javafx.collections.ObservableList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static de.budde.km.main.MainPage.ksql;
+import static de.schonas.keymanagement.main.MainPage.ksql;
 
 public class DataSource {
 

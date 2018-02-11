@@ -1,4 +1,4 @@
-package de.budde.km.main;
+package de.schonas.keymanagement.main;
 
 import javafx.beans.property.SimpleStringProperty;
 
