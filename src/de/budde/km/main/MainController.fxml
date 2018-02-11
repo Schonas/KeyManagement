@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.budde.km.main.MainController">
+    <children>
+        <TableView fx:id="KeyTable" editable="true" layoutY="27.0" prefHeight="460.0" prefWidth="535.0">
+            <columns>
+                <TableColumn fx:id="UniqueID" prefWidth="104.0" sortable="false" text="Unique ID" />
+                <TableColumn fx:id="Owner" prefWidth="172.0" sortable="false" text="Owner" />
+                <TableColumn fx:id="ExpireDate" prefWidth="245.0" text="Expiration Date" />
+            </columns>
+         <padding>
+            <Insets right="1.0" />
+         </padding>
+        </TableView>
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="760.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem fx:id="settings" mnemonicParsing="false" onAction="#onSettingsClick" text="Settings" />
+                  <MenuItem fx:id="quit" mnemonicParsing="false" onAction="#onQuitClick" text="Quit" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="View">
+               <items>
+                  <RadioMenuItem mnemonicParsing="false" text="Show Expired" />
+                  <RadioMenuItem mnemonicParsing="false" text="Show Days until Expiration" />
+               </items></Menu>
+            <Menu fx:id="reloadMenu" mnemonicParsing="false" onAction="#onReloadClick" text="Reload" />
+        </menus>
+      </MenuBar>
+      <ToolBar layoutX="535.0" layoutY="27.0" prefHeight="40.0" prefWidth="224.0">
+        <items>
+            <Button fx:id="addButton" mnemonicParsing="false" onAction="#onAddClick" prefHeight="25.0" prefWidth="62.0" text="Add" textFill="#06ff23">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="removeButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Remove" textFill="#f50707">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="editButton" mnemonicParsing="false" onAction="#onEditButton" prefHeight="25.0" prefWidth="67.0" text="Edit" textFill="#ffc609">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+        </items>
+      </ToolBar>
+      <VBox fx:id="EditBox" layoutX="551.0" layoutY="74.0" prefHeight="336.0" prefWidth="193.0" visible="false">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Unique ID">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Text>
+            <TextField fx:id="uidField" editable="false">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="5.0" />
+               </VBox.margin>
+            </TextField>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Owner" />
+            <TextField fx:id="ownerField">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="5.0" />
+               </VBox.margin>
+            </TextField>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Expire Date" />
+            <DatePicker fx:id="dateField">
+               <VBox.margin>
+                  <Insets bottom="20.0" top="5.0" />
+               </VBox.margin>
+            </DatePicker>
+            <Button mnemonicParsing="false" onAction="#onUpdateClick" text="Update" />
+         </children>
+      </VBox>
+      <Text fx:id="statusBar" fontSmoothingType="LCD" layoutY="500.0" opacity="0.75" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="535.0" />
+    </children>
+</AnchorPane>

@@ -1,0 +1,55 @@
+package de.budde.km.main;
+
+import de.budde.km.database.KeySQL;
+import de.budde.km.util.Utils;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+public class MainPage extends Application {
+
+    public static Utils u;
+    public static KeySQL ksql;
+    public static Stage gStage;
+    public static Properties prop;
+    InputStream input = null;
+
+    @Override
+    public void start(Stage stage) throws IOException {
+
+        Parent pane = FXMLLoader.load(getClass().getResource("MainController.fxml"));
+        Scene scene = new Scene(pane);
+        gStage = stage;
+
+        //stage.getIcons().add(new Image("http://www.dresden.ihk.de/apple-touch-icon.png"));
+        //stage.getIcons().add(new Image("ressources/ihk_icon.png"));
+        stage.resizableProperty().setValue(Boolean.FALSE);
+        stage.setScene(scene);
+        stage.setTitle("Key Management");
+        stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void init(){
+        prop = new Properties();
+        try {
+            input = new FileInputStream("config");
+            prop.load(input);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        u = new Utils();
+        ksql = new KeySQL();
+    }
+}

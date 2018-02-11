@@ -1,0 +1,18 @@
+###Client
+
+TODO:
+Expired? Col (View)
+Date until Expired Col (View)
+Add/Remove/Edit Icons
+Reload Progress Bar
+Remove Confirm Window
+Load table after start
+Icon as res (add in MainPage, Error on Edit, AddPage, Settings)
+onHover show days until expiration
+
+ADDED/FIXED:
+load mysql data from config
+
+###Server
+
+5min loop, check for keys -> yes? -> mail (form settings)

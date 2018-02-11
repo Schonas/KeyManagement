@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="140.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.budde.km.main.AddPageController">
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <children>
+      <Text layoutX="23.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unique ID" />
+      <TextField fx:id="uidField" layoutX="23.0" layoutY="39.0" prefHeight="25.0" prefWidth="174.0" />
+      <Text layoutX="229.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Owner" />
+      <TextField fx:id="ownerField" layoutX="229.0" layoutY="39.0" prefHeight="25.0" prefWidth="167.0" />
+      <Text layoutX="25.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Expire Date" wrappingWidth="64.96875" />
+      <DatePicker fx:id="expDateField" layoutX="23.0" layoutY="93.0" />
+      <Button layoutX="229.0" layoutY="93.0" mnemonicParsing="false" onAction="#addButtonClick" prefHeight="25.0" prefWidth="81.0" text="Hinzufügen" />
+      <Button layoutX="315.0" layoutY="93.0" mnemonicParsing="false" onAction="#clearButtonClick" prefHeight="25.0" prefWidth="81.0" text="Leeren" />
+   </children>
+</AnchorPane>
