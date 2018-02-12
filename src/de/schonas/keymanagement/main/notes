@@ -10,9 +10,12 @@ Icon as res (add in MainPage, Error on Edit, AddPage, Settings)
 onHover show days until expiration
 Safe on Close (settings?)
 sql con with constant
-test con in settings
 Date fancy in table
-Save Button auf Settings Page
+con state with icon, remove after 2 secs
+
+WIP:
+test con in settings (bei success alles gucci aber wenn nicht dann dauerts zu lange)
+Save Button on Settings Page(-> Erfolg-Alert?)
 
 ADDED/FIXED:
 load mysql data from config
@@ -24,3 +27,4 @@ Only work in Database?
 
 5min loop, check for keys -> yes? -> mail (form settings)
 config datei
+get smtp server and username, password, ...

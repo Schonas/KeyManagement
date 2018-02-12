@@ -13,7 +13,7 @@
         <TableView fx:id="KeyTable" editable="true" layoutY="27.0" prefHeight="481.0" prefWidth="535.0">
             <columns>
                 <TableColumn fx:id="UniqueID" prefWidth="100.0" sortable="false" text="Unique ID" />
-                <TableColumn fx:id="Owner" prefWidth="175.0" sortable="false" text="Owner" />
+                <TableColumn fx:id="Owner" prefWidth="175.0" text="Owner" />
                 <TableColumn fx:id="ExpireDate" prefWidth="244.0" text="Expiration Date" />
             </columns>
          <padding>
@@ -30,8 +30,8 @@
           </Menu>
           <Menu mnemonicParsing="false" text="View">
                <items>
-                  <RadioMenuItem fx:id="viewButtonExpired" mnemonicParsing="false" text="Show Expired" />
-                  <RadioMenuItem fx:id="viewButtonExpDateInDays" mnemonicParsing="false" text="Show Days until Expiration" />
+                  <RadioMenuItem fx:id="viewButtonExpired" mnemonicParsing="false" onAction="#onViewExpiredClick" text="Show Expired" />
+                  <RadioMenuItem fx:id="viewButtonExpDateInDays" mnemonicParsing="false" onAction="#onShowDaysUntilExpiredClick" text="Show Days until Expiration" />
                </items></Menu>
         </menus>
       </MenuBar>
@@ -83,9 +83,9 @@
       </VBox>
       <HBox layoutX="539.0" layoutY="469.0" prefHeight="25.0" prefWidth="217.0">
          <children>
-            <Text fx:id="statusBar" fontSmoothingType="LCD" opacity="0.75" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="162.0">
+            <Text fx:id="statusBar" fontSmoothingType="LCD" opacity="0.75" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="150.0">
                <HBox.margin>
-                  <Insets top="5.0" />
+                  <Insets right="5.0" top="5.0" />
                </HBox.margin>
             </Text>
             <Button mnemonicParsing="false" onAction="#onReloadClick" prefHeight="25.0" prefWidth="54.0" text="Reload" />

@@ -18,7 +18,7 @@
       <TextField fx:id="settingsHostField" layoutX="45.0" layoutY="72.0" />
       <TextField fx:id="settingsUsernameField" layoutX="45.0" layoutY="125.0" />
       <Button layoutX="41.0" layoutY="170.0" mnemonicParsing="false" onAction="#onTestConClick" text="Test Connection" />
-      <Text fx:id="settingsConValueField" layoutX="157.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No Connection" wrappingWidth="110.13671875">
+      <Text fx:id="settingsConValueField" layoutX="154.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No Connection" wrappingWidth="174.13671875">
          <font>
             <Font size="16.0" />
          </font>
@@ -28,5 +28,6 @@
             <Font size="18.0" />
          </font>
       </Text>
+      <Button layoutX="377.0" layoutY="170.0" mnemonicParsing="false" onAction="#onSaveButtonClick" text="Save" />
    </children>
 </AnchorPane>

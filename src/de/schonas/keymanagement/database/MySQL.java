@@ -241,7 +241,7 @@ public class MySQL {
     }
 
     /**
-     * Updatet ausgewÃ¤hlten Eintrag
+     * Updatet ausgewählten Eintrag
      * @param table Tabelle
      * @param filter Map zum Filtern der EintrÃ¤ge
      * @param values Neue Werte

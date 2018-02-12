@@ -1,12 +1,8 @@
 package de.schonas.keymanagement.main;
 
 import de.schonas.keymanagement.settings.SettingsPage;
-import de.schonas.keymanagement.util.FXUtils;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.layout.VBox;
@@ -16,6 +12,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 import static de.schonas.keymanagement.database.KeySQL.TABLE;
 import static de.schonas.keymanagement.main.MainPage.*;
@@ -29,10 +26,10 @@ public class MainController {
     @FXML // fx:id="uniqueID","Owner","ExpireDate","Valid"
     private TableColumn<Key, String> UniqueID,ExpireDate,Owner;
 
-    @FXML
+    @FXML //EDIT ANSICHT
     private TextField uidField, ownerField;
 
-    @FXML
+    @FXML //EDIT DATEPICKER
     private DatePicker dateField;
 
     @FXML
@@ -57,7 +54,6 @@ public class MainController {
 
         u.reloadTable(KeyTable, UniqueID, Owner, ExpireDate);
         quitMenuButton.setAccelerator(new KeyCodeCombination(KeyCode.Q, KeyCodeCombination.CONTROL_DOWN));
-
     }
 
     /**
@@ -84,7 +80,7 @@ public class MainController {
      */
     @FXML
     private void onEditButton(){
-        try {
+        if(KeyTable.getSelectionModel().getSelectedItem() != null) {
             Key key = KeyTable.getSelectionModel().getSelectedItem();
             EditBox.setVisible(true);
             AddBox.setVisible(false);
@@ -95,7 +91,7 @@ public class MainController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate dateTime = LocalDate.parse(key.getExpireDate(), formatter);
             dateField.setValue(dateTime);
-        } catch (Exception e){
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Key Management");
             alert.setHeaderText("Fehler!");
@@ -144,10 +140,11 @@ public class MainController {
      */
     @FXML
     private void onUpdateClick(){
-        Key key = KeyTable.getSelectionModel().getSelectedItem();
-        key.setExpireDate(dateField.getValue().toString());
-        key.setOwner(ownerField.getText());
-        key.setUniqueID(uidField.getText());
+        Key key = new Key(uidField.getText(), ownerField.getText(), dateField.getValue().toString());
+        Map data = u.getDBMap("owner", key.getOwner());
+        data.put("expire_date", key.getExpireDate());
+        ksql.update("KEYMANAGEMENT.Keys", u.getDBMap("uid", key.getUniqueID()), data);
+        u.reloadTable(KeyTable, UniqueID, Owner, ExpireDate);
         u.sendAlert(statusBar, "Key " + key.getUniqueID() + " wurde erfolgreich geändert.");
         EditBox.setVisible(false);
     }
@@ -192,6 +189,26 @@ public class MainController {
     @FXML
     private void onRemoveNoClick(){
         RemoveBox.setVisible(false);
+    }
+
+    //MENUBAR
+
+    @FXML
+    private void onViewExpiredClick(){
+        if(viewButtonExpired.isSelected()){
+            prop.setProperty("showExpired", "false");
+        } else {
+            prop.setProperty("showExpired", "true");
+        }
+    }
+
+    @FXML
+    private void onShowDaysUntilExpiredClick(){
+        if(viewButtonExpDateInDays.isSelected()){
+            prop.setProperty("showDaysUntilExpDate", "false");
+        } else {
+            prop.setProperty("showDaysUntilExpDate", "true");
+        }
     }
 
 }

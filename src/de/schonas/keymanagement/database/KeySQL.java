@@ -49,6 +49,7 @@ public class KeySQL extends MySQL {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            e.getCause().toString();
         }
         return false;
     }
