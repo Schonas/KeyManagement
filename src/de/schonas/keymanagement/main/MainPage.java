@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
@@ -20,6 +21,7 @@ public class MainPage extends Application {
     public static Stage gStage;
     public static Properties prop;
     InputStream input = null;
+    public static Image logo = new Image("http://www.dresden.ihk.de/apple-touch-icon.png");
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -28,8 +30,8 @@ public class MainPage extends Application {
         Scene scene = new Scene(pane);
         gStage = stage;
 
-        //stage.getIcons().add(new Image("http://www.dresden.ihk.de/apple-touch-icon.png"));
-        //stage.getIcons().add(new Image("ressources/ihk_icon.png"));
+        stage.getIcons().add(logo);
+        //stage.getIcons().add(new Image("lib/images/ihk_icon.png"));
         stage.resizableProperty().setValue(Boolean.FALSE);
         stage.setScene(scene);
         stage.setTitle("Key Management");

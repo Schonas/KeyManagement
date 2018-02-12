@@ -218,10 +218,10 @@ public class MySQL {
     }
 
     /**
-     * LÃ¶scht EintrÃ¤ge aus DB
+     * Löscht Einträge aus DB
      *
      * @param table  Tabelle
-     * @param filter Bed. fÃ¼r zu lÃ¶schende EintrÃ¤ge
+     * @param filter Bed. für zu löschende Einträge
      */
     public void delete(String table, Map<String, Object> filter) {
 
