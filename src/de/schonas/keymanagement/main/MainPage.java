@@ -32,7 +32,9 @@ public class MainPage extends Application {
 
         stage.getIcons().add(logo);
         //stage.getIcons().add(new Image("lib/images/ihk_icon.png"));
-        stage.resizableProperty().setValue(Boolean.FALSE);
+        stage.setWidth(750);
+        stage.setHeight(525);
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.setTitle("Key Management");
         stage.show();

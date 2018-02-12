@@ -8,19 +8,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="508.0" prefWidth="740.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.schonas.keymanagement.main.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.schonas.keymanagement.main.MainController">
     <children>
-        <TableView fx:id="KeyTable" editable="true" layoutY="27.0" prefHeight="481.0" prefWidth="535.0">
+        <TableView fx:id="KeyTable" editable="true" layoutY="27.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="473.0" prefWidth="535.0">
             <columns>
                 <TableColumn fx:id="UniqueID" prefWidth="100.0" sortable="false" text="Unique ID" />
                 <TableColumn fx:id="Owner" prefWidth="175.0" text="Owner" />
-                <TableColumn fx:id="ExpireDate" prefWidth="244.0" text="Expiration Date" />
+                <TableColumn fx:id="ExpireDate" prefWidth="245.0" text="Expiration Date" />
             </columns>
          <padding>
             <Insets right="1.0" />
          </padding>
         </TableView>
-      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="760.0">
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="750.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
@@ -35,19 +35,19 @@
                </items></Menu>
         </menus>
       </MenuBar>
-      <ToolBar layoutX="535.0" layoutY="27.0" prefHeight="40.0" prefWidth="225.0">
+      <ToolBar layoutX="535.0" layoutY="27.0" prefHeight="40.0" prefWidth="215.0">
         <items>
-            <Button mnemonicParsing="false" onAction="#onAddClick" prefHeight="25.0" prefWidth="59.0" text="Add" textFill="#06ff23">
+            <Button mnemonicParsing="false" onAction="#onAddClick" prefHeight="25.0" prefWidth="52.0" text="Add" textFill="#06ff23">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onRemoveClick" prefHeight="25.0" prefWidth="72.0" text="Remove" textFill="#f50707">
+            <Button mnemonicParsing="false" onAction="#onRemoveClick" prefHeight="25.0" prefWidth="74.0" text="Remove" textFill="#f50707">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onEditButton" prefHeight="25.0" prefWidth="62.0" text="Edit" textFill="#ffc609">
+            <Button mnemonicParsing="false" onAction="#onEditButton" prefHeight="25.0" prefWidth="64.0" text="Edit" textFill="#ffc609">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -81,9 +81,9 @@
             <Button mnemonicParsing="false" onAction="#onUpdateClick" text="Update" />
          </children>
       </VBox>
-      <HBox layoutX="539.0" layoutY="469.0" prefHeight="25.0" prefWidth="217.0">
+      <HBox layoutX="534.0" layoutY="461.0" prefHeight="25.0" prefWidth="211.0">
          <children>
-            <Text fx:id="statusBar" fontSmoothingType="LCD" opacity="0.75" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="150.0">
+            <Text fx:id="statusBar" fontSmoothingType="LCD" opacity="0.75" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="146.0">
                <HBox.margin>
                   <Insets right="5.0" top="5.0" />
                </HBox.margin>
@@ -140,6 +140,6 @@
             </HBox>
          </children>
       </VBox>
-      <Separator layoutX="539.0" layoutY="452.0" prefHeight="7.0" prefWidth="217.0" />
+      <Separator layoutX="541.0" layoutY="436.0" prefHeight="2.0" prefWidth="204.0" />
     </children>
 </AnchorPane>
