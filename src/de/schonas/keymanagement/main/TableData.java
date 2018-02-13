@@ -70,7 +70,6 @@ public class TableData {
             ts.setMaxWidth(198);
             ts.setVisibleRowCount(8);
 
-
             searchField.textProperty().addListener((observable, oldValue, newValue) -> {
                 filteredData.setPredicate(key -> {
                     if (newValue == null || newValue.isEmpty()) {
@@ -93,6 +92,7 @@ public class TableData {
             SortedList<Key> sortedData = new SortedList<>(filteredData);
             sortedData.comparatorProperty().bind(keyTable.comparatorProperty());
             keyTable.setItems(sortedData);
+
             keyTable.setRowFactory(tableView -> {
             final TableRow<Key> row = new TableRow<>();
 

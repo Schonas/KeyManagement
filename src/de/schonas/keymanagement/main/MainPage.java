@@ -21,7 +21,7 @@ public class MainPage extends Application {
     public static Stage gStage;
     public static Properties prop;
     InputStream input = null;
-    public static Image logo = new Image("de/schonas/keymanagement/images/icon.png");
+    public static Image logo = new Image("http://www.dresden.ihk.de/apple-touch-icon.png");
 
     @Override
     public void start(Stage stage) throws IOException {
