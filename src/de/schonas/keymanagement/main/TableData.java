@@ -27,6 +27,14 @@ public class TableData {
     private TableColumn<Key, String> uniqueID,expDate,owner;
     private TextField searchField;
 
+    /**
+     * Setzt Daten in lokale Variablien und holt Daten aus DB
+     * @param tableView
+     * @param uid
+     * @param owner
+     * @param expDate
+     * @param searchField
+     */
     public TableData(TableView tableView, TableColumn<Key, String>  uid, TableColumn<Key, String>  owner, TableColumn<Key, String>  expDate, TextField searchField) {
         this.keyTable = tableView;
         this.uniqueID = uid;
@@ -48,6 +56,9 @@ public class TableData {
         }
     }
 
+    /**
+     * Legt Spalten an, setzt Autocomplete auf Textfeld, Regelt Suche, setzt Daten in die Tabelle, Regelt Hover
+     */
     public void load(){
             this.uniqueID.setCellValueFactory(cellData -> cellData.getValue().uidProperty());
             this.owner.setCellValueFactory(cellData -> cellData.getValue().ownerProperty());
@@ -90,8 +101,8 @@ public class TableData {
 
                 if (row.isHover() && key != null) {
                     Date date = Date.valueOf(key.getExpireDate());
-                    String dateString = String.valueOf(u.getDateDiff(date, TimeUnit.DAYS));
-                    row.setTooltip(new Tooltip("Verbleibende Tage: " + dateString));
+                    String dateString = String.valueOf(u.getDateDiff(date));
+                    row.setTooltip(new Tooltip("Überfällig in: " + dateString));
                 }
             });
 

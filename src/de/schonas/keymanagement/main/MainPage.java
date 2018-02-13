@@ -21,7 +21,7 @@ public class MainPage extends Application {
     public static Stage gStage;
     public static Properties prop;
     InputStream input = null;
-    public static Image logo = new Image("de/schonas/keymanagement/images/ihk_icon.png");
+    public static Image logo = new Image("de/schonas/keymanagement/images/icon.png");
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -31,7 +31,7 @@ public class MainPage extends Application {
         gStage = stage;
 
         stage.getIcons().add(logo);
-        //stage.getIcons().add(new Image("lib/images/ihk_icon.png"));
+        //stage.getIcons().add(new Image("lib/images/icon.png"));
         stage.setWidth(750);
         stage.setHeight(530);
         stage.setResizable(false);

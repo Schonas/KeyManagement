@@ -52,7 +52,10 @@ public class MainController {
     @FXML
     private Button addTaskButton, removeTaskButton, editTaskButton;
 
-    @FXML //basically works like an onload() method
+    /**
+     * init Methode die alles vorbereitet
+     */
+    @FXML
     protected void initialize() {
 
         addTaskButton.setTooltip(new Tooltip("Füge einen Schlüssel hinzu"));
@@ -72,7 +75,6 @@ public class MainController {
         }, 100);
 
         KeyTable.getStylesheets().add("de/schonas/keymanagement/main/tableStylesheet");
-        //u.reloadTable(KeyTable, UniqueID, Owner, ExpireDate);
         quitMenuButton.setAccelerator(new KeyCodeCombination(KeyCode.Q, KeyCodeCombination.CONTROL_DOWN));
     }
 
@@ -189,6 +191,9 @@ public class MainController {
     @FXML
     private DatePicker expDateAddField;
 
+    /**
+     * Hinzufügen Button auf der Add-Seite
+     */
     @FXML
     private void onAddKeyClick(){
 
@@ -207,6 +212,9 @@ public class MainController {
 
     //REMOVE BOX
 
+    /**
+     * Greift wenn auf der Add-Page auf ja geklickt wird
+     */
     @FXML
     private void onRemoveYesClick(){
         Key key = KeyTable.getSelectionModel().getSelectedItem();
@@ -216,6 +224,9 @@ public class MainController {
         RemoveBox.setVisible(false);
     }
 
+    /**
+     * Greift wenn auf der Add-Page auf nein geklickt wird
+     */
     @FXML
     private void onRemoveNoClick(){
         RemoveBox.setVisible(false);
@@ -223,6 +234,9 @@ public class MainController {
 
     //MENUBAR
 
+    /**
+     * Holt Value aus Config und setzt Dinge
+     */
     @FXML
     private void onViewExpiredClick(){
         if(viewButtonExpired.isSelected()){
@@ -232,6 +246,9 @@ public class MainController {
         }
     }
 
+    /**
+     * Macht das gleiche wie oben und ist auch noch eigentlich ohne funktion
+     */
     @FXML
     private void onShowDaysUntilExpiredClick(){
         if(viewButtonExpDateInDays.isSelected()){

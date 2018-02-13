@@ -24,6 +24,9 @@ public class SettingsController {
     @FXML
     private PasswordField settingsPasswordField;
 
+    /**
+     * Holt Werte aus Config und setzt sie in die Textfelder
+     */
     @FXML
     protected void initialize() {
 
@@ -34,6 +37,10 @@ public class SettingsController {
 
     }
 
+    /**
+     * Testet Connection mit den eingegebenen Parametern
+     * @throws IOException
+     */
     @FXML
     private void onTestConClick() throws IOException {
 
@@ -48,6 +55,9 @@ public class SettingsController {
         }
     }
 
+    /**
+     * Holt Werte aus Textfeldern und setzt sie in der Config
+     */
     @FXML
     private void onSaveButtonClick() {
         try {

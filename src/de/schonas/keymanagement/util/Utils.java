@@ -1,14 +1,9 @@
 package de.schonas.keymanagement.util;
 
-import de.schonas.keymanagement.main.DataSource;
-import de.schonas.keymanagement.main.Key;
 import de.schonas.keymanagement.main.TableData;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 
 import java.sql.Date;
@@ -99,10 +94,9 @@ public class Utils {
         tb.load();
     }
 
-    public static long getDateDiff(Date date, TimeUnit timeUnit) {
+    public static long getDateDiff(Date date) {
         Date current = new Date(Calendar.getInstance().getTimeInMillis());
-        long diffInMillies =date.getTime() - current.getTime();
-        return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
+        return TimeUnit.DAYS.convert((current.getTime() - date.getTime()), TimeUnit.MILLISECONDS);
     }
 
 
