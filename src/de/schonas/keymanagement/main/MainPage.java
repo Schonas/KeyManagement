@@ -21,7 +21,7 @@ public class MainPage extends Application {
     public static Stage gStage;
     public static Properties prop;
     InputStream input = null;
-    public static Image logo = new Image("http://www.dresden.ihk.de/apple-touch-icon.png");
+    public static Image logo = new Image("de/schonas/keymanagement/images/ihk_icon.png");
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -33,7 +33,7 @@ public class MainPage extends Application {
         stage.getIcons().add(logo);
         //stage.getIcons().add(new Image("lib/images/ihk_icon.png"));
         stage.setWidth(750);
-        stage.setHeight(525);
+        stage.setHeight(530);
         stage.setResizable(false);
         stage.setScene(scene);
         stage.setTitle("Key Management");

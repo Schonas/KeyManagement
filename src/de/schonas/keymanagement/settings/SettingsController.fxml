@@ -11,8 +11,8 @@
    <children>
       <PasswordField fx:id="settingsPasswordField" layoutX="269.0" layoutY="125.0" />
       <Text layoutX="44.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Host" wrappingWidth="48.13671875" />
-      <Text layoutX="268.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schema" wrappingWidth="41.42578125" />
-      <TextField fx:id="settingsSchemaField" layoutX="269.0" layoutY="72.0" />
+      <Text layoutX="268.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Database" wrappingWidth="41.42578125" />
+      <TextField fx:id="settingsDatabaseField" layoutX="269.0" layoutY="72.0" />
       <Text layoutX="45.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
       <Text layoutX="269.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
       <TextField fx:id="settingsHostField" layoutX="45.0" layoutY="72.0" />

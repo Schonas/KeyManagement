@@ -2,9 +2,12 @@ package de.schonas.keymanagement.util;
 
 import de.schonas.keymanagement.main.DataSource;
 import de.schonas.keymanagement.main.Key;
+import de.schonas.keymanagement.main.TableData;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 
@@ -15,6 +18,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class Utils {
 
@@ -90,22 +94,15 @@ public class Utils {
         }
     }
 
-    public void reloadTable(TableView tableView, TableColumn uid, TableColumn owner, TableColumn expDate){
+    public void reloadTable(TableView tableView, TableColumn uid, TableColumn owner, TableColumn expDate, TextField searchField){
+        TableData tb = new TableData(tableView, uid, owner, expDate, searchField);
+        tb.load();
+    }
 
-        //setting up the columns
-        PropertyValueFactory<Key, String> uidProperty = new PropertyValueFactory<>("UniqueID");
-        PropertyValueFactory<Key, String> ownerProperty = new PropertyValueFactory<>("Owner");
-        PropertyValueFactory<Key, String> expDateProperty = new PropertyValueFactory<>("ExpireDate");
-
-        //setting up the main data source
-        uid.setCellValueFactory(uidProperty);
-        owner.setCellValueFactory(ownerProperty);
-        expDate.setCellValueFactory(expDateProperty);
-
-        DataSource data = new DataSource();
-        ObservableList<Key> tableItems = data.getData();
-        tableView.setItems(tableItems);
-
+    public static long getDateDiff(Date date, TimeUnit timeUnit) {
+        Date current = new Date(Calendar.getInstance().getTimeInMillis());
+        long diffInMillies =date.getTime() - current.getTime();
+        return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
     }
 
 

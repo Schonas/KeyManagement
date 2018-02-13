@@ -1,0 +1,9 @@
+.table-row-cell:hover {
+    -fx-background-color:#F0F8FF;
+}
+.table-row-cell:focused {
+    -fx-background-color:#5881c4;
+}
+.table-row-cell{
+    -fx-padding-left: 15px;
+}

@@ -1,17 +1,18 @@
 package de.schonas.keymanagement.main;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public class Key {
     private final SimpleStringProperty UniqueID;
     private final SimpleStringProperty Owner;
-    private final SimpleStringProperty ExpireDate;
+    private final SimpleStringProperty expDate;
 
 
-    public Key(String UniqueID, String owner, String expireDate) {
+    public Key(String UniqueID, String owner, String expDate) {
         this.UniqueID = new SimpleStringProperty(UniqueID);
         this.Owner = new SimpleStringProperty(owner);
-        this.ExpireDate = new SimpleStringProperty(expireDate);
+        this.expDate = new SimpleStringProperty(expDate);
     }
 
     public String getUniqueID() {
@@ -33,9 +34,22 @@ public class Key {
 
 
     public String getExpireDate() {
-        return ExpireDate.get();
+        return expDate.get();
     }
     public void setExpireDate(String expireDate) {
-        this.ExpireDate.set(expireDate);
+        this.expDate.set(expireDate);
     }
+
+    public StringProperty uidProperty(){
+        return UniqueID;
+    }
+
+    public StringProperty ownerProperty(){
+        return Owner;
+    }
+
+    public StringProperty expDateProperty(){
+        return expDate;
+    }
+
 }

@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static de.schonas.keymanagement.database.KeySQL.TABLE;
 import static de.schonas.keymanagement.main.MainPage.*;
@@ -27,7 +29,7 @@ public class MainController {
     private TableColumn<Key, String> UniqueID,ExpireDate,Owner;
 
     @FXML //EDIT ANSICHT
-    private TextField uidField, ownerField;
+    private TextField uidField, ownerField, searchField;
 
     @FXML //EDIT DATEPICKER
     private DatePicker dateField;
@@ -47,14 +49,34 @@ public class MainController {
     @FXML
     private Text RemoveText;
 
+    @FXML
+    private Button addTaskButton, removeTaskButton, editTaskButton;
+
     @FXML //basically works like an onload() method
     protected void initialize() {
+
+        addTaskButton.setTooltip(new Tooltip("Füge einen Schlüssel hinzu"));
+        removeTaskButton.setTooltip(new Tooltip("Lösche den ausgewählten Schlüssel"));
+        editTaskButton.setTooltip(new Tooltip("Bearbeite den ausgewählten Schlüssel"));
+        searchField.setPromptText("Search...");
+
         viewButtonExpired.setSelected(Boolean.parseBoolean(prop.getProperty("showExpired")));
         viewButtonExpDateInDays.setSelected(Boolean.parseBoolean(prop.getProperty("showDaysUntilExpDate")));
 
-        u.reloadTable(KeyTable, UniqueID, Owner, ExpireDate);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                TableData tb = new TableData(KeyTable, UniqueID, Owner, ExpireDate, searchField);
+                tb.load();
+            }
+        }, 100);
+
+        KeyTable.getStylesheets().add("de/schonas/keymanagement/main/tableStylesheet");
+        //u.reloadTable(KeyTable, UniqueID, Owner, ExpireDate);
         quitMenuButton.setAccelerator(new KeyCodeCombination(KeyCode.Q, KeyCodeCombination.CONTROL_DOWN));
     }
+
+
 
     /**
      * Öffnet Settings Page
@@ -107,7 +129,7 @@ public class MainController {
      */
     @FXML
     private void onReloadClick(){
-        u.reloadTable(KeyTable, UniqueID, Owner, ExpireDate);
+        u.reloadTable(KeyTable, UniqueID, Owner, ExpireDate, searchField);
         u.sendAlert(statusBar, "Tabelle wurde neu geladen.");
     }
 
@@ -144,7 +166,7 @@ public class MainController {
         Map data = u.getDBMap("owner", key.getOwner());
         data.put("expire_date", key.getExpireDate());
         ksql.update("KEYMANAGEMENT.Keys", u.getDBMap("uid", key.getUniqueID()), data);
-        u.reloadTable(KeyTable, UniqueID, Owner, ExpireDate);
+        u.reloadTable(KeyTable, UniqueID, Owner, ExpireDate, searchField);
         u.sendAlert(statusBar, "Key " + key.getUniqueID() + " wurde erfolgreich geändert.");
         EditBox.setVisible(false);
     }
@@ -157,6 +179,7 @@ public class MainController {
     private void onAddClick() {
         EditBox.setVisible(false);
         AddBox.setVisible(true);
+        RemoveBox.setVisible(false);
     }
 
     // ADD BOX
@@ -168,12 +191,19 @@ public class MainController {
 
     @FXML
     private void onAddKeyClick(){
+
         Key key = new Key(uidAddField.getText() ,ownerAddField.getText(), u.asDate(expDateAddField.getValue()).toString());
         ksql.insertKey(key);
         u.sendAlert(statusBar, "Key " + key.getUniqueID() + " wurde \n erfolgreich hinzugefügt.");
-        u.reloadTable(KeyTable, UniqueID, Owner, ExpireDate);
+        u.reloadTable(KeyTable, UniqueID, Owner, ExpireDate, searchField);
         KeyTable.getSelectionModel().select(key);
+        AddBox.setVisible(false);
+        expDateAddField.setValue(null);
+        ownerAddField.setText(null);
+        uidAddField.setText(null);
+
     }
+
 
     //REMOVE BOX
 
@@ -181,7 +211,7 @@ public class MainController {
     private void onRemoveYesClick(){
         Key key = KeyTable.getSelectionModel().getSelectedItem();
         ksql.delete(TABLE, u.getDBMap("uid", key.getUniqueID()));
-        u.reloadTable(KeyTable, UniqueID, Owner, ExpireDate);
+        u.reloadTable(KeyTable, UniqueID, Owner, ExpireDate, searchField);
         u.sendAlert(statusBar, "Key " +  key.getUniqueID() + " wurde gelöscht.");
         RemoveBox.setVisible(false);
     }

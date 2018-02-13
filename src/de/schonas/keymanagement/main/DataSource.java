@@ -2,6 +2,7 @@ package de.schonas.keymanagement.main;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,12 +14,11 @@ public class DataSource {
 
     private final ObservableList<Key> data = FXCollections.observableArrayList();
 
-    public ObservableList<Key> getData() {
+    public final ObservableList<Key> getData() {
         return data;
     }
 
     public DataSource() {
-
         ResultSet rs = ksql.getKeys();
         try {
             while(rs.next()){

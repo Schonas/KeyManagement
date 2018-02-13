@@ -12,49 +12,49 @@
     <children>
         <TableView fx:id="KeyTable" editable="true" layoutY="27.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="473.0" prefWidth="535.0">
             <columns>
-                <TableColumn fx:id="UniqueID" prefWidth="100.0" sortable="false" text="Unique ID" />
-                <TableColumn fx:id="Owner" prefWidth="175.0" text="Owner" />
-                <TableColumn fx:id="ExpireDate" prefWidth="245.0" text="Expiration Date" />
+                <TableColumn fx:id="UniqueID" prefWidth="100.0" resizable="false" text="Unique ID" />
+                <TableColumn fx:id="Owner" prefWidth="175.0" resizable="false" text="Owner" />
+                <TableColumn fx:id="ExpireDate" prefWidth="246.0" resizable="false" text="Expiration Date" />
             </columns>
          <padding>
             <Insets right="1.0" />
          </padding>
         </TableView>
-      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="750.0">
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="535.0">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="Menu">
             <items>
               <MenuItem fx:id="settings" mnemonicParsing="false" onAction="#onSettingsClick" text="Settings" />
                   <MenuItem fx:id="quitMenuButton" mnemonicParsing="false" onAction="#onQuitClick" text="Quit" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="View">
+          <Menu mnemonicParsing="false" text="View" visible="false">
                <items>
                   <RadioMenuItem fx:id="viewButtonExpired" mnemonicParsing="false" onAction="#onViewExpiredClick" text="Show Expired" />
                   <RadioMenuItem fx:id="viewButtonExpDateInDays" mnemonicParsing="false" onAction="#onShowDaysUntilExpiredClick" text="Show Days until Expiration" />
                </items></Menu>
         </menus>
       </MenuBar>
-      <ToolBar layoutX="535.0" layoutY="27.0" prefHeight="40.0" prefWidth="215.0">
+      <ToolBar layoutX="535.0" layoutY="7.0" prefHeight="51.0" prefWidth="215.0" AnchorPane.bottomAnchor="449.0" AnchorPane.topAnchor="0.0">
         <items>
-            <Button mnemonicParsing="false" onAction="#onAddClick" prefHeight="25.0" prefWidth="52.0" text="Add" textFill="#06ff23">
+            <Button fx:id="addTaskButton" mnemonicParsing="false" onAction="#onAddClick" prefHeight="25.0" prefWidth="52.0" text="Add" textFill="#06ff23">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onRemoveClick" prefHeight="25.0" prefWidth="74.0" text="Remove" textFill="#f50707">
+            <Button fx:id="removeTaskButton" mnemonicParsing="false" onAction="#onRemoveClick" prefHeight="25.0" prefWidth="74.0" text="Remove" textFill="#f50707">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onEditButton" prefHeight="25.0" prefWidth="64.0" text="Edit" textFill="#ffc609">
+            <Button fx:id="editTaskButton" mnemonicParsing="false" onAction="#onEditButton" prefHeight="25.0" prefWidth="64.0" text="Edit" textFill="#ffc609">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
         </items>
       </ToolBar>
-      <VBox fx:id="EditBox" layoutX="551.0" layoutY="79.0" prefHeight="259.0" prefWidth="175.0" visible="false">
+      <VBox fx:id="EditBox" layoutX="551.0" layoutY="122.0" prefHeight="259.0" prefWidth="175.0" visible="false">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Unique ID">
                <VBox.margin>
@@ -81,17 +81,21 @@
             <Button mnemonicParsing="false" onAction="#onUpdateClick" text="Update" />
          </children>
       </VBox>
-      <HBox layoutX="534.0" layoutY="461.0" prefHeight="25.0" prefWidth="211.0">
+      <HBox layoutX="534.0" layoutY="454.0" prefHeight="42.0" prefWidth="211.0">
          <children>
-            <Text fx:id="statusBar" fontSmoothingType="LCD" opacity="0.75" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="146.0">
+            <Text fx:id="statusBar" fontSmoothingType="LCD" opacity="0.75" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="136.0">
                <HBox.margin>
-                  <Insets right="5.0" top="5.0" />
+                  <Insets left="10.0" right="5.0" top="5.0" />
                </HBox.margin>
             </Text>
-            <Button mnemonicParsing="false" onAction="#onReloadClick" prefHeight="25.0" prefWidth="54.0" text="Reload" />
+            <Button mnemonicParsing="false" onAction="#onReloadClick" prefHeight="25.0" prefWidth="54.0" text="Reload">
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+            </Button>
          </children>
       </HBox>
-      <VBox fx:id="AddBox" layoutX="551.0" layoutY="77.0" prefHeight="259.0" prefWidth="175.0" visible="false">
+      <VBox fx:id="AddBox" layoutX="551.0" layoutY="120.0" prefHeight="259.0" prefWidth="175.0" visible="false">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Unique ID" />
             <TextField fx:id="uidAddField">
@@ -114,7 +118,7 @@
             <Button mnemonicParsing="false" onAction="#onAddKeyClick" text="Hinzufügen" />
          </children>
       </VBox>
-      <VBox fx:id="RemoveBox" layoutX="547.0" layoutY="79.0" prefHeight="103.0" prefWidth="184.0" visible="false">
+      <VBox fx:id="RemoveBox" layoutX="547.0" layoutY="114.0" prefHeight="103.0" prefWidth="184.0" visible="false">
          <children>
             <Text fx:id="RemoveText" strokeType="OUTSIDE" strokeWidth="0.0" text="Möchstest du den Schlüssel XYZ wirklich löschen?" wrappingWidth="183.44140625">
                <VBox.margin>
@@ -140,6 +144,8 @@
             </HBox>
          </children>
       </VBox>
-      <Separator layoutX="541.0" layoutY="436.0" prefHeight="2.0" prefWidth="204.0" />
+      <Separator layoutX="541.0" layoutY="449.0" prefHeight="4.0" prefWidth="198.0" />
+      <TextField fx:id="searchField" layoutX="540.0" layoutY="63.0" prefHeight="25.0" prefWidth="198.0" />
+      <Separator layoutX="541.0" layoutY="99.0" prefHeight="4.0" prefWidth="198.0" />
     </children>
 </AnchorPane>
