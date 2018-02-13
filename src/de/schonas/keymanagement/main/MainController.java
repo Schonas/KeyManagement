@@ -86,7 +86,7 @@ public class MainController {
      */
     @FXML
     private void onSettingsClick() throws IOException {
-        //TODO: Settings Page
+        //TODO: Letzter Aufruf sollte Exception immer handlen
         SettingsPage s = new SettingsPage();
         s.start();
     }
@@ -251,6 +251,8 @@ public class MainController {
      */
     @FXML
     private void onShowDaysUntilExpiredClick(){
+        //TODO: Fragezeichenoperator (Bietet sich beim Belegen von Werten mit einer bedigungsabfrage immer ganz gut an
+        //prop.setProperty("showDaysUntilExpDate", viewButtonExpDateInDays.isSelected() ? "false" : "true");
         if(viewButtonExpDateInDays.isSelected()){
             prop.setProperty("showDaysUntilExpDate", "false");
         } else {

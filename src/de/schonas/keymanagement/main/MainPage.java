@@ -16,11 +16,16 @@ import java.util.Properties;
 
 public class MainPage extends Application {
 
+    //TODO: generell auf einheitliches Schema für Setzen von Leerzeichen und Leerzeilen achten. Dadurch wird es besser lesbar
+
     public static Utils u;
     public static KeySQL ksql;
     public static Stage gStage;
     public static Properties prop;
+    //TODO: ist automatisch null
     InputStream input = null;
+    //TODO: Sowas als Konstante machen -> static + final + name in Caps mit _
+    //public static final Image LOGO_IHK = new Image("http://www.dresden.ihk.de/apple-touch-icon.png");
     public static Image logo = new Image("http://www.dresden.ihk.de/apple-touch-icon.png");
 
     @Override
@@ -36,6 +41,7 @@ public class MainPage extends Application {
         stage.setHeight(530);
         stage.setResizable(false);
         stage.setScene(scene);
+        //TODO: Sowas wie Title oder andere wichtige Werte in Konstanten oben speichern -> besserer Überblick wenn man was davon ändern will
         stage.setTitle("Key Management");
         stage.show();
     }

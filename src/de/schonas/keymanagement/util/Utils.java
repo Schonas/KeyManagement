@@ -64,6 +64,7 @@ public class Utils {
 
     }
 
+    //TODO: warum auf einmal static?
     /**
      * Formt LocalDate in Date um
      * @param localDate
@@ -80,6 +81,7 @@ public class Utils {
      */
     public boolean isInPast(Date date){
         Date current = new Date(Calendar.getInstance().getTimeInMillis());
+        //TODO: Auf einheitliches Schema achten
         if(date.before(current)){
             return true;
         }else if(date.equals(current)){
@@ -87,6 +89,8 @@ public class Utils {
         } else {
             return false;
         }
+        //TODO: Verkürzen
+        //return date.before(current) || date.equals(current);
     }
 
     public void reloadTable(TableView tableView, TableColumn uid, TableColumn owner, TableColumn expDate, TextField searchField){

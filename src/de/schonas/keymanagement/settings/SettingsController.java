@@ -43,7 +43,7 @@ public class SettingsController {
      */
     @FXML
     private void onTestConClick() throws IOException {
-
+        //TODO: handle or declare, nicht beides
         try{
             if(ksql.testConnection(settingsHostField.getText(), settingsDatabaseField.getText(), settingsUsernameField.getText(), settingsPasswordField.getText())){
                 settingsConValueField.setText("Connected!");

@@ -12,6 +12,7 @@ import static de.schonas.keymanagement.main.MainPage.logo;
 
 public class SettingsPage {
 
+    //TODO: Vererbungshierarchie nutzen -> Redundanzen wie setzen der Szene oder anderer Merkmale wie resize logo .. vermeiden
     public void start () throws IOException {
         Stage stage = new Stage();
         Parent pane = FXMLLoader.load(getClass().getResource("SettingsController.fxml"));
