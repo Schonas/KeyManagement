@@ -6,6 +6,8 @@ import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static de.schonas.keymanagement.main.MainPage.ksql;
@@ -50,6 +52,13 @@ public class KeySQL extends MySQL {
         } catch (SQLException e) {
             return false;
         }
+    }
+
+    public List<String> getRooms(Key key){
+        List<String> allowedKeys = new ArrayList<>();
+
+        this.get("KEYMANAGEMENT.Access", u.getDBMap("uid", key.getUniqueID()));
+        return allowedKeys;
     }
 
 }

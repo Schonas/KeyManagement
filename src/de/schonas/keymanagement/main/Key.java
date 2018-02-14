@@ -5,18 +5,18 @@ import javafx.beans.property.StringProperty;
 
 public class Key {
 
-    private final SimpleStringProperty UniqueID;
+    private final SimpleStringProperty ID;
     private final SimpleStringProperty Owner;
     private final SimpleStringProperty expDate;
 
-    public Key(String UniqueID, String owner, String expDate) {
-        this.UniqueID = new SimpleStringProperty(UniqueID);
+    public Key(String ID, String owner, String expDate) {
+        this.ID = new SimpleStringProperty(ID);
         this.Owner = new SimpleStringProperty(owner);
         this.expDate = new SimpleStringProperty(expDate);
     }
 
-    public String getUniqueID() {
-        return UniqueID.get();
+    public String getID() {
+        return ID.get();
     }
 
     public String getOwner() {
@@ -28,8 +28,8 @@ public class Key {
         return expDate.get();
     }
 
-    public StringProperty uidProperty(){
-        return UniqueID;
+    public StringProperty idProperty(){
+        return ID;
     }
 
     public StringProperty ownerProperty(){

@@ -6,8 +6,13 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.controlsfx.glyphfont.FontAwesome;
+import org.controlsfx.glyphfont.Glyph;
+import org.controlsfx.glyphfont.GlyphFont;
+import org.controlsfx.glyphfont.GlyphFontRegistry;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -50,13 +55,35 @@ public class MainController {
     private Text RemoveText;
 
     @FXML
-    private Button addTaskButton, removeTaskButton, editTaskButton;
+    private Button addTaskButton, removeTaskButton, editTaskButton, reloadTaskButton;
 
     /**
      * init Methode die alles vorbereitet
      */
     @FXML
     protected void initialize() {
+
+        GlyphFont fontAwesome= GlyphFontRegistry.font("FontAwesome");
+
+        Glyph addIcon = fontAwesome.create(FontAwesome.Glyph.PLUS_CIRCLE);
+        Glyph removeIcon = fontAwesome.create(FontAwesome.Glyph.MINUS_CIRCLE);
+        Glyph editIcon = fontAwesome.create(FontAwesome.Glyph.PENCIL);
+        Glyph reloadIcon = fontAwesome.create(FontAwesome.Glyph.REFRESH);
+
+        addIcon.setFontSize(28);
+        removeIcon.setFontSize(28);
+        editIcon.setFontSize(28);
+        reloadIcon.setFontSize(28);
+
+        addTaskButton.setText(null);
+        removeTaskButton.setText(null);
+        editTaskButton.setText(null);
+        reloadTaskButton.setText(null);
+
+        addTaskButton.setGraphic(addIcon);
+        removeTaskButton.setGraphic(removeIcon);
+        editTaskButton.setGraphic(editIcon);
+        reloadTaskButton.setGraphic(reloadIcon);
 
         addTaskButton.setTooltip(new Tooltip("Füge einen Schlüssel hinzu"));
         removeTaskButton.setTooltip(new Tooltip("Lösche den ausgewählten Schlüssel"));
@@ -74,7 +101,11 @@ public class MainController {
             }
         }, 100);
 
+        RoomData rm = new RoomData(AddBox);
+        rm.load();
+
         KeyTable.getStylesheets().add("de/schonas/keymanagement/main/tableStylesheet");
+        KeyTable.getSelectionModel().select(0);
         quitMenuButton.setAccelerator(new KeyCodeCombination(KeyCode.Q, KeyCodeCombination.CONTROL_DOWN));
     }
 
@@ -109,7 +140,7 @@ public class MainController {
             EditBox.setVisible(true);
             AddBox.setVisible(false);
             RemoveBox.setVisible(false);
-            uidField.setText(key.getUniqueID());
+            uidField.setText(key.getID());
             ownerField.setText(key.getOwner());
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -120,7 +151,7 @@ public class MainController {
             alert.setTitle("Key Management");
             alert.setHeaderText("Fehler!");
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(logo);
+            stage.getIcons().add(LOGO);
             alert.setContentText("Du musst ein Schlüssel auswählen!");
             alert.show();
         }
@@ -146,14 +177,14 @@ public class MainController {
             RemoveBox.setVisible(true);
             AddBox.setVisible(false);
             EditBox.setVisible(false);
-            RemoveText.setText("Möchtest du den Schlüssel " + key.getUniqueID() + " wirklich löschen?");
+            RemoveText.setText("Möchtest du den Schlüssel " + key.getID() + " wirklich löschen?");
         } else {
             RemoveBox.setVisible(false);
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Key Management");
             alert.setHeaderText("Fehler!");
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(logo);
+            stage.getIcons().add(LOGO);
             alert.setContentText("Du musst ein Schlüssel auswählen!");
             alert.show();
         }
@@ -167,9 +198,9 @@ public class MainController {
         Key key = new Key(uidField.getText(), ownerField.getText(), dateField.getValue().toString());
         Map data = u.getDBMap("owner", key.getOwner());
         data.put("expire_date", key.getExpireDate());
-        ksql.update("KEYMANAGEMENT.Keys", u.getDBMap("uid", key.getUniqueID()), data);
+        ksql.update("KEYMANAGEMENT.Keys", u.getDBMap("id", key.getID()), data);
         u.reloadTable(KeyTable, UniqueID, Owner, ExpireDate, searchField);
-        u.sendAlert(statusBar, "Key " + key.getUniqueID() + " wurde erfolgreich geändert.");
+        u.sendAlert(statusBar, "Key " + key.getID() + " wurde erfolgreich geändert.");
         EditBox.setVisible(false);
     }
 
@@ -199,7 +230,7 @@ public class MainController {
 
         Key key = new Key(uidAddField.getText() ,ownerAddField.getText(), u.asDate(expDateAddField.getValue()).toString());
         ksql.insertKey(key);
-        u.sendAlert(statusBar, "Key " + key.getUniqueID() + " wurde \n erfolgreich hinzugefügt.");
+        u.sendAlert(statusBar, "Key " + key.getID() + " wurde \n erfolgreich hinzugefügt.");
         u.reloadTable(KeyTable, UniqueID, Owner, ExpireDate, searchField);
         KeyTable.getSelectionModel().select(key);
         AddBox.setVisible(false);
@@ -218,9 +249,9 @@ public class MainController {
     @FXML
     private void onRemoveYesClick(){
         Key key = KeyTable.getSelectionModel().getSelectedItem();
-        ksql.delete(TABLE, u.getDBMap("uid", key.getUniqueID()));
+        ksql.delete(TABLE, u.getDBMap("id", key.getID()));
         u.reloadTable(KeyTable, UniqueID, Owner, ExpireDate, searchField);
-        u.sendAlert(statusBar, "Key " +  key.getUniqueID() + " wurde gelöscht.");
+        u.sendAlert(statusBar, "Key " +  key.getID() + " wurde gelöscht.");
         RemoveBox.setVisible(false);
     }
 
@@ -251,13 +282,8 @@ public class MainController {
      */
     @FXML
     private void onShowDaysUntilExpiredClick(){
-        //TODO: Fragezeichenoperator (Bietet sich beim Belegen von Werten mit einer bedigungsabfrage immer ganz gut an
-        //prop.setProperty("showDaysUntilExpDate", viewButtonExpDateInDays.isSelected() ? "false" : "true");
-        if(viewButtonExpDateInDays.isSelected()){
-            prop.setProperty("showDaysUntilExpDate", "false");
-        } else {
-            prop.setProperty("showDaysUntilExpDate", "true");
-        }
+
+        prop.setProperty("showDaysUntilExpDate", viewButtonExpDateInDays.isSelected() ? "false" : "true");
     }
 
 }
