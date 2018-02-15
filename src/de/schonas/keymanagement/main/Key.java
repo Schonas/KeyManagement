@@ -15,6 +15,13 @@ public class Key {
         this.expDate = new SimpleStringProperty(expDate);
     }
 
+    public Key(String ID){
+        this.ID = new SimpleStringProperty(ID);
+        this.Owner = new SimpleStringProperty(null);
+        this.expDate = new SimpleStringProperty(null);
+    }
+
+
     public String getID() {
         return ID.get();
     }
@@ -23,10 +30,10 @@ public class Key {
         return Owner.get();
     }
 
-
-    public String getExpireDate() {
+    public String getExpDate() {
         return expDate.get();
     }
+
 
     public StringProperty idProperty(){
         return ID;

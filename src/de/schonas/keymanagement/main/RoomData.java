@@ -3,7 +3,6 @@ package de.schonas.keymanagement.main;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
 import org.controlsfx.control.CheckComboBox;
 
@@ -18,7 +17,7 @@ public class RoomData {
 
     public void load(){
         for (int i = 0; i <= 100; i++) {
-            strings.add("Item " + i);
+            strings.add("Room " + i);
         }
 
         final CheckComboBox<String> checkComboBox = new CheckComboBox<>(strings);
@@ -26,6 +25,7 @@ public class RoomData {
         checkComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<String>) c ->
                 System.out.println(checkComboBox.getCheckModel().getCheckedIndices()));
 
+        checkComboBox.setPrefWidth(175);
 
         box.getChildren().add(box.getChildren().size()-1, checkComboBox);
 

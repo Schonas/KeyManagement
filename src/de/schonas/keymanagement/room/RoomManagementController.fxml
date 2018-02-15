@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.Button?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.schonas.keymanagement.room.RoomManagementController">
+    <children>
+        <Pane fx:id="roomViewPane" layoutX="300.0" prefHeight="400.0" prefWidth="300.0" />
+        <TextField fx:id="searchKeyField" layoutX="14.0" layoutY="90.0" prefHeight="28.0" prefWidth="164.0" promptText="Search..." />
+        <Text layoutX="13.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Raumverwaltung">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Text>
+        <Button layoutX="14.0" layoutY="343.0" mnemonicParsing="false" text="Sichern" />
+        <Text layoutX="13.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam" wrappingWidth="267.0" />
+    </children>
+</AnchorPane>

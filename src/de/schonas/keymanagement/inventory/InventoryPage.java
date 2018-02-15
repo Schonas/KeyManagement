@@ -1,4 +1,4 @@
-package de.schonas.keymanagement.settings;
+package de.schonas.keymanagement.inventory;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,19 +10,18 @@ import java.io.IOException;
 import static de.schonas.keymanagement.main.MainPage.LOGO;
 import static de.schonas.keymanagement.main.MainPage.TITLE;
 
-public class SettingsPage {
+public class InventoryPage {
 
-    //TODO: Vererbungshierarchie nutzen -> Redundanzen wie setzen der Szene oder anderer Merkmale wie resize LOGO .. vermeiden
     public void start () throws IOException {
 
         Stage stage = new Stage();
-        Parent pane = FXMLLoader.load(getClass().getResource("SettingsController.fxml"));
+        Parent pane = FXMLLoader.load(getClass().getResource("InventoryController.fxml"));
         Scene scene = new Scene(pane);
 
         stage.getIcons().add(LOGO);
         stage.resizableProperty().setValue(Boolean.FALSE);
         stage.setScene(scene);
-        stage.setTitle(TITLE + " | Einstellungen");
+        stage.setTitle(TITLE + " | Inventar");
         stage.show();
     }
 }

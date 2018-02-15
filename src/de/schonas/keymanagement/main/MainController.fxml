@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import org.controlsfx.control.*?>
-<?import com.jfoenix.controls.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.schonas.keymanagement.main.MainController">
     <children>
-        <TableView fx:id="KeyTable" editable="true" layoutY="27.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="473.0" prefWidth="535.0">
+        <TableView fx:id="keyTable" editable="true" layoutY="27.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="473.0" prefWidth="535.0">
             <columns>
-                <TableColumn fx:id="UniqueID" prefWidth="100.0" resizable="false" text="ID" />
-                <TableColumn fx:id="Owner" prefWidth="175.0" resizable="false" text="Besitzer" />
-                <TableColumn fx:id="ExpireDate" prefWidth="246.0" resizable="false" text="Ablaufdatum" />
+                <TableColumn fx:id="idCol" prefWidth="100.0" resizable="false" text="ID" />
+                <TableColumn fx:id="ownerCol" prefWidth="175.0" resizable="false" text="Besitzer" />
+                <TableColumn fx:id="expDateCol" prefWidth="246.0" resizable="false" text="Ablaufdatum" />
             </columns>
          <padding>
             <Insets right="1.0" />
@@ -24,17 +20,21 @@
         </TableView>
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="535.0">
         <menus>
-          <Menu mnemonicParsing="false" text="Menu">
+          <Menu mnemonicParsing="false" text="Menü">
             <items>
-              <MenuItem fx:id="settings" mnemonicParsing="false" onAction="#onSettingsClick" text="Settings" />
-                  <MenuItem fx:id="quitMenuButton" mnemonicParsing="false" onAction="#onQuitClick" text="Quit" />
+              <MenuItem mnemonicParsing="false" onAction="#onSettingsClick" text="Einstellungen" />
+                  <MenuItem fx:id="roomManagementButton" mnemonicParsing="false" onAction="#onRoomManagementClick" text="Raumverwaltung" />
+                  <MenuItem mnemonicParsing="false" onAction="#onInventoryClick" text="Inventar" />
+                  <MenuItem fx:id="quitMenuButton" mnemonicParsing="false" onAction="#onQuitClick" text="Beenden" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="View" visible="false">
-               <items>
-                  <RadioMenuItem fx:id="viewButtonExpired" mnemonicParsing="false" onAction="#onViewExpiredClick" text="Show Expired" />
-                  <RadioMenuItem fx:id="viewButtonExpDateInDays" mnemonicParsing="false" onAction="#onShowDaysUntilExpiredClick" text="Show Days until Expiration" />
-               </items></Menu>
+            <Menu mnemonicParsing="false" text="Drucken">
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onAddKeyPrintClick" text="Schlüsselvergabe" />
+                <MenuItem mnemonicParsing="false" onAction="#onRemoveKeyPrintClick" text="Schlüsselabgabe" />
+                  <MenuItem mnemonicParsing="false" onAction="#onManualDocumentClick" text="Manuelles Dokument" />
+              </items>
+            </Menu>
         </menus>
       </MenuBar>
       <VBox fx:id="EditBox" layoutX="551.0" layoutY="122.0" prefHeight="259.0" prefWidth="175.0" visible="false">
@@ -44,19 +44,19 @@
                   <Insets />
                </VBox.margin>
             </Text>
-            <TextField fx:id="uidField" editable="false">
+            <TextField fx:id="uidEditField" editable="false">
                <VBox.margin>
                   <Insets bottom="10.0" top="5.0" />
                </VBox.margin>
             </TextField>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Besitzer" />
-            <TextField fx:id="ownerField">
+            <TextField fx:id="ownerEditField">
                <VBox.margin>
                   <Insets bottom="10.0" top="5.0" />
                </VBox.margin>
             </TextField>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ablaufdatum" />
-            <DatePicker fx:id="dateField">
+            <DatePicker fx:id="dateEditField">
                <VBox.margin>
                   <Insets bottom="20.0" top="5.0" />
                </VBox.margin>
@@ -64,7 +64,7 @@
             <Button mnemonicParsing="false" onAction="#onUpdateClick" text="Editieren" />
          </children>
       </VBox>
-      <HBox layoutX="534.0" layoutY="464.0" prefHeight="32.0" prefWidth="211.0">
+      <HBox layoutX="537.0" layoutY="454.0" prefHeight="32.0" prefWidth="211.0">
          <children>
             <Text fx:id="statusBar" fontSmoothingType="LCD" opacity="0.75" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="191.0">
                <HBox.margin>
@@ -93,7 +93,10 @@
                   <Insets bottom="20.0" top="5.0" />
                </VBox.margin>
             </DatePicker>
-            <Button mnemonicParsing="false" onAction="#onAddKeyClick" text="Hinzufügen" />
+            <Button mnemonicParsing="false" onAction="#onAddKeyClick" text="Hinzufügen">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin></Button>
          </children>
       </VBox>
       <VBox fx:id="RemoveBox" layoutX="547.0" layoutY="114.0" prefHeight="103.0" prefWidth="184.0" visible="false">

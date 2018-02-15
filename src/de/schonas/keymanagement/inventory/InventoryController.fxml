@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="300.0" prefWidth="260.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.schonas.keymanagement.inventory.InventoryController">
+   <children>
+      <Text layoutX="10.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Beschreibung:" wrappingWidth="97.13671875">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="24.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="alle Schlüssel" />
+      <Text layoutX="13.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="belegte Schlüssel" />
+      <Text layoutX="21.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="freie Schlüssel" />
+      <Text layoutX="160.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Anzahl">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Text>
+      <Separator layoutX="127.0" layoutY="2.0" orientation="VERTICAL" prefHeight="393.0" prefWidth="5.0" />
+      <Text fx:id="allKeys" layoutX="182.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="occupiedKeys" layoutX="182.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="freeKeys" layoutX="182.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+   </children>
+</AnchorPane>

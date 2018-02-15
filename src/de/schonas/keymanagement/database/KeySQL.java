@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 import static de.schonas.keymanagement.main.MainPage.ksql;
-import static de.schonas.keymanagement.main.MainPage.prop;
 import static de.schonas.keymanagement.main.MainPage.u;
 
 public class KeySQL extends MySQL {
@@ -33,9 +32,9 @@ public class KeySQL extends MySQL {
     }
 
     public void insertKey(Key key){
-        Map map = u.getDBMap("uid", key.getUniqueID());
+        Map map = u.getDBMap("id", key.getID());
         map.put("owner", key.getOwner());
-        map.put("expire_date", Date.valueOf(key.getExpireDate()));
+        map.put("exp_date", Date.valueOf(key.getExpDate()));
         ksql.insert("KEYMANAGEMENT.Keys", map);
     }
 
@@ -57,8 +56,53 @@ public class KeySQL extends MySQL {
     public List<String> getRooms(Key key){
         List<String> allowedKeys = new ArrayList<>();
 
-        this.get("KEYMANAGEMENT.Access", u.getDBMap("uid", key.getUniqueID()));
         return allowedKeys;
+    }
+
+    public List<String> getKeyTypes() {
+        List<String> keyTypes = new ArrayList<>();
+
+        ResultSet rs = getResultTypes();
+        String id;
+        System.out.println(rs);
+        try {
+            while (rs.next()) {
+                id = rs.getString("id");
+                System.out.println(id);
+                if (!keyTypes.contains(id)) keyTypes.add(id);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return keyTypes;
+    }
+
+    private ResultSet getResultTypes(){
+
+        statement = "SELECT id FROM KEYMANAGEMENT.Keys";
+        try {
+            pStmt= conn.prepareStatement(statement);
+            //pStmt.setString(1, TABLE);
+            return pStmt.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public int getKeyAmount(String statement){
+        this.statement = statement;
+        ResultSet rs = null;
+        this.statement = "";
+        try {
+            pStmt= conn.prepareStatement(this.statement);
+            rs = pStmt.executeQuery();
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
 }

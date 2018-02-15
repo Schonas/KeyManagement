@@ -1,12 +1,14 @@
 package de.schonas.keymanagement.main;
 
+import de.schonas.keymanagement.inventory.InventoryPage;
+import de.schonas.keymanagement.keyinfo.KeyInfo;
+import de.schonas.keymanagement.room.RoomManagementPage;
 import de.schonas.keymanagement.settings.SettingsPage;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.controlsfx.glyphfont.FontAwesome;
@@ -28,31 +30,25 @@ import static de.schonas.keymanagement.main.MainPage.*;
 public class MainController {
 
     @FXML // fx:id="keyTable"
-    private TableView<Key> KeyTable;
+    private TableView<Key> keyTable;
 
-    @FXML // fx:id="uniqueID","Owner","ExpireDate","Valid"
-    private TableColumn<Key, String> UniqueID,ExpireDate,Owner;
+    @FXML // fx:id="idCol","ownerCol","expDateCol","Valid"
+    private TableColumn<Key, String> idCol, ownerCol, expDateCol;
 
-    @FXML //EDIT ANSICHT
-    private TextField uidField, ownerField, searchField;
+    @FXML //EDIT ANSICHT & Search
+    private TextField uidEditField, ownerEditField, searchField;
 
     @FXML //EDIT DATEPICKER
-    private DatePicker dateField;
+    private DatePicker dateEditField;
 
     @FXML
-    private MenuItem quitMenuButton;
+    private MenuItem quitMenuButton, roomManagementButton;
 
     @FXML
     private VBox EditBox, AddBox, RemoveBox;
 
     @FXML
-    public Text statusBar;
-
-    @FXML
-    private RadioMenuItem viewButtonExpDateInDays, viewButtonExpired;
-
-    @FXML
-    private Text RemoveText;
+    public Text statusBar, RemoveText;
 
     @FXML
     private Button addTaskButton, removeTaskButton, editTaskButton, reloadTaskButton;
@@ -65,8 +61,8 @@ public class MainController {
 
         GlyphFont fontAwesome= GlyphFontRegistry.font("FontAwesome");
 
-        Glyph addIcon = fontAwesome.create(FontAwesome.Glyph.PLUS_CIRCLE);
-        Glyph removeIcon = fontAwesome.create(FontAwesome.Glyph.MINUS_CIRCLE);
+        Glyph addIcon = fontAwesome.create(FontAwesome.Glyph.PLUS);
+        Glyph removeIcon = fontAwesome.create(FontAwesome.Glyph.TRASH);
         Glyph editIcon = fontAwesome.create(FontAwesome.Glyph.PENCIL);
         Glyph reloadIcon = fontAwesome.create(FontAwesome.Glyph.REFRESH);
 
@@ -90,26 +86,22 @@ public class MainController {
         editTaskButton.setTooltip(new Tooltip("Bearbeite den ausgewählten Schlüssel"));
         searchField.setPromptText("Search...");
 
-        viewButtonExpired.setSelected(Boolean.parseBoolean(prop.getProperty("showExpired")));
-        viewButtonExpDateInDays.setSelected(Boolean.parseBoolean(prop.getProperty("showDaysUntilExpDate")));
-
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                TableData tb = new TableData(KeyTable, UniqueID, Owner, ExpireDate, searchField);
+                TableData tb = new TableData(keyTable, idCol, ownerCol, expDateCol, searchField);
                 tb.load();
+                keyTable.getSelectionModel().select(0);
+                keyTable.getStylesheets().add("de/schonas/keymanagement/main/keyTableStylesheet");
             }
         }, 100);
 
-        RoomData rm = new RoomData(AddBox);
-        rm.load();
+        //RoomData rm = new RoomData(AddBox);
+        //rm.load();
 
-        KeyTable.getStylesheets().add("de/schonas/keymanagement/main/tableStylesheet");
-        KeyTable.getSelectionModel().select(0);
         quitMenuButton.setAccelerator(new KeyCodeCombination(KeyCode.Q, KeyCodeCombination.CONTROL_DOWN));
+        roomManagementButton.setAccelerator(new KeyCodeCombination(KeyCode.R, KeyCodeCombination.CONTROL_DOWN));
     }
-
-
 
     /**
      * Öffnet Settings Page
@@ -135,17 +127,17 @@ public class MainController {
      */
     @FXML
     private void onEditButton(){
-        if(KeyTable.getSelectionModel().getSelectedItem() != null) {
-            Key key = KeyTable.getSelectionModel().getSelectedItem();
+        if(keyTable.getSelectionModel().getSelectedItem() != null) {
+            Key key = keyTable.getSelectionModel().getSelectedItem();
             EditBox.setVisible(true);
             AddBox.setVisible(false);
             RemoveBox.setVisible(false);
-            uidField.setText(key.getID());
-            ownerField.setText(key.getOwner());
+            uidEditField.setText(key.getID());
+            ownerEditField.setText(key.getOwner());
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate dateTime = LocalDate.parse(key.getExpireDate(), formatter);
-            dateField.setValue(dateTime);
+            LocalDate dateTime = LocalDate.parse(key.getExpDate(), formatter);
+            dateEditField.setValue(dateTime);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Key Management");
@@ -162,7 +154,7 @@ public class MainController {
      */
     @FXML
     private void onReloadClick(){
-        u.reloadTable(KeyTable, UniqueID, Owner, ExpireDate, searchField);
+        u.reloadTable(keyTable, idCol, ownerCol, expDateCol, searchField);
         u.sendAlert(statusBar, "Tabelle wurde neu geladen.");
     }
 
@@ -172,8 +164,8 @@ public class MainController {
     @FXML
     private void onRemoveClick(){
 
-        if(KeyTable.getSelectionModel().getSelectedItem() != null) {
-            Key key = KeyTable.getSelectionModel().getSelectedItem();
+        if(keyTable.getSelectionModel().getSelectedItem() != null) {
+            Key key = keyTable.getSelectionModel().getSelectedItem();
             RemoveBox.setVisible(true);
             AddBox.setVisible(false);
             EditBox.setVisible(false);
@@ -181,7 +173,7 @@ public class MainController {
         } else {
             RemoveBox.setVisible(false);
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Key Management");
+            alert.setTitle(TITLE);
             alert.setHeaderText("Fehler!");
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(LOGO);
@@ -195,11 +187,11 @@ public class MainController {
      */
     @FXML
     private void onUpdateClick(){
-        Key key = new Key(uidField.getText(), ownerField.getText(), dateField.getValue().toString());
+        Key key = new Key(uidEditField.getText(), ownerEditField.getText(), dateEditField.getValue().toString());
         Map data = u.getDBMap("owner", key.getOwner());
-        data.put("expire_date", key.getExpireDate());
+        data.put("exp_date", key.getExpDate());
         ksql.update("KEYMANAGEMENT.Keys", u.getDBMap("id", key.getID()), data);
-        u.reloadTable(KeyTable, UniqueID, Owner, ExpireDate, searchField);
+        u.reloadTable(keyTable, idCol, ownerCol, expDateCol, searchField);
         u.sendAlert(statusBar, "Key " + key.getID() + " wurde erfolgreich geändert.");
         EditBox.setVisible(false);
     }
@@ -227,12 +219,17 @@ public class MainController {
      */
     @FXML
     private void onAddKeyClick(){
-
-        Key key = new Key(uidAddField.getText() ,ownerAddField.getText(), u.asDate(expDateAddField.getValue()).toString());
+        String date;
+        if(expDateAddField.getValue() != null){
+            date = u.asDate(expDateAddField.getValue()).toString();
+        } else {
+            date = null;
+        }
+        Key key = new Key(uidAddField.getText() ,ownerAddField.getText(), date);
         ksql.insertKey(key);
-        u.sendAlert(statusBar, "Key " + key.getID() + " wurde \n erfolgreich hinzugefügt.");
-        u.reloadTable(KeyTable, UniqueID, Owner, ExpireDate, searchField);
-        KeyTable.getSelectionModel().select(key);
+        u.sendAlert(statusBar, "Key " + key.getID() + " wurde \nerfolgreich hinzugefügt.");
+        u.reloadTable(keyTable, idCol, ownerCol, expDateCol, searchField);
+        keyTable.getSelectionModel().select(key);
         AddBox.setVisible(false);
         expDateAddField.setValue(null);
         ownerAddField.setText(null);
@@ -248,9 +245,9 @@ public class MainController {
      */
     @FXML
     private void onRemoveYesClick(){
-        Key key = KeyTable.getSelectionModel().getSelectedItem();
+        Key key = keyTable.getSelectionModel().getSelectedItem();
         ksql.delete(TABLE, u.getDBMap("id", key.getID()));
-        u.reloadTable(KeyTable, UniqueID, Owner, ExpireDate, searchField);
+        u.reloadTable(keyTable, idCol, ownerCol, expDateCol, searchField);
         u.sendAlert(statusBar, "Key " +  key.getID() + " wurde gelöscht.");
         RemoveBox.setVisible(false);
     }
@@ -263,27 +260,56 @@ public class MainController {
         RemoveBox.setVisible(false);
     }
 
-    //MENUBAR
-
     /**
-     * Holt Value aus Config und setzt Dinge
+     * Öffnet Raumverwaltungs-Seite
      */
     @FXML
-    private void onViewExpiredClick(){
-        if(viewButtonExpired.isSelected()){
-            prop.setProperty("showExpired", "false");
-        } else {
-            prop.setProperty("showExpired", "true");
-        }
+    private void onRoomManagementClick() throws IOException {
+        RoomManagementPage rm = new RoomManagementPage();
+        rm.start();
     }
 
     /**
-     * Macht das gleiche wie oben und ist auch noch eigentlich ohne funktion
+     * Druckt Dokument für die Vergabe eines Schlüssels
      */
     @FXML
-    private void onShowDaysUntilExpiredClick(){
+    private void onAddKeyPrintClick(){
 
-        prop.setProperty("showDaysUntilExpDate", viewButtonExpDateInDays.isSelected() ? "false" : "true");
+        Key key = keyTable.getSelectionModel().getSelectedItem();
+
+        Stage printStage = new Stage();
+        print.printAllocationPaper("Vergabedokument " + key.getID(), key, printStage);
+
+    }
+
+    /**
+     * Druckt Dokument für die Abgabe eines Schlüssels
+     */
+    @FXML
+    private void onRemoveKeyPrintClick(){
+
+        Key key = keyTable.getSelectionModel().getSelectedItem();
+
+        Stage printStage = new Stage();
+        print.printRemovalPaper("Abgabedokument " + key.getID(), key, printStage);
+
+    }
+
+    /**
+     * Druckt Dokument aus
+     */
+    @FXML
+    private void onManualDocumentClick(){
+
+    }
+
+    /**
+     * Öffnet Seite mit Infos über alle Schlüssel
+     */
+    @FXML
+    private void onInventoryClick() throws IOException {
+        InventoryPage invPage = new InventoryPage();
+        invPage.start();
     }
 
 }

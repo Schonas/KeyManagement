@@ -1,39 +1,27 @@
 package de.schonas.keymanagement.util;
 
 import de.schonas.keymanagement.main.TableData;
+import javafx.print.PrinterJob;
+import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import static de.schonas.keymanagement.main.MainPage.openStages;
+
 public class Utils {
 
-    public Timestamp convertStringToTimestamp(String s){
-
-        try {
-            DateFormat formatter;
-            formatter = new SimpleDateFormat("dd/MM/yyyy");
-            Date date = (Date) formatter.parse(s);
-            java.sql.Timestamp timeStampDate = new Timestamp(date.getTime());
-
-            return timeStampDate;
-        } catch (ParseException e) {
-            System.out.println("Exception :" + e);
-            return null;
-        }
-    }
-
     /**
-     * Sendet Text in ein Textfeld und lässt Text nach 5 sek verschwinden
+     * Sendet Text in ein Textfeld und lässt diesen Text nach 5 sek verschwinden
      * @param t Textfeld
      * @param s Anzuzeigender Text
      */
@@ -67,7 +55,7 @@ public class Utils {
     /**
      * Formt LocalDate in Date um
      * @param localDate
-     * @return
+     * @return sql.Date
      */
     public Date asDate(LocalDate localDate) {
         return Date.valueOf(localDate);
@@ -88,15 +76,83 @@ public class Utils {
         }
     }
 
-    public void reloadTable(TableView tableView, TableColumn uid, TableColumn owner, TableColumn expDate, TextField searchField){
-        TableData tb = new TableData(tableView, uid, owner, expDate, searchField);
+    /**
+     * Lädt Tabelle mit Informationen der Datenbank neu
+     * @param tableView Tabelle um die es geht
+     * @param id ID Spalte
+     * @param owner Besitzer Spalte
+     * @param expDate Ablaufdatum Spalte
+     * @param searchField Seachfield um Autocomplete usw zu aktivieren
+     */
+    public void reloadTable(TableView tableView, TableColumn id, TableColumn owner, TableColumn expDate, TextField searchField){
+        TableData tb = new TableData(tableView, id, owner, expDate, searchField);
         tb.load();
+        tableView.getSelectionModel().select(0);
     }
 
+    /**
+     * Rechnet die Zeit zwischen 2 sql.Date aus
+     * @param date Datum was mit dem jetzigen verglichen werden soll
+     * @return Differenz der Daten
+     */
     public static long getDateDiff(Date date) {
         Date current = new Date(Calendar.getInstance().getTimeInMillis());
         return TimeUnit.DAYS.convert((current.getTime() - date.getTime()), TimeUnit.MILLISECONDS);
     }
 
+    /**
+     * Gibt Remote Namen zurück
+     * @return Remote Namen
+     */
+    public String getRemoteHostName(){
+        try {
+            return InetAddress.getLocalHost ().getHostName();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
+    /**
+     * Gibt Namen des angemeldeten Users zurück
+     * @return Username
+     */
+    public String getSystemUserName(){
+        return System.getProperty("user.name");
+    }
+
+    /**
+     * Druckt etwas aus
+     * @param node
+     */
+    public void print(Node node) {
+        System.out.println("Creating a printer job...");
+
+        PrinterJob job = PrinterJob.createPrinterJob();
+
+        if (job != null && job.showPageSetupDialog(node.getScene().getWindow())) {
+            System.out.println(job.jobStatusProperty().asString());
+            boolean printed = job.printPage(node);
+            if (printed) {
+                job.endJob();
+            } else {
+                System.out.println("Printing failed.");
+            }
+        } else {
+            System.out.println("Could not create a printer job.");
+        }
+    }
+
+    public void print(final Node node, Stage stage, String name) {
+
+    }
+
+    /**
+     * Schließt alle Fenster
+     */
+    public void closeEverything(){
+        for(Stage stage : openStages){
+            stage.close();
+        }
+    }
 }
