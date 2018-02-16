@@ -21,7 +21,7 @@ public class InventoryPage {
         stage.getIcons().add(LOGO);
         stage.resizableProperty().setValue(Boolean.FALSE);
         stage.setScene(scene);
-        stage.setTitle(TITLE + " | Inventar");
+        stage.setTitle(TITLE);
         stage.show();
     }
 }

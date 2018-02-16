@@ -1,11 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="de.schonas.keymanagement.keyinfo.KeyInfoController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.schonas.keymanagement.keyinfo.KeyInfoController">
+   <children>
+      <GridPane layoutX="8.0" layoutY="34.0" prefHeight="86.0" prefWidth="118.0">
+        <columnConstraints>
+          <ColumnConstraints />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ID" wrappingWidth="51.607421875" GridPane.columnIndex="1" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="UID" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Besitzer" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Text fx:id="keyInfoIDField" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="2" />
+            <Text fx:id="keyInfoUIDField" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Text fx:id="keyInfoOwnerField" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+      <TableView layoutX="174.0" prefHeight="400.0" prefWidth="226.0">
+        <columns>
+          <TableColumn prefWidth="67.0" text="Besitzer" />
+          <TableColumn prefWidth="84.0" text="Vergabe" />
+            <TableColumn prefWidth="74.0" text="Abgabe" />
+        </columns>
+      </TableView>
+   </children>
 </AnchorPane>

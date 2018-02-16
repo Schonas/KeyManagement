@@ -1,5 +1,6 @@
 package de.schonas.keymanagement.main;
 
+import de.schonas.keymanagement.keyinfo.KeyInfo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -8,6 +9,7 @@ import javafx.scene.control.*;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -104,12 +106,24 @@ public class TableData {
             row.hoverProperty().addListener((observable) -> {
                 final Key key = row.getItem();
 
-                if (row.isHover() && key != null) {
-                    String dateString = String.valueOf(u.getDateDiff(Date.valueOf(key.getExpDate())));
+                if (row.isHover() && key != null && key.getExpDate() != null) {
+                    String dateString = String.valueOf(u.getDateDiff(key.getExpDate()));
                     row.setTooltip(new Tooltip("Tage bis Ablauf: " + dateString));
                 }
+
             });
 
+            row.setOnMouseClicked(event -> {
+                if(event.getClickCount() == 2 && (!row.isEmpty())){
+                    Key key = row.getItem();
+                    KeyInfo keyInfo = new KeyInfo();
+                    try {
+                        keyInfo.start();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
             return row;
         });
     }

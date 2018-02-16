@@ -1,5 +1,6 @@
 package de.schonas.keymanagement.test;
 
+import de.schonas.keymanagement.util.Utils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,12 +9,19 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
 
-import static de.schonas.keymanagement.main.MainPage.LOGO;
-import static de.schonas.keymanagement.main.MainPage.TITLE;
-import static de.schonas.keymanagement.main.MainPage.ksql;
+import static de.schonas.keymanagement.main.MainPage.*;
 
 public class TestPage extends Application {
+
+    Utils u;
 
     public static void main(String[] args) {
         launch(args);
@@ -22,9 +30,16 @@ public class TestPage extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
+        u = new Utils();
 
-        System.out.println(ksql.getKeyAmount("SELECT COUNT(id) FROM KEYMANAGEMENT.Keys WEHRE owner = ''"));
+        String dateString = "2018-02-18";
+        System.out.println(u.getDateString(dateString));
+        //LocalDate localDate = u.getLocalDateFromLocalDateString(date);
+        //System.out.println(localDate);
+        //System.out.println(u.getLocalDateFromLocalDateString(date).toString());
 
+        // System.out.println(ksql.getKeyAmount("SELECT COUNT(id) FROM KEYMANAGEMENT.Keys WEHRE owner = ''"));
+        System.exit(0);
         /*
         Parent pane = FXMLLoader.load(getClass().getResource("TestController.fxml"));
         Scene scene = new Scene(pane);
@@ -36,4 +51,6 @@ public class TestPage extends Application {
         stage.show();
         */
     }
+
+
 }

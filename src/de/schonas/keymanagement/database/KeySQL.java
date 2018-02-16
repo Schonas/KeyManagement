@@ -34,7 +34,7 @@ public class KeySQL extends MySQL {
     public void insertKey(Key key){
         Map map = u.getDBMap("id", key.getID());
         map.put("owner", key.getOwner());
-        map.put("exp_date", Date.valueOf(key.getExpDate()));
+        map.put("exp_date", u.getDateString(key.getExpDate()));
         ksql.insert("KEYMANAGEMENT.Keys", map);
     }
 
@@ -64,11 +64,9 @@ public class KeySQL extends MySQL {
 
         ResultSet rs = getResultTypes();
         String id;
-        System.out.println(rs);
         try {
             while (rs.next()) {
                 id = rs.getString("id");
-                System.out.println(id);
                 if (!keyTypes.contains(id)) keyTypes.add(id);
             }
         } catch (SQLException e) {
@@ -93,7 +91,7 @@ public class KeySQL extends MySQL {
 
     public int getKeyAmount(String statement){
         this.statement = statement;
-        ResultSet rs = null;
+        ResultSet rs;
         this.statement = "";
         try {
             pStmt= conn.prepareStatement(this.statement);

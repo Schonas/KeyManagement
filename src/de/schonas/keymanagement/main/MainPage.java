@@ -23,9 +23,10 @@ public class MainPage extends Application {
     public static Utils u;
     public static KeySQL ksql;
     public static Properties prop;
-    public static Print print;
-    InputStream input;
+    public static Print printer;
+    private InputStream input;
     public static List<Stage> openStages;
+    public static Key currentKey;
 
     public static Image LOGO = new Image("de/schonas/keymanagement/images/icon.png");
     public static String TITLE = "Key Management";
@@ -62,7 +63,7 @@ public class MainPage extends Application {
         }
         u = new Utils();
         ksql = new KeySQL();
-        print = new Print();
+        printer = new Print();
         openStages = new ArrayList<>();
     }
 }

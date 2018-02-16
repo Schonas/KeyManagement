@@ -12,11 +12,14 @@ import javafx.stage.Stage;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 import static de.schonas.keymanagement.main.MainPage.openStages;
+import static java.time.temporal.ChronoUnit.DAYS;
 
 public class Utils {
 
@@ -91,15 +94,55 @@ public class Utils {
     }
 
     /**
-     * Rechnet die Zeit zwischen 2 sql.Date aus
-     * @param date Datum was mit dem jetzigen verglichen werden soll
-     * @return Differenz der Daten
+     * Erzeugt ein LocalDate von einem String
+     * @param dateString String mit dem Format dd.MM.yyyy
+     * @return LocalDate
      */
-    public static long getDateDiff(Date date) {
-        Date current = new Date(Calendar.getInstance().getTimeInMillis());
-        return TimeUnit.DAYS.convert((current.getTime() - date.getTime()), TimeUnit.MILLISECONDS);
+    public LocalDate getLocalDateFromString(String dateString){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        formatter = formatter.withLocale(Locale.GERMANY);
+        return LocalDate.parse(dateString, formatter);
     }
 
+    public String getDateString(String dateString){
+
+        SimpleDateFormat inSDF = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat outSDF = new SimpleDateFormat("dd.MM.yyyy");
+        String outDate = "";
+        if (dateString != null) try {
+            java.util.Date date = inSDF.parse(dateString);
+            outDate = outSDF.format(date);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+        return outDate;
+    }
+
+    /**
+     *
+     * @param date
+     * @return
+     */
+    public String getStringFromLocalDate(LocalDate date){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        formatter = formatter.withLocale(Locale.GERMANY);
+        return date.format(formatter);
+    }
+
+    public long getDateDiff(LocalDate date){
+        LocalDate current = LocalDate.now();
+        return DAYS.between(date, current);
+    }
+
+    /**
+     * dd.MM.yyyy
+     * @param dateString
+     * @return
+     */
+    public long getDateDiff(String dateString){
+        LocalDate current = LocalDate.now();
+        return DAYS.between(getLocalDateFromString(dateString), current);
+    }
     /**
      * Gibt Remote Namen zurück
      * @return Remote Namen
@@ -154,5 +197,9 @@ public class Utils {
         for(Stage stage : openStages){
             stage.close();
         }
+    }
+
+    public void test(String test){
+        System.out.println(test);
     }
 }

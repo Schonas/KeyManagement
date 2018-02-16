@@ -1,7 +1,6 @@
 package de.schonas.keymanagement.main;
 
 import de.schonas.keymanagement.inventory.InventoryPage;
-import de.schonas.keymanagement.keyinfo.KeyInfo;
 import de.schonas.keymanagement.room.RoomManagementPage;
 import de.schonas.keymanagement.settings.SettingsPage;
 import javafx.fxml.FXML;
@@ -17,8 +16,6 @@ import org.controlsfx.glyphfont.GlyphFont;
 import org.controlsfx.glyphfont.GlyphFontRegistry;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -93,6 +90,7 @@ public class MainController {
                 tb.load();
                 keyTable.getSelectionModel().select(0);
                 keyTable.getStylesheets().add("de/schonas/keymanagement/main/keyTableStylesheet");
+                currentKey = keyTable.getSelectionModel().getSelectedItem();
             }
         }, 100);
 
@@ -135,9 +133,7 @@ public class MainController {
             uidEditField.setText(key.getID());
             ownerEditField.setText(key.getOwner());
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate dateTime = LocalDate.parse(key.getExpDate(), formatter);
-            dateEditField.setValue(dateTime);
+            dateEditField.setValue(u.getLocalDateFromString(key.getExpDate()));
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Key Management");
@@ -187,9 +183,10 @@ public class MainController {
      */
     @FXML
     private void onUpdateClick(){
+
         Key key = new Key(uidEditField.getText(), ownerEditField.getText(), dateEditField.getValue().toString());
         Map data = u.getDBMap("owner", key.getOwner());
-        data.put("exp_date", key.getExpDate());
+        data.put("exp_date", u.getDateString(key.getExpDate()));
         ksql.update("KEYMANAGEMENT.Keys", u.getDBMap("id", key.getID()), data);
         u.reloadTable(keyTable, idCol, ownerCol, expDateCol, searchField);
         u.sendAlert(statusBar, "Key " + key.getID() + " wurde erfolgreich geändert.");
@@ -219,13 +216,9 @@ public class MainController {
      */
     @FXML
     private void onAddKeyClick(){
-        String date;
-        if(expDateAddField.getValue() != null){
-            date = u.asDate(expDateAddField.getValue()).toString();
-        } else {
-            date = null;
-        }
-        Key key = new Key(uidAddField.getText() ,ownerAddField.getText(), date);
+        String date = dateEditField.getValue().toString();
+        System.out.println(u.getDateString(date));
+        Key key = new Key(uidAddField.getText() ,ownerAddField.getText(), u.getDateString(date));
         ksql.insertKey(key);
         u.sendAlert(statusBar, "Key " + key.getID() + " wurde \nerfolgreich hinzugefügt.");
         u.reloadTable(keyTable, idCol, ownerCol, expDateCol, searchField);
@@ -278,7 +271,7 @@ public class MainController {
         Key key = keyTable.getSelectionModel().getSelectedItem();
 
         Stage printStage = new Stage();
-        print.printAllocationPaper("Vergabedokument " + key.getID(), key, printStage);
+        printer.printAllocationPaper("Vergabedokument " + key.getID(), key, printStage);
 
     }
 
@@ -291,7 +284,7 @@ public class MainController {
         Key key = keyTable.getSelectionModel().getSelectedItem();
 
         Stage printStage = new Stage();
-        print.printRemovalPaper("Abgabedokument " + key.getID(), key, printStage);
+        printer.printRemovalPaper("Abgabedokument " + key.getID(), key, printStage);
 
     }
 
