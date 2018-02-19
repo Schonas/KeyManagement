@@ -39,13 +39,13 @@ public class MainController {
     @FXML //EDIT DATEPICKER
     private DatePicker dateEditField;
 
-    @FXML
+    @FXML //MENU BAR BUTTONS
     private MenuItem quitMenuButton, roomManagementMenuButton, inventoryMenuButton;
 
-    @FXML
+    @FXML //BOXEN DER AKTIONEN
     private VBox EditBox, AddBox, RemoveBox;
 
-    @FXML
+    @FXML //
     public Text statusBar, RemoveText;
 
     @FXML
@@ -191,23 +191,30 @@ public class MainController {
         } else {
             key = new Key(currentKey.getUID(), idEditField.getText(), ownerEditField.getText(), dateEditField.getValue().toString());
         }
-        Map data = u.getDBMap("owner", key.getOwner());
+        Map<String, Object> data = u.getDBMap("owner", key.getOwner());
         data.put("exp_date", u.getDateString(key.getExpDate()));
         ksql.update("KEYMANAGEMENT.Openers", u.getDBMap("id", key.getID()), data);
         u.reloadTable(keyTable, uidCol, idCol, ownerCol, expDateCol, searchField);
+        ksql.addLog(key, Action.UPDATEKEY);
         u.sendAlert(statusBar, "Key " + key.getID() + " wurde erfolgreich geändert.");
         EditBox.setVisible(false);
     }
 
     /**
      * Öffnet AddPage
-     * @throws IOException
      */
     @FXML
     private void onAddClick() {
-        EditBox.setVisible(false);
-        AddBox.setVisible(true);
-        RemoveBox.setVisible(false);
+        if(AddBox.isVisible()){
+            AddBox.setVisible(false);
+            idAddField.setText(null);
+            ownerAddField.setText(null);
+            expDateAddField.setValue(null);
+        } else {
+            EditBox.setVisible(false);
+            AddBox.setVisible(true);
+            RemoveBox.setVisible(false);
+        }
     }
 
     // ADD BOX
@@ -232,30 +239,31 @@ public class MainController {
         u.sendAlert(statusBar, "Key " + key.getID() + " wurde \nerfolgreich hinzugefügt.");
         u.reloadTable(keyTable, uidCol, idCol, ownerCol, expDateCol, searchField);
         keyTable.getSelectionModel().select(key);
+        ksql.addLog(keyTable.getSelectionModel().getSelectedItem(), Action.ADDKEY);
         AddBox.setVisible(false);
         expDateAddField.setValue(null);
         ownerAddField.setText(null);
         idAddField.setText(null);
-
     }
 
 
     //REMOVE BOX
 
     /**
-     * Greift wenn auf der Add-Page auf ja geklickt wird
+     * Greift wenn auf der Remove-Page auf ja geklickt wird
      */
     @FXML
     private void onRemoveYesClick(){
         Key key = keyTable.getSelectionModel().getSelectedItem();
         ksql.delete(TABLE, u.getDBMap("id", key.getID()));
         u.reloadTable(keyTable, uidCol, idCol, ownerCol, expDateCol, searchField);
+        ksql.addLog(key, Action.REMOVEKEY);
         u.sendAlert(statusBar, "Key " +  key.getID() + " wurde gelöscht.");
         RemoveBox.setVisible(false);
     }
 
     /**
-     * Greift wenn auf der Add-Page auf nein geklickt wird
+     * Greift wenn auf der Remove-Page auf nein geklickt wird
      */
     @FXML
     private void onRemoveNoClick(){

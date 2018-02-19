@@ -14,7 +14,7 @@ import static de.schonas.keymanagement.main.MainPage.*;
 public class KeyInfoController {
 
     @FXML
-    private Text keyInfoUIDField,keyInfoIDField,keyInfoOwnerField;
+    private Text keyInfoUIDField,keyInfoIDField,keyInfoOwnerField, keyInfoExpDateField;
 
     /**
      * Trägt Werte aus DB in die Felder ein
@@ -23,7 +23,16 @@ public class KeyInfoController {
     protected void initialize() {
             keyInfoIDField.setText(currentKey.getID());
             keyInfoUIDField.setText(currentKey.getUID());
-            keyInfoOwnerField.setText(currentKey.getOwner());
+            if(currentKey.getOwner() != null) {
+                keyInfoOwnerField.setText(currentKey.getOwner());
+            } else {
+                keyInfoOwnerField.setText("-");
+            }
+            if(!currentKey.getExpDate().isEmpty()) {
+                keyInfoExpDateField.setText(currentKey.getExpDate());
+            } else {
+                keyInfoExpDateField.setText("-");
+            }
     }
 
 }

@@ -1,5 +1,6 @@
 package de.schonas.keymanagement.util;
 
+import de.schonas.keymanagement.main.Key;
 import de.schonas.keymanagement.main.TableData;
 import javafx.print.PrinterJob;
 import javafx.scene.Node;
@@ -194,5 +195,9 @@ public class Utils {
      */
     public void test(String test){
         System.out.println(test);
+    }
+
+    public Key getLastAddedKey(TableView<Key> keyTable){
+        return keyTable.getItems().get(keyTable.getItems().size());
     }
 }

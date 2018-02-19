@@ -5,19 +5,19 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.schonas.keymanagement.keyinfo.KeyInfoController">
    <children>
-      <GridPane layoutX="8.0" layoutY="34.0" prefHeight="86.0" prefWidth="118.0">
+      <GridPane layoutX="8.0" layoutY="34.0" prefHeight="86.0" prefWidth="129.0">
         <columnConstraints>
           <ColumnConstraints />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="83.0" minWidth="10.0" prefWidth="83.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="60.0" minWidth="10.0" prefWidth="46.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ID" wrappingWidth="51.607421875" GridPane.columnIndex="1" />
@@ -26,6 +26,8 @@
             <Text fx:id="keyInfoIDField" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="2" />
             <Text fx:id="keyInfoUIDField" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <Text fx:id="keyInfoOwnerField" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ablaufdatum" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Text fx:id="keyInfoExpDateField" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
          </children>
       </GridPane>
       <TableView layoutX="174.0" prefHeight="400.0" prefWidth="226.0">

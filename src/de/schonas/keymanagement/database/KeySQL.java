@@ -1,6 +1,8 @@
 package de.schonas.keymanagement.database;
 
+import de.schonas.keymanagement.main.Action;
 import de.schonas.keymanagement.main.Key;
+import de.schonas.keymanagement.main.Room;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -160,8 +162,54 @@ public class KeySQL extends MySQL {
         }
     }
 
-    public void addLog(Key key){
+    public void addLog(Key key, Action action){
+        Map<String, Object> logInfos = u.getDBMap("user", u.getSystemUserName());
+        logInfos.put("workspace", u.getRemoteHostName());
+        logInfos.put("action", getActionLog(key, action));
+        ksql.insert("Log", logInfos);
+    }
 
+    /**
+     * Gibt Actionlog zurück
+     * @param key
+     * @param action
+     * @return
+     */
+    public String getActionLog(Key key, Action action){
+        String actionString = ("Key (UID: " + key.getUID() + ") wurde ");
+        switch (action){
+            case ADDKEY:    actionString += "hinzugefügt.";
+                            break;
+            case REMOVEKEY: actionString += "entfernt.";
+                            break;
+            case UPDATEKEY: actionString += "geändert.";
+                            break;
+            default:        actionString = "ERROR";
+                            break;
+        }
+        return actionString;
+    }
+
+    /**
+     * Gibt Räume aus die ein Schlüssel öffnen kann
+     * @param key Schlüssel
+     * @return Räume die der Schlüssel öffnen kann
+     */
+    public List<String> getAccessibleRooms(Key key){
+        List<String> rooms = new ArrayList<>();
+        statement = "SELECT * FROM Access WHERE key_id = ?";
+        ResultSet rs;
+        try {
+            pStmt = conn.prepareStatement(statement);
+            pStmt.setString(1, key.getID());
+            rs = pStmt.executeQuery();
+            while (rs.next()){
+                rooms.add(new Room(rs.getString("room_id"), "1").getID());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rooms;
     }
 
     /**

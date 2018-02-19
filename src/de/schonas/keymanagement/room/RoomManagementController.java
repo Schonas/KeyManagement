@@ -1,5 +1,6 @@
 package de.schonas.keymanagement.room;
 
+import de.schonas.keymanagement.main.Key;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -37,6 +38,8 @@ public class RoomManagementController {
 
         // Create the CheckTreeView with the data
         roomsTreeView = new CheckTreeView<>(root);
+
+        System.out.println(ksql.getAccessibleRooms(new Key("OK1927")));
 
         // and listen to the relevant events (e.g. when the checked items change).
        // roomsTreeView.getCheckModel().getCheckedItems().addListener((ListChangeListener<TreeItem<String>>) c ->
