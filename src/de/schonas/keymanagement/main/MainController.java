@@ -3,6 +3,7 @@ package de.schonas.keymanagement.main;
 import de.schonas.keymanagement.inventory.InventoryPage;
 import de.schonas.keymanagement.room.RoomManagementPage;
 import de.schonas.keymanagement.settings.SettingsPage;
+import de.schonas.keymanagement.util.Print;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -30,16 +31,16 @@ public class MainController {
     private TableView<Key> keyTable;
 
     @FXML // fx:id="idCol","ownerCol","expDateCol","Valid"
-    private TableColumn<Key, String> idCol, ownerCol, expDateCol;
+    private TableColumn<Key, String> uidCol, idCol, ownerCol, expDateCol;
 
     @FXML //EDIT ANSICHT & Search
-    private TextField uidEditField, ownerEditField, searchField;
+    private TextField idEditField, ownerEditField, searchField;
 
     @FXML //EDIT DATEPICKER
     private DatePicker dateEditField;
 
     @FXML
-    private MenuItem quitMenuButton, roomManagementButton;
+    private MenuItem quitMenuButton, roomManagementMenuButton, inventoryMenuButton;
 
     @FXML
     private VBox EditBox, AddBox, RemoveBox;
@@ -86,7 +87,7 @@ public class MainController {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                TableData tb = new TableData(keyTable, idCol, ownerCol, expDateCol, searchField);
+                TableData tb = new TableData(keyTable, uidCol, idCol, ownerCol, expDateCol, searchField);
                 tb.load();
                 keyTable.getSelectionModel().select(0);
                 keyTable.getStylesheets().add("de/schonas/keymanagement/main/keyTableStylesheet");
@@ -98,7 +99,8 @@ public class MainController {
         //rm.load();
 
         quitMenuButton.setAccelerator(new KeyCodeCombination(KeyCode.Q, KeyCodeCombination.CONTROL_DOWN));
-        roomManagementButton.setAccelerator(new KeyCodeCombination(KeyCode.R, KeyCodeCombination.CONTROL_DOWN));
+        roomManagementMenuButton.setAccelerator(new KeyCodeCombination(KeyCode.R, KeyCodeCombination.CONTROL_DOWN));
+        inventoryMenuButton.setAccelerator(new KeyCodeCombination(KeyCode.I, KeyCodeCombination.CONTROL_DOWN));
     }
 
     /**
@@ -130,10 +132,10 @@ public class MainController {
             EditBox.setVisible(true);
             AddBox.setVisible(false);
             RemoveBox.setVisible(false);
-            uidEditField.setText(key.getID());
+            idEditField.setText(key.getID());
             ownerEditField.setText(key.getOwner());
-
-            dateEditField.setValue(u.getLocalDateFromString(key.getExpDate()));
+            currentKey = key;
+            if(!key.getExpDate().isEmpty()) dateEditField.setValue(u.getLocalDateFromString(key.getExpDate()));
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Key Management");
@@ -150,7 +152,7 @@ public class MainController {
      */
     @FXML
     private void onReloadClick(){
-        u.reloadTable(keyTable, idCol, ownerCol, expDateCol, searchField);
+        u.reloadTable(keyTable, uidCol, idCol, ownerCol, expDateCol, searchField);
         u.sendAlert(statusBar, "Tabelle wurde neu geladen.");
     }
 
@@ -183,12 +185,16 @@ public class MainController {
      */
     @FXML
     private void onUpdateClick(){
-
-        Key key = new Key(uidEditField.getText(), ownerEditField.getText(), dateEditField.getValue().toString());
+        Key key;
+        if(ownerEditField.getText() == null || dateEditField.getValue()== null){
+            key = new Key(currentKey.getUID(), idEditField.getText());
+        } else {
+            key = new Key(currentKey.getUID(), idEditField.getText(), ownerEditField.getText(), dateEditField.getValue().toString());
+        }
         Map data = u.getDBMap("owner", key.getOwner());
         data.put("exp_date", u.getDateString(key.getExpDate()));
-        ksql.update("KEYMANAGEMENT.Keys", u.getDBMap("id", key.getID()), data);
-        u.reloadTable(keyTable, idCol, ownerCol, expDateCol, searchField);
+        ksql.update("KEYMANAGEMENT.Openers", u.getDBMap("id", key.getID()), data);
+        u.reloadTable(keyTable, uidCol, idCol, ownerCol, expDateCol, searchField);
         u.sendAlert(statusBar, "Key " + key.getID() + " wurde erfolgreich geändert.");
         EditBox.setVisible(false);
     }
@@ -206,7 +212,7 @@ public class MainController {
 
     // ADD BOX
     @FXML
-    private TextField uidAddField, ownerAddField;
+    private TextField idAddField, ownerAddField;
 
     @FXML
     private DatePicker expDateAddField;
@@ -216,17 +222,20 @@ public class MainController {
      */
     @FXML
     private void onAddKeyClick(){
-        String date = dateEditField.getValue().toString();
-        System.out.println(u.getDateString(date));
-        Key key = new Key(uidAddField.getText() ,ownerAddField.getText(), u.getDateString(date));
+        Key key;
+        if(ownerAddField.getText() == null || expDateAddField.getValue()== null){
+            key = new Key(currentKey.getUID(), idAddField.getText());
+        } else {
+            key = new Key(currentKey.getUID(), idAddField.getText(), ownerAddField.getText(), expDateAddField.getValue().toString());
+        }
         ksql.insertKey(key);
         u.sendAlert(statusBar, "Key " + key.getID() + " wurde \nerfolgreich hinzugefügt.");
-        u.reloadTable(keyTable, idCol, ownerCol, expDateCol, searchField);
+        u.reloadTable(keyTable, uidCol, idCol, ownerCol, expDateCol, searchField);
         keyTable.getSelectionModel().select(key);
         AddBox.setVisible(false);
         expDateAddField.setValue(null);
         ownerAddField.setText(null);
-        uidAddField.setText(null);
+        idAddField.setText(null);
 
     }
 
@@ -240,7 +249,7 @@ public class MainController {
     private void onRemoveYesClick(){
         Key key = keyTable.getSelectionModel().getSelectedItem();
         ksql.delete(TABLE, u.getDBMap("id", key.getID()));
-        u.reloadTable(keyTable, idCol, ownerCol, expDateCol, searchField);
+        u.reloadTable(keyTable, uidCol, idCol, ownerCol, expDateCol, searchField);
         u.sendAlert(statusBar, "Key " +  key.getID() + " wurde gelöscht.");
         RemoveBox.setVisible(false);
     }
@@ -271,7 +280,8 @@ public class MainController {
         Key key = keyTable.getSelectionModel().getSelectedItem();
 
         Stage printStage = new Stage();
-        printer.printAllocationPaper("Vergabedokument " + key.getID(), key, printStage);
+        Print p = new Print();
+        p.printAllocationPaper("Vergabedokument " + key.getID(), key, printStage);
 
     }
 
@@ -284,7 +294,8 @@ public class MainController {
         Key key = keyTable.getSelectionModel().getSelectedItem();
 
         Stage printStage = new Stage();
-        printer.printRemovalPaper("Abgabedokument " + key.getID(), key, printStage);
+        Print p = new Print();
+        p.printRemovalPaper("Abgabedokument " + key.getID(), key, printStage);
 
     }
 

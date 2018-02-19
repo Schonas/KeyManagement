@@ -1,28 +1,29 @@
 package de.schonas.keymanagement.keyinfo;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import static de.schonas.keymanagement.main.MainPage.LOGO;
-import static de.schonas.keymanagement.main.MainPage.TITLE;
+import static de.schonas.keymanagement.main.MainPage.*;
 
 public class KeyInfoController {
 
-        public void start () throws IOException {
+    @FXML
+    private Text keyInfoUIDField,keyInfoIDField,keyInfoOwnerField;
 
-            Stage stage = new Stage();
-            Parent pane = FXMLLoader.load(getClass().getResource("KeyInfoController.fxml"));
-            Scene scene = new Scene(pane);
-
-            stage.getIcons().add(LOGO);
-            stage.resizableProperty().setValue(Boolean.FALSE);
-            stage.setScene(scene);
-            stage.setTitle(TITLE + " Key Info");
-            stage.show();
-        }
+    /**
+     * Trägt Werte aus DB in die Felder ein
+     */
+    @FXML
+    protected void initialize() {
+            keyInfoIDField.setText(currentKey.getID());
+            keyInfoUIDField.setText(currentKey.getUID());
+            keyInfoOwnerField.setText(currentKey.getOwner());
+    }
 
 }

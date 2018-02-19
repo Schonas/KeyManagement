@@ -10,9 +10,10 @@
     <children>
         <TableView fx:id="keyTable" editable="true" layoutY="27.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="473.0" prefWidth="535.0">
             <columns>
-                <TableColumn fx:id="idCol" prefWidth="100.0" resizable="false" text="ID" />
-                <TableColumn fx:id="ownerCol" prefWidth="175.0" resizable="false" text="Besitzer" />
-                <TableColumn fx:id="expDateCol" prefWidth="246.0" resizable="false" text="Ablaufdatum" />
+            <TableColumn fx:id="uidCol" prefWidth="32.0" text="UID" />
+                <TableColumn fx:id="idCol" prefWidth="125.0" resizable="false" text="ID" />
+                <TableColumn fx:id="ownerCol" prefWidth="167.0" resizable="false" text="Besitzer" />
+                <TableColumn fx:id="expDateCol" prefWidth="196.0" resizable="false" text="Ablaufdatum" />
             </columns>
          <padding>
             <Insets right="1.0" />
@@ -23,8 +24,8 @@
           <Menu mnemonicParsing="false" text="Menü">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#onSettingsClick" text="Einstellungen" />
-                  <MenuItem fx:id="roomManagementButton" mnemonicParsing="false" onAction="#onRoomManagementClick" text="Raumverwaltung" />
-                  <MenuItem mnemonicParsing="false" onAction="#onInventoryClick" text="Inventar" />
+                  <MenuItem fx:id="roomManagementMenuButton" mnemonicParsing="false" onAction="#onRoomManagementClick" text="Raumverwaltung" />
+                  <MenuItem fx:id="inventoryMenuButton" mnemonicParsing="false" onAction="#onInventoryClick" text="Inventar" />
                   <MenuItem fx:id="quitMenuButton" mnemonicParsing="false" onAction="#onQuitClick" text="Beenden" />
             </items>
           </Menu>
@@ -44,7 +45,7 @@
                   <Insets />
                </VBox.margin>
             </Text>
-            <TextField fx:id="uidEditField" editable="false">
+            <TextField fx:id="idEditField" editable="false">
                <VBox.margin>
                   <Insets bottom="10.0" top="5.0" />
                </VBox.margin>
@@ -76,7 +77,7 @@
       <VBox fx:id="AddBox" layoutX="551.0" layoutY="120.0" prefHeight="259.0" prefWidth="175.0" visible="false">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ID" />
-            <TextField fx:id="uidAddField">
+            <TextField fx:id="idAddField">
                <VBox.margin>
                   <Insets bottom="10.0" top="5.0" />
                </VBox.margin>

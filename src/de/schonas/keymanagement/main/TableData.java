@@ -10,12 +10,12 @@ import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static de.schonas.keymanagement.main.MainPage.currentKey;
 import static de.schonas.keymanagement.main.MainPage.ksql;
 import static de.schonas.keymanagement.main.MainPage.u;
 
@@ -24,7 +24,7 @@ public class TableData {
     private ObservableList<Key> masterData = FXCollections.observableArrayList();
     private List<String> autoCompleteData = new ArrayList<>();
     private TableView<Key> keyTable;
-    private TableColumn<Key, String> idCol, expDateCol, ownerCol;
+    private TableColumn<Key, String> uidCol, idCol, expDateCol, ownerCol;
     private TextField searchField;
     private AutoCompletionBinding ts;
 
@@ -37,8 +37,9 @@ public class TableData {
      * @param expDateCol Ablaufdatum Spalte
      * @param searchField Surchfeld
      */
-    public TableData(TableView tableView, TableColumn<Key, String> idCol, TableColumn<Key, String> ownerCol, TableColumn<Key, String> expDateCol, TextField searchField) {
+    public TableData(TableView tableView, TableColumn<Key, String> uidCol, TableColumn<Key, String> idCol, TableColumn<Key, String> ownerCol, TableColumn<Key, String> expDateCol, TextField searchField) {
         this.keyTable = tableView;
+        this.uidCol = uidCol;
         this.idCol = idCol;
         this.expDateCol = expDateCol;
         this.ownerCol = ownerCol;
@@ -48,7 +49,7 @@ public class TableData {
         try {
             Key k;
             while (rs.next()) {
-                k = new Key(rs.getString("id"), rs.getString("owner"), rs.getString("exp_date"));
+                k = new Key(rs.getString("uid"), rs.getString("id"), rs.getString("owner"), rs.getString("exp_date"));
                 masterData.add(k);
                 if (!autoCompleteData.contains(k.getID())) autoCompleteData.add(k.getID());
                 if (!autoCompleteData.contains(k.getOwner())) autoCompleteData.add(k.getOwner());
@@ -67,6 +68,7 @@ public class TableData {
      */
     public void load() {
 
+        uidCol.setCellValueFactory(cellData -> cellData.getValue().uidPropety());
         idCol.setCellValueFactory(cellData -> cellData.getValue().idProperty());
         ownerCol.setCellValueFactory(cellData -> cellData.getValue().ownerProperty());
         expDateCol.setCellValueFactory(cellData -> cellData.getValue().expDateProperty());
@@ -87,9 +89,9 @@ public class TableData {
 
                 if (key.getID().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (key.getOwner().toLowerCase().contains(lowerCaseFilter)) {
+                } else if (key.getOwner() != null && key.getOwner().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (key.getExpDate().toLowerCase().contains(lowerCaseFilter)) {
+                } else if (key.getExpDate() != null && key.getExpDate().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 }
                 return false;
@@ -106,9 +108,9 @@ public class TableData {
             row.hoverProperty().addListener((observable) -> {
                 final Key key = row.getItem();
 
-                if (row.isHover() && key != null && key.getExpDate() != null) {
+                if (row.isHover() && !key.getExpDate().isEmpty()) {
                     String dateString = String.valueOf(u.getDateDiff(key.getExpDate()));
-                    row.setTooltip(new Tooltip("Tage bis Ablauf: " + dateString));
+                    row.setTooltip(new Tooltip("Abgelaufen seit " + dateString + " Tagen"));
                 }
 
             });
@@ -118,6 +120,7 @@ public class TableData {
                     Key key = row.getItem();
                     KeyInfo keyInfo = new KeyInfo();
                     try {
+                        currentKey = key;
                         keyInfo.start();
                     } catch (IOException e) {
                         e.printStackTrace();

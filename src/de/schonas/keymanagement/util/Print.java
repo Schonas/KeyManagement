@@ -10,9 +10,14 @@ public class Print {
 
     private PrinterJob printerJob;
 
+    public Print(){
+        PrinterJob pJob = PrinterJob.createPrinterJob();
+        this.printerJob = pJob;
+    }
+
     public boolean printAllocationPaper(String jobName, Key key, Stage stage){
 
-        printerJob.createPrinterJob();
+        PrinterJob.createPrinterJob();
 
         printerJob.getJobSettings().setJobName(jobName + key.getID());
 
@@ -23,7 +28,7 @@ public class Print {
 
     public boolean printRemovalPaper(String jobName, Key key, Stage stage){
 
-        printerJob.createPrinterJob();
+        PrinterJob.createPrinterJob();
 
         printerJob.getJobSettings().setJobName(jobName + key.getID());
 

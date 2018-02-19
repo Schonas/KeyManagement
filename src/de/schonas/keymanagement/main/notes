@@ -4,23 +4,25 @@ TODO:
 difDays fixen!
 Expired? Col (View)
 Date until Expired Col (View)
-Date fancy in table
 con state with icon, remove after 2 secs
 addPage, editPage Abfangen wenn nicht alles ausgefüllt ist
 SQL Table als Konstante
 Scanned signature as link
 zuletzt ausgewählter Schlüssel manuell erfassen -> bei klick auf add dann auf remove wird er nicht mehr erkannt
-Datum als String in DB?
 Dokuemnt über Abgabe/Annahme erstellen (Unterschriftenfeld, Keyinfos, etc)
 CSS der verschiedenen Teile gleich halten, d.h. menubar und toolbar einheitlich gestalten
 inventory page überschrift
 edit/add Button möglichkeit für 1+ jahr geben
+Inventory: läuft diesen Monat ab
+uid keyinfo
+cancel button edit/add
 
 WIP:
 Save Button on Settings Page(-> Erfolg-Alert?)
 
 
 ADDED/FIXED:
+Date fancy in table, Datum als String in DB
 load mysql data from config
 Remove Confirm Window
 Reload from Database

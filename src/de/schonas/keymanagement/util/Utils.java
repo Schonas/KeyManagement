@@ -17,8 +17,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-
-import static de.schonas.keymanagement.main.MainPage.openStages;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class Utils {
@@ -42,7 +40,6 @@ public class Utils {
 
     /**
      * Liefert Hashmap mit einem KV Paar
-     *
      * @param column Key
      * @param value  Value
      * @return Map
@@ -87,8 +84,8 @@ public class Utils {
      * @param expDate Ablaufdatum Spalte
      * @param searchField Seachfield um Autocomplete usw zu aktivieren
      */
-    public void reloadTable(TableView tableView, TableColumn id, TableColumn owner, TableColumn expDate, TextField searchField){
-        TableData tb = new TableData(tableView, id, owner, expDate, searchField);
+    public void reloadTable(TableView tableView, TableColumn uid, TableColumn id, TableColumn owner, TableColumn expDate, TextField searchField){
+        TableData tb = new TableData(tableView, uid, id, owner, expDate, searchField);
         tb.load();
         tableView.getSelectionModel().select(0);
     }
@@ -104,6 +101,11 @@ public class Utils {
         return LocalDate.parse(dateString, formatter);
     }
 
+    /**
+     * Wandelt LocalDate String in ein normales Datum um
+     * @param dateString Local Date String
+     * @return String eines normalen Datums
+     */
     public String getDateString(String dateString){
 
         SimpleDateFormat inSDF = new SimpleDateFormat("yyyy-MM-dd");
@@ -119,7 +121,7 @@ public class Utils {
     }
 
     /**
-     *
+     * Braucht man eher nicht
      * @param date
      * @return
      */
@@ -129,20 +131,16 @@ public class Utils {
         return date.format(formatter);
     }
 
-    public long getDateDiff(LocalDate date){
-        LocalDate current = LocalDate.now();
-        return DAYS.between(date, current);
-    }
-
     /**
-     * dd.MM.yyyy
-     * @param dateString
-     * @return
+     * Liefert Differenz von String im Format dd.MM.yyyy zum akutellen Datum in Tagen
+     * @param dateString dd.MM.yyyy String
+     * @return Differenz in Tagen
      */
     public long getDateDiff(String dateString){
         LocalDate current = LocalDate.now();
         return DAYS.between(getLocalDateFromString(dateString), current);
     }
+
     /**
      * Gibt Remote Namen zurück
      * @return Remote Namen
@@ -165,7 +163,7 @@ public class Utils {
     }
 
     /**
-     * Druckt etwas aus
+     * Druckt Node aus
      * @param node
      */
     public void print(Node node) {
@@ -191,14 +189,9 @@ public class Utils {
     }
 
     /**
-     * Schließt alle Fenster
+     * Gibt TestString aus und ist kürzer als System.out.println
+     * @param test TestString
      */
-    public void closeEverything(){
-        for(Stage stage : openStages){
-            stage.close();
-        }
-    }
-
     public void test(String test){
         System.out.println(test);
     }

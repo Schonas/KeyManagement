@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -25,7 +27,6 @@ public class MainPage extends Application {
     public static Properties prop;
     public static Print printer;
     private InputStream input;
-    public static List<Stage> openStages;
     public static Key currentKey;
 
     public static Image LOGO = new Image("de/schonas/keymanagement/images/icon.png");
@@ -53,7 +54,7 @@ public class MainPage extends Application {
     }
 
     @Override
-    public void init(){
+    public void init() throws SQLException {
         prop = new Properties();
         try {
             input = new FileInputStream("config");
@@ -63,7 +64,8 @@ public class MainPage extends Application {
         }
         u = new Utils();
         ksql = new KeySQL();
+        //ksql.createTables();
         printer = new Print();
-        openStages = new ArrayList<>();
     }
+
 }
