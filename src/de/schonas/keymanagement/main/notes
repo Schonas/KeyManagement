@@ -17,6 +17,7 @@ Inventory: läuft diesen Monat ab
 uid keyinfo
 cancel button edit/add
 wo wird die config gespeichert
+hide edit on double click
 
 WIP:
 Save Button on Settings Page(-> Erfolg-Alert?)

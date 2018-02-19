@@ -6,6 +6,7 @@ import de.schonas.keymanagement.main.Room;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -73,10 +74,19 @@ public class KeySQL extends MySQL {
      * @param key
      * @return
      */
-    public List<String> getRooms(Key key){
-        List<String> allowedKeys = new ArrayList<>();
+    public ResultSet getRooms(String keyID){
 
-        return allowedKeys;
+        statement = "SELECT * FROM Openers o JOIN Access a ON o.id = a.key_id RIGHT OUTER JOIN Rooms r ON r.uid = a.room_id " +
+                "RIGHT OUTER JOIN Departments d ON d.uid = r.department_id WHERE o.id = ?";
+        try {
+            pStmt = conn.prepareStatement(statement);
+            pStmt.setString(1, keyID);
+            return pStmt.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+
     }
 
     /**
@@ -212,6 +222,34 @@ public class KeySQL extends MySQL {
         return rooms;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Legt Tabellen an
      * @throws SQLException
@@ -238,7 +276,6 @@ public class KeySQL extends MySQL {
                 "(time TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
                 "    user VARCHAR(30) NOT NULL," +
                 "    action VARCHAR(300) NOT NULL);";
-
         Statement stmt = conn.createStatement();
         stmt.execute(keysTable);
         stmt.execute(roomsTable);

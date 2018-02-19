@@ -13,6 +13,12 @@ import org.controlsfx.control.CheckTreeView;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static de.schonas.keymanagement.main.MainPage.currentKey;
 import static de.schonas.keymanagement.main.MainPage.ksql;
 
 public class RoomManagementController {
@@ -28,18 +34,39 @@ public class RoomManagementController {
     @FXML
     protected void initialize() {
 
-        CheckBoxTreeItem<String> root = new CheckBoxTreeItem<>("Verwaltung, Recht & Steuern");
+        List<CheckBoxTreeItem<String>> checkBoxTreeItems = new ArrayList<>();
+        List<String> departments = new ArrayList<>();
+        ResultSet res = ksql.getRooms("OK1927");
+        try {
+            while (res.next()) {
+                String departmentAsString = res.getString("name");
+                if (!departments.contains(departmentAsString)) {
+                    checkBoxTreeItems.add(new CheckBoxTreeItem<>(departmentAsString));
+                } else departments.add(departmentAsString);
+                for (CheckBoxTreeItem<String> department : checkBoxTreeItems) {
+                    System.out.println(department.getValue() + " " + departmentAsString);
+                    if (department.getValue().equals(departmentAsString)) {
+                        department.getChildren().add(new CheckBoxTreeItem<>(res.getString("room_id")));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        /*CheckBoxTreeItem<String> root = new CheckBoxTreeItem<>("Verwaltung, Recht & Steuern");
         root.setExpanded(true);
         root.getChildren().addAll(
-                new CheckBoxTreeItem<>("Raum 404"),
-                new CheckBoxTreeItem<>("Raum 405"),
-                new CheckBoxTreeItem<>("Raum 403"),
-                new CheckBoxTreeItem<>("Raum 402"));
+                new CheckBoxTreeItem<>("404"),
+                new CheckBoxTreeItem<>("405"),
+                new CheckBoxTreeItem<>("403"),
+                new CheckBoxTreeItem<>("402"));*/
 
         // Create the CheckTreeView with the data
-        roomsTreeView = new CheckTreeView<>(root);
+        //List<CheckTreeView<String>> checkTreeViews = new ArrayList<>();
+        checkBoxTreeItems.forEach(stringCheckBoxTreeItem -> roomViewPane.getChildren().add(new CheckTreeView<>(stringCheckBoxTreeItem)));
+        //roomsTreeView = new CheckTreeView<>(root);
 
-        System.out.println(ksql.getAccessibleRooms(new Key("OK1927")));
+        //System.out.println(ksql.getAccessibleRooms(new Key("OK1927")));
 
         // and listen to the relevant events (e.g. when the checked items change).
        // roomsTreeView.getCheckModel().getCheckedItems().addListener((ListChangeListener<TreeItem<String>>) c ->
@@ -49,8 +76,8 @@ public class RoomManagementController {
         ts.setMaxWidth(164);
         ts.setVisibleRowCount(8);
 
-        roomViewPane.getChildren().add(roomsTreeView);
-        roomsTreeView.setPrefSize(310,410);
+        //roomViewPane.getChildren().add(roomsTreeView);
+        //roomsTreeView.setPrefSize(310,410);
     }
 
     /**
@@ -64,7 +91,7 @@ public class RoomManagementController {
         for(int i = 0; i <= checkedItems.size()-1; i++){
             if(checkedItems.get(i) instanceof CheckBoxTreeItem) {
                 tm = (CheckBoxTreeItem) checkedItems.get(i);
-                System.out.println(tm.getValue().toString().substring(5));
+                System.out.println(tm.getValue().toString());
             }
 
         }

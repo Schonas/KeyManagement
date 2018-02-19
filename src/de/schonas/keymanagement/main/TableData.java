@@ -110,7 +110,8 @@ public class TableData {
 
                 if (row.isHover() && !key.getExpDate().isEmpty()) {
                     String dateString = String.valueOf(u.getDateDiff(key.getExpDate()));
-                    row.setTooltip(new Tooltip("Abgelaufen seit " + dateString + " Tagen"));
+                    long dif = u.getDateDiff(key.getExpDate());
+                    row.setTooltip(new Tooltip(dif > 0 ? "Abgelaufen seit " + dateString + " Tagen" : "Läuft in " + Math.abs(dif) + " Tagen ab"));
                 }
 
             });
