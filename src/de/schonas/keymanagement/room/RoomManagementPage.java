@@ -21,7 +21,7 @@ public class RoomManagementPage {
         stage.getIcons().add(LOGO);
         stage.resizableProperty().setValue(Boolean.FALSE);
         stage.setScene(scene);
-        stage.setTitle(TITLE + " | Raumverteilung");
+        stage.setTitle(TITLE + " | Raumverwaltung");
         stage.show();
     }
 }

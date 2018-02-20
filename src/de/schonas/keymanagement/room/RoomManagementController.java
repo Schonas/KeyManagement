@@ -1,13 +1,16 @@
 package de.schonas.keymanagement.room;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import de.schonas.keymanagement.main.Key;
+import de.schonas.keymanagement.main.Room;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBoxTreeItem;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TreeItem;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import org.controlsfx.control.CheckModel;
 import org.controlsfx.control.CheckTreeView;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
@@ -23,61 +26,47 @@ import static de.schonas.keymanagement.main.MainPage.ksql;
 
 public class RoomManagementController {
 
-    @FXML
-    private Pane roomViewPane;
+    private ObservableList<Room> masterData = FXCollections.observableArrayList();
 
     @FXML
     private TextField searchKeyField;
 
-    private CheckTreeView<String>  roomsTreeView;
+    @FXML
+    private TableView<Room> roomTableView;
+
+    @FXML
+    private TableColumn<Room, Boolean> checkCol;
+
+    @FXML
+    private TableColumn<Room, String> roomCol, departmentCol;
 
     @FXML
     protected void initialize() {
 
-        List<CheckBoxTreeItem<String>> checkBoxTreeItems = new ArrayList<>();
-        List<String> departments = new ArrayList<>();
-        ResultSet res = ksql.getRooms("OK1927");
+        checkCol.setCellValueFactory(new PropertyValueFactory<>("status"));
+        roomCol.setCellValueFactory(cellData -> cellData.getValue().getID());
+        departmentCol.setCellValueFactory(cellData -> cellData.getValue().getDepartment());
+
+        ResultSet rs = ksql.getRooms();
         try {
-            while (res.next()) {
-                String departmentAsString = res.getString("name");
-                if (!departments.contains(departmentAsString)) {
-                    checkBoxTreeItems.add(new CheckBoxTreeItem<>(departmentAsString));
-                } else departments.add(departmentAsString);
-                for (CheckBoxTreeItem<String> department : checkBoxTreeItems) {
-                    System.out.println(department.getValue() + " " + departmentAsString);
-                    if (department.getValue().equals(departmentAsString)) {
-                        department.getChildren().add(new CheckBoxTreeItem<>(res.getString("room_id")));
-                    }
-                }
+            Room r;
+            while (rs.next()) {
+                r = new Room(rs.getString("id"), rs.getString("name"));
+                masterData.add(r);
             }
-        } catch (SQLException e) {
+        } catch (SQLException e){
             e.printStackTrace();
         }
-        /*CheckBoxTreeItem<String> root = new CheckBoxTreeItem<>("Verwaltung, Recht & Steuern");
-        root.setExpanded(true);
-        root.getChildren().addAll(
-                new CheckBoxTreeItem<>("404"),
-                new CheckBoxTreeItem<>("405"),
-                new CheckBoxTreeItem<>("403"),
-                new CheckBoxTreeItem<>("402"));*/
 
-        // Create the CheckTreeView with the data
-        //List<CheckTreeView<String>> checkTreeViews = new ArrayList<>();
-        checkBoxTreeItems.forEach(stringCheckBoxTreeItem -> roomViewPane.getChildren().add(new CheckTreeView<>(stringCheckBoxTreeItem)));
-        //roomsTreeView = new CheckTreeView<>(root);
-
-        //System.out.println(ksql.getAccessibleRooms(new Key("OK1927")));
-
-        // and listen to the relevant events (e.g. when the checked items change).
-       // roomsTreeView.getCheckModel().getCheckedItems().addListener((ListChangeListener<TreeItem<String>>) c ->
-         //       System.out.println(roomsTreeView.getCheckModel().getCheckedItems()));
+        for(Room r : ksql.getAccessibleRooms("OK1927")){
+            System.out.println(r.getID());
+        }
+        roomTableView.setItems(masterData);
 
         AutoCompletionBinding ts = TextFields.bindAutoCompletion(searchKeyField, ksql.getKeyTypes());
         ts.setMaxWidth(164);
         ts.setVisibleRowCount(8);
-
-        //roomViewPane.getChildren().add(roomsTreeView);
-        //roomsTreeView.setPrefSize(310,410);
+        roomTableView.setMinSize(320,420);
     }
 
     /**
@@ -86,14 +75,32 @@ public class RoomManagementController {
     //TODO: Key ID aus searchKeyField bekommen und werte in DB mit Werte aus roomsTreeView überschreiben
     @FXML
     public void onSaveRoomClick(){
-        ObservableList checkedItems = roomsTreeView.getCheckModel().getCheckedItems();
-        CheckBoxTreeItem tm;
-        for(int i = 0; i <= checkedItems.size()-1; i++){
-            if(checkedItems.get(i) instanceof CheckBoxTreeItem) {
-                tm = (CheckBoxTreeItem) checkedItems.get(i);
-                System.out.println(tm.getValue().toString());
-            }
+        roomTableView.getItems().get(0).setStatus(true);
+        roomTableView.getItems().get(5).setStatus(true);
+    }
 
+    /**
+     * Setzt Checkboxen auf entsprechenden Wert
+     */
+    @FXML
+    public void onSelectKeyTypeButtonClick(){
+
+        List<Room> accessibleRooms = ksql.getAccessibleRooms(searchKeyField.getText());
+        for(Room r : accessibleRooms){
+            System.out.println(r.getID());
+            System.out.println(r.getDepartment());
+        }
+        System.out.println(roomTableView.getItems().size());
+
+        for(int i=0;i<= roomTableView.getItems().size()-1;i++){
+            System.out.println(i);
+            Room room = roomTableView.getItems().get(i);
+            System.out.println(room.getID());
+            System.out.println(room.getDepartment());
+            if(accessibleRooms.contains(room)){
+                System.out.println("yoooooooooooooooo");
+                roomTableView.getItems().get(i).setStatus(true);
+            }
         }
     }
 }

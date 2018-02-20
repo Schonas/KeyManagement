@@ -1,11 +1,8 @@
 ###Client
 
 TODO:
-difDays fixen!
-Expired? Col (View)
-Date until Expired Col (View)
 con state with icon, remove after 2 secs
-addPage, editPage Abfangen wenn nicht alles ausgefüllt ist
+addPage, editPage Abfangen wenn nicht alles ausgefüllt ist -> Schlüssel auch ohne Ablaufdatum?
 SQL Table als Konstante
 Scanned signature as link
 zuletzt ausgewählter Schlüssel manuell erfassen -> bei klick auf add dann auf remove wird er nicht mehr erkannt
@@ -14,21 +11,24 @@ CSS der verschiedenen Teile gleich halten, d.h. menubar und toolbar einheitlich 
 inventory page überschrift
 edit/add Button möglichkeit für 1+ jahr geben
 Inventory: läuft diesen Monat ab
-uid keyinfo
-cancel button edit/add
 wo wird die config gespeichert
 hide edit on double click
 
-WIP:
+WIP/COULD BE NICER:
 Save Button on Settings Page(-> Erfolg-Alert?)
-
+test con in settings
+Reload Progress Bar
+Expired? Col (View) in Tooltip, also as Column?
 
 ADDED/FIXED:
+cancel button edit/add(double click)
+uid keyinfo
+difDays fixen!
 Date fancy in table, Datum als String in DB
+Date until Expired Col (View) addded as tooltip
 load mysql data from config
 Remove Confirm Window
 Reload from Database
-Only work in Database?
 search
 Load table after start
 Icon as res (add in MainPage, Error on Edit, AddPage, Settings)
@@ -36,10 +36,6 @@ onHover show days until expiration
 Add/Remove/Edit Icons
 Wenn Hauptfenster geschlossen wird auch alle anderen Schließen
 
-
-COULD BE NICER:
-test con in settings
-Reload Progress Bar
 
 ###Server
 

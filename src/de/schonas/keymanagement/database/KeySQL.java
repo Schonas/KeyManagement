@@ -89,6 +89,37 @@ public class KeySQL extends MySQL {
 
     }
 
+    public ResultSet getRooms(){
+        statement = "SELECT r.uid AS id, name FROM Rooms r JOIN Departments d ON d.uid = r.department_id;";
+        try {
+            pStmt = conn.prepareStatement(statement);
+            return pStmt.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Sucht alle Namen der Abteilungen aus DB
+     * @return Alle Namen der Abteilungen als String in einer Liste
+     */
+    public List<String> getDepartments(){
+        List<String> departments = new ArrayList<>();
+        statement = "SELECT DISTINCT name FROM Departments";
+        ResultSet rs;
+        try{
+            pStmt = conn.prepareStatement(statement);
+            rs = pStmt.executeQuery();
+            while(rs.next()){
+                departments.add(rs.getString("name"));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return departments;
+    }
+
     /**
      * Liefert alle verschiedenen Schlüsseltypen
      * @return Schlüsseltypen mit unterschiedlicher ID
@@ -110,7 +141,7 @@ public class KeySQL extends MySQL {
     }
 
     /**
-     * ???????????????????????????????????????????
+     *
      * @return braucht man für die Methode da oben
      */
     private ResultSet getResultTypes(){
@@ -201,54 +232,29 @@ public class KeySQL extends MySQL {
     }
 
     /**
-     * Gibt Räume aus die ein Schlüssel öffnen kann
-     * @param key Schlüssel
+     * Gibt Räume aus die ein Schlüssel-Typ öffnen kann
+     * @param keyID Schlüssel ID
      * @return Räume die der Schlüssel öffnen kann
      */
-    public List<String> getAccessibleRooms(Key key){
-        List<String> rooms = new ArrayList<>();
+    public List<Room> getAccessibleRooms(String keyID){
+        List<Room> rooms = new ArrayList<>();
         statement = "SELECT * FROM Access WHERE key_id = ?";
         ResultSet rs;
         try {
             pStmt = conn.prepareStatement(statement);
-            pStmt.setString(1, key.getID());
+            pStmt.setString(1, keyID);
             rs = pStmt.executeQuery();
+            Room r;
             while (rs.next()){
-                rooms.add(new Room(rs.getString("room_id"), "1").getID());
+                r = new Room(rs.getString("room_id"), "Verwaltung, Recht und Steuern");
+                System.out.println(r.getID().getName());
+                rooms.add(r);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return rooms;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     /**
      * Legt Tabellen an

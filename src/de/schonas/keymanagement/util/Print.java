@@ -38,6 +38,7 @@ public class Print {
     }
 
     private Node getAllocationPaper(Key key){
+
         return new SwingNode();
     }
 

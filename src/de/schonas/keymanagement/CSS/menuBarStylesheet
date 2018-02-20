@@ -1,0 +1,28 @@
+.menu-bar{
+    -fx-background-color: #f4f4f4;
+}
+
+.menu-bar:hover {
+    -fx-border-width: 5;
+    -fx-border-color: 23315;
+    -fx-text-fill: white;
+    -fx-background-color: #233157;
+}
+
+.menu:hover {
+    -fx-background-color: #d8d5e2;
+}
+
+.menu-item .label{
+
+}
+/*
+    f4f4f4 HINTERGRUND GRAU WEISS
+    233157 KAMMERLOGO DUNKEL
+    d8d5e2 KAMMERLOGO HELL
+    .menu-bar .label {
+    -fx-text-fill: white;
+    -fx-background-color: #233157;
+}
+
+ */

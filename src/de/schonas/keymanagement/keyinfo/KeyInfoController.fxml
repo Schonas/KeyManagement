@@ -32,9 +32,9 @@
       </GridPane>
       <TableView layoutX="174.0" prefHeight="400.0" prefWidth="226.0">
         <columns>
-          <TableColumn prefWidth="67.0" text="Besitzer" />
-          <TableColumn prefWidth="84.0" text="Vergabe" />
-            <TableColumn prefWidth="74.0" text="Abgabe" />
+          <TableColumn editable="false" prefWidth="67.0" text="Besitzer" />
+          <TableColumn editable="false" prefWidth="84.0" text="Vergabe" />
+            <TableColumn editable="false" prefWidth="74.0" text="Abgabe" />
         </columns>
       </TableView>
    </children>

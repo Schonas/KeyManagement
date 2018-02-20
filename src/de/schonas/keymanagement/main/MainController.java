@@ -51,6 +51,9 @@ public class MainController {
     @FXML
     private Button addTaskButton, removeTaskButton, editTaskButton, reloadTaskButton;
 
+    @FXML
+    private MenuBar menuBar;
+
     /**
      * init Methode die alles vorbereitet
      */
@@ -90,11 +93,12 @@ public class MainController {
                 TableData tb = new TableData(keyTable, uidCol, idCol, ownerCol, expDateCol, searchField);
                 tb.load();
                 keyTable.getSelectionModel().select(0);
-                keyTable.getStylesheets().add("de/schonas/keymanagement/main/keyTableStylesheet");
+                //keyTable.getStylesheets().add("de/schonas/keymanagement/CSS/keyTableStylesheet");
                 currentKey = keyTable.getSelectionModel().getSelectedItem();
             }
         }, 100);
 
+        //menuBar.getStylesheets().add("de/schonas/keymanagement/CSS/menuBarStylesheet");
         //RoomData rm = new RoomData(AddBox);
         //rm.load();
 
@@ -128,14 +132,21 @@ public class MainController {
     @FXML
     private void onEditButton(){
         if(keyTable.getSelectionModel().getSelectedItem() != null) {
-            Key key = keyTable.getSelectionModel().getSelectedItem();
-            EditBox.setVisible(true);
-            AddBox.setVisible(false);
-            RemoveBox.setVisible(false);
-            idEditField.setText(key.getID());
-            ownerEditField.setText(key.getOwner());
-            currentKey = key;
-            if(!key.getExpDate().isEmpty()) dateEditField.setValue(u.getLocalDateFromString(key.getExpDate()));
+            if(EditBox.isVisible()){
+                EditBox.setVisible(false);
+                idEditField.setText(null);
+                ownerEditField.setText(null);
+                dateEditField.setValue(null);
+            } else {
+                Key key = keyTable.getSelectionModel().getSelectedItem();
+                EditBox.setVisible(true);
+                AddBox.setVisible(false);
+                RemoveBox.setVisible(false);
+                idEditField.setText(key.getID());
+                ownerEditField.setText(key.getOwner());
+                currentKey = key;
+                if (!key.getExpDate().isEmpty()) dateEditField.setValue(u.getLocalDateFromString(key.getExpDate()));
+            }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Key Management");

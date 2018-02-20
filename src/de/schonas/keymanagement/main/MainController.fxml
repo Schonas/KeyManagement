@@ -19,7 +19,7 @@
             <Insets right="1.0" />
          </padding>
         </TableView>
-      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="535.0">
+      <MenuBar fx:id="menuBar" layoutY="2.0" prefHeight="25.0" prefWidth="535.0">
         <menus>
           <Menu mnemonicParsing="false" text="Menü">
             <items>

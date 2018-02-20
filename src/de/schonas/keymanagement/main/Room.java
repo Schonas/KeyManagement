@@ -1,21 +1,37 @@
 package de.schonas.keymanagement.main;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.CheckBox;
+
 public class Room {
 
-    private String id;
-    private String department;
+    private SimpleStringProperty id;
+    private SimpleStringProperty department;
+    private CheckBox status;
 
     public Room(String id, String department){
-        this.id = id;
-        this.department = department;
+        this.id = new SimpleStringProperty(id);
+        this.department = new SimpleStringProperty(department);
+        this.status = new CheckBox();
     }
 
-    public String getID() {
+    public SimpleStringProperty getID() {
         return id;
     }
 
-    public String getDepartment() {
+    public SimpleStringProperty getDepartment() {
         return department;
     }
 
+    public CheckBox getStatus() {
+        return status;
+    }
+
+    public void setStatus(CheckBox status){
+        this.status = status;
+    }
+
+    public void setStatus(boolean selected) {
+        status.setSelected(selected);
+    }
 }
