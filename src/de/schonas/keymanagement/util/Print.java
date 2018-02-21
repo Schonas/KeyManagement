@@ -11,11 +11,10 @@ public class Print {
     private PrinterJob printerJob;
 
     public Print(){
-        PrinterJob pJob = PrinterJob.createPrinterJob();
-        this.printerJob = pJob;
+        this.printerJob = PrinterJob.createPrinterJob();
     }
 
-    public boolean printAllocationPaper(String jobName, Key key, Stage stage){
+    public void printAllocationPaper(String jobName, Key key, Stage stage){
 
         PrinterJob.createPrinterJob();
 
@@ -23,10 +22,9 @@ public class Print {
 
         initPrint(getAllocationPaper(key), printerJob, stage);
 
-        return false;
     }
 
-    public boolean printRemovalPaper(String jobName, Key key, Stage stage){
+    public void printRemovalPaper(String jobName, Key key, Stage stage){
 
         PrinterJob.createPrinterJob();
 
@@ -34,7 +32,6 @@ public class Print {
 
         initPrint(getRemovalPaper(key), printerJob, stage);
 
-        return false;
     }
 
     private Node getAllocationPaper(Key key){

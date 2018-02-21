@@ -26,7 +26,6 @@ public class MainPage extends Application {
     public static KeySQL ksql;
     public static Properties prop;
     public static Print printer;
-    private InputStream input;
     public static Key currentKey;
 
     public static Image LOGO = new Image("de/schonas/keymanagement/images/icon.png");
@@ -54,10 +53,10 @@ public class MainPage extends Application {
     }
 
     @Override
-    public void init() throws SQLException {
+    public void init() {
         prop = new Properties();
         try {
-            input = new FileInputStream("config");
+            InputStream input = new FileInputStream("config");
             prop.load(input);
         } catch (IOException e) {
             e.printStackTrace();

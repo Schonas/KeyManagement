@@ -4,5 +4,4 @@
 .table-row-cell:focused {
     -fx-background-color:#233157;
     -fx-text-fill: white;
-
 }

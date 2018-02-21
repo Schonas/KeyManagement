@@ -54,17 +54,8 @@ public class Utils {
     }
 
     /**
-     * Formt LocalDate in Date um
-     * @param localDate
-     * @return sql.Date
-     */
-    public Date asDate(LocalDate localDate) {
-        return Date.valueOf(localDate);
-    }
-
-    /**
      * Schaut ob ein Datum in der Vergangenheit oder am jetzigen Tag ist
-     * @param date
+     * @param date zu vergleichenes Datum
      * @return in vergangenheit oder jetzt?
      */
     public boolean isInPast(Date date){
@@ -123,8 +114,8 @@ public class Utils {
 
     /**
      * Braucht man eher nicht
-     * @param date
-     * @return
+     * @param date LocalDate
+     * @return liefert String aus Local Date
      */
     public String getStringFromLocalDate(LocalDate date){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -185,10 +176,6 @@ public class Utils {
         }
     }
 
-    public void print(final Node node, Stage stage, String name) {
-
-    }
-
     /**
      * Gibt TestString aus und ist kürzer als System.out.println
      * @param test TestString
@@ -197,6 +184,11 @@ public class Utils {
         System.out.println(test);
     }
 
+    /**
+     * Gibt unterstes KeyObject aus einer Tabelle voller Keys zurück
+     * @param keyTable Tabelle mit Key Objekten
+     * @return letzter Key
+     */
     public Key getLastAddedKey(TableView<Key> keyTable){
         return keyTable.getItems().get(keyTable.getItems().size());
     }

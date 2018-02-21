@@ -71,7 +71,7 @@ public class KeySQL extends MySQL {
 
     /**
      * Listet irgendwas auf
-     * @param key
+     * @param
      * @return
      */
     public ResultSet getRooms(String keyID){
@@ -89,6 +89,10 @@ public class KeySQL extends MySQL {
 
     }
 
+    /**
+     * Gib alle Räume und ihre zugehörigen Departments als ResultSet
+     * @return ResultSet Raum, Department
+     */
     public ResultSet getRooms(){
         statement = "SELECT r.uid AS id, name FROM Rooms r JOIN Departments d ON d.uid = r.department_id;";
         try {
@@ -203,6 +207,11 @@ public class KeySQL extends MySQL {
         }
     }
 
+    /**
+     * Fügt Logeintrag hinzu
+     * @param key verwendeter Schlüssel
+     * @param action ADD REMOVE OR UPDATE
+     */
     public void addLog(Key key, Action action){
         Map<String, Object> logInfos = u.getDBMap("user", u.getSystemUserName());
         logInfos.put("workspace", u.getRemoteHostName());
@@ -247,13 +256,55 @@ public class KeySQL extends MySQL {
             Room r;
             while (rs.next()){
                 r = new Room(rs.getString("room_id"), "Verwaltung, Recht und Steuern");
-                System.out.println(r.getID().getName());
                 rooms.add(r);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return rooms;
+    }
+
+    /**
+     * Gibt eine Liste von Räumen aus die ein KeyType öffnen kann
+     * @param keyID keyType
+     * @return Liste von roomIds die der Schlüssel öffnen kann
+     */
+    public List<String> getAccessibleRoomIDs(String keyID){
+        List<String> room_ids = new ArrayList<>();
+        statement = "SELECT * FROM Access WHERE key_id = ?";
+        ResultSet rs;
+        try {
+            pStmt = conn.prepareStatement(statement);
+            pStmt.setString(1, keyID);
+            rs = pStmt.executeQuery();
+            while (rs.next()){
+                room_ids.add(rs.getString("room_id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return room_ids;
+    }
+
+    /**
+     * Setzt Räume die noch nicht für einen Schlüssel gesetzt waren, wenn der Eintrag noch nicht existiert
+     * @param keyID KeyType
+     * @param roomID RoomID
+     */
+    public void setNewRoomIDs(String keyID, String roomID){
+        statement = "INSERT INTO Access(?, ?) SELECT Access.key_id, Access.room_id FROM Access WHERE NOT EXISTS (SELECT * FROM Access WHERE key_id = ? AND room_id = ?)";
+        try {
+            pStmt = conn.prepareStatement(statement);
+            System.out.println(statement);
+            pStmt.setString(1, keyID);
+            pStmt.setString(2, roomID);
+            pStmt.setString(3, keyID);
+            pStmt.setString(4, roomID);
+            System.out.println(pStmt);
+            pStmt.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     /**

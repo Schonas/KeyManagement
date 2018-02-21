@@ -14,6 +14,7 @@ Schlüssel ohne Datum, Name oder Räume? Date in SQL als Varchar, kann null sein
 
 Zeigt genauere Infos über genauen Schlüssel an
 Name, UID, ID, Owner, Bisherige Owner, Ablaufdatum (aktuelles)
+Bisherige Owner? Bei Edit prüfen ob owner geändert wurde, neuer besitzer knopf, tag der erstellung merken
 
 
 Tabellen:

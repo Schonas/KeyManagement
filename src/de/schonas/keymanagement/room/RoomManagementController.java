@@ -58,25 +58,28 @@ public class RoomManagementController {
             e.printStackTrace();
         }
 
-        for(Room r : ksql.getAccessibleRooms("OK1927")){
-            System.out.println(r.getID());
-        }
         roomTableView.setItems(masterData);
 
         AutoCompletionBinding ts = TextFields.bindAutoCompletion(searchKeyField, ksql.getKeyTypes());
         ts.setMaxWidth(164);
         ts.setVisibleRowCount(8);
-        roomTableView.setMinSize(320,420);
+        roomTableView.setMinSize(340,410);
     }
 
     /**
      * Holt Werte aus checkTreeView und trägt sich in Tabelle ein
      */
-    //TODO: Key ID aus searchKeyField bekommen und werte in DB mit Werte aus roomsTreeView überschreiben
+    //TODO: werte in DB mit Werte aus TableView überschreiben
     @FXML
     public void onSaveRoomClick(){
-        roomTableView.getItems().get(0).setStatus(true);
-        roomTableView.getItems().get(5).setStatus(true);
+        initialize();
+        /*String keyType = searchKeyField.getText();
+        for(int i=0;i<= roomTableView.getItems().size()-1;i++){
+            Room room = roomTableView.getItems().get(i);
+            if(room.getStatus().isSelected()){
+                ksql.setNewRoomIDs(keyType, room.getID().getValue());
+            }
+        }*/
     }
 
     /**
@@ -85,20 +88,10 @@ public class RoomManagementController {
     @FXML
     public void onSelectKeyTypeButtonClick(){
 
-        List<Room> accessibleRooms = ksql.getAccessibleRooms(searchKeyField.getText());
-        for(Room r : accessibleRooms){
-            System.out.println(r.getID());
-            System.out.println(r.getDepartment());
-        }
-        System.out.println(roomTableView.getItems().size());
-
+        List<String> accessibleRooms = ksql.getAccessibleRoomIDs(searchKeyField.getText());
         for(int i=0;i<= roomTableView.getItems().size()-1;i++){
-            System.out.println(i);
             Room room = roomTableView.getItems().get(i);
-            System.out.println(room.getID());
-            System.out.println(room.getDepartment());
-            if(accessibleRooms.contains(room)){
-                System.out.println("yoooooooooooooooo");
+            if(accessibleRooms.contains(room.getID().getValue())){
                 roomTableView.getItems().get(i).setStatus(true);
             }
         }
