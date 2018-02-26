@@ -2,16 +2,17 @@ package de.schonas.keymanagement.settings;
 
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.Properties;
 
-import static de.schonas.keymanagement.main.MainPage.ksql;
-import static de.schonas.keymanagement.main.MainPage.prop;
+import static de.schonas.keymanagement.main.MainPage.*;
 
 public class SettingsController {
 
@@ -72,6 +73,13 @@ public class SettingsController {
             props.setProperty("password", settingsPasswordField.getText());
             props.store(out, "Config Datei für Schlüsselverwaltungssystem");
             out.close();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle(TITLE);
+            alert.setHeaderText("Erfolg!");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(LOGO);
+            alert.setContentText("Einstellungen wurden erfolgreich gespeichert.");
+            alert.show();
         } catch (IOException e){
             e.printStackTrace();
         }

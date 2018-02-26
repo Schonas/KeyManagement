@@ -80,6 +80,7 @@ public class RoomManagementController {
                 ksql.setNewRoomIDs(keyType, room.getID().getValue());
             }
         }*/
+        clearCheckboxes();
     }
 
     /**
@@ -94,6 +95,12 @@ public class RoomManagementController {
             if(accessibleRooms.contains(room.getID().getValue())){
                 roomTableView.getItems().get(i).setStatus(true);
             }
+        }
+    }
+
+    private void clearCheckboxes(){
+        for(Room r : roomTableView.getItems()){
+            r.setStatus(false);
         }
     }
 }
