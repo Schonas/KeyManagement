@@ -8,7 +8,7 @@ Was soll im Log passieren?
 Bei Löschung,Edit wird dokumentiert wer es gemacht hat.
 
 Schlüssel ohne Datum, Name oder Räume? Date in SQL als Varchar, kann null seine
-
+Add Room/Department?
 
 ##KeyInfo Seite
 

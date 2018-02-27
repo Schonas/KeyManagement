@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static de.schonas.keymanagement.database.KeySQL.TABLE;
+import static de.schonas.keymanagement.database.KeySQL.TABLE_KEYS;
 import static de.schonas.keymanagement.main.MainPage.*;
 
 
@@ -266,7 +266,7 @@ public class MainController {
     @FXML
     private void onRemoveYesClick(){
         Key key = keyTable.getSelectionModel().getSelectedItem();
-        ksql.delete(TABLE, u.getDBMap("id", key.getID()));
+        ksql.delete(TABLE_KEYS, u.getDBMap("id", key.getID()));
         u.reloadTable(keyTable, uidCol, idCol, ownerCol, expDateCol, searchField);
         ksql.addLog(key, Action.REMOVEKEY);
         u.sendAlert(statusBar, "Key " +  key.getID() + " wurde gelöscht.");

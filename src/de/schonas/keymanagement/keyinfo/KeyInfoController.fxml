@@ -47,5 +47,11 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Text>
+      <Text fx:id="roomView" layoutX="8.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="155.13671875" />
+      <Text layoutX="8.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zugriff auf Räume">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

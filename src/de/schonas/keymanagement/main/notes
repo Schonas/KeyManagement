@@ -10,18 +10,23 @@ inventory page überschrift
 edit/add Button möglichkeit für 1+ jahr geben
 Inventory: läuft diesen Monat ab
 wo wird die config gespeichert
-Add Room/Department?
+sichern in thread machen (raumverwaltung)
 
-WIP/COULD BE NICER:
-Clear Table if keyType has no Access (muss noch gecheckt und dann ausgeführt werden, methode ist schond da)
+WIP:
+Komma bei Raumaufzählung
+Clear Table if keyType has no Access (muss noch gecheckt und dann ausgeführt werden, methode ist schon da)
 test con in settings
 Reload Progress Bar
 Expired? Col (View) in Tooltip, also as Column?
 con state with icon, remove after 2 secs
+tabelle in raumverwaltung schöner machen
 
 ADDED/FIXED:
+Raumaufzählung auf Key-Info-Seite
+Möglichkeit zu Schlüsseltypen Räume hinzuzufügen
 Save Button on Settings Page(-> Erfolg-Alert?)
 hide edit on double click
+Log(Bei Add, Remove, Edit)
 zuletzt ausgewählter Schlüssel manuell erfassen -> bei klick auf add dann auf remove wird er nicht mehr erkannt
 cancel button edit/add(double click)
 uid keyinfo

@@ -15,7 +15,8 @@ import static de.schonas.keymanagement.main.MainPage.u;
 
 public class KeySQL extends MySQL {
 
-    public static final String TABLE = "KEYMANAGEMENT.Openers";
+    public static final String TABLE_KEYS = "KEYMANAGEMENT.Openers";
+    public static final String TABLE_ACCESS = "KEYMANAGEMENT.Access";
 
     /**
      * Liefer alle Schlüssel als RS
@@ -26,7 +27,7 @@ public class KeySQL extends MySQL {
         statement = "SELECT * FROM KEYMANAGEMENT.Openers";
         try {
             pStmt= conn.prepareStatement(statement);
-            //pStmt.setString(1, TABLE);
+            //pStmt.setString(1, TABLE_KEYS);
             return pStmt.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -43,7 +44,7 @@ public class KeySQL extends MySQL {
         Map map = u.getDBMap("id", key.getID());
         map.put("owner", key.getOwner());
         map.put("exp_date", u.getDateString(key.getExpDate()));
-        ksql.insert(TABLE, map);
+        ksql.insert(TABLE_KEYS, map);
     }
 
     /**
@@ -153,7 +154,7 @@ public class KeySQL extends MySQL {
         statement = "SELECT id FROM KEYMANAGEMENT.Openers";
         try {
             pStmt= conn.prepareStatement(statement);
-            //pStmt.setString(1, TABLE);
+            //pStmt.setString(1, TABLE_KEYS);
             return pStmt.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -304,6 +305,32 @@ public class KeySQL extends MySQL {
             pStmt.executeUpdate();
         } catch (SQLException e){
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Fügt room_id - key_id Paar in Tabelle ein wenn es noch nicht da ist
+     * @param room_id Raum ID
+     * @param key_id Schlüssel ID
+     */
+    public void insertIfNotExists(String room_id, String key_id){
+        Map values = u.getDBMap("key_id", key_id);
+        values.put("room_id", room_id);
+        if(!contains(TABLE_ACCESS, values)){
+            insert(TABLE_ACCESS, values);
+        }
+    }
+
+    /**
+     * Löscht Eintrag eines room_id - key_id Paares wenn es drin ist.
+     * @param room_id
+     * @param key_id
+     */
+    public void deleteIfExists(String room_id, String key_id){
+        Map values = u.getDBMap("key_id", key_id);
+        values.put("room_id", room_id);
+        if(contains(TABLE_ACCESS, values)){
+            delete(TABLE_ACCESS, values);
         }
     }
 

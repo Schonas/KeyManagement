@@ -1,6 +1,7 @@
 package de.schonas.keymanagement.util;
 
 import de.schonas.keymanagement.main.Key;
+import de.schonas.keymanagement.main.Room;
 import de.schonas.keymanagement.main.TableData;
 import javafx.print.PrinterJob;
 import javafx.scene.Node;
@@ -18,6 +19,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+
+import static de.schonas.keymanagement.main.MainPage.ksql;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class Utils {
@@ -191,5 +194,15 @@ public class Utils {
      */
     public Key getLastAddedKey(TableView<Key> keyTable){
         return keyTable.getItems().get(keyTable.getItems().size());
+    }
+
+    public String getAccessibleKeyList(String keyID){
+        String rooms = "";
+        for(Room room : ksql.getAccessibleRooms(keyID)){
+            rooms += room.getID().getValue() + ", ";
+        }
+        rooms = rooms.substring(0, rooms.length()-2);
+        if(rooms.isEmpty())rooms="keine";
+        return rooms;
     }
 }

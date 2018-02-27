@@ -19,11 +19,11 @@
         </Text>
         <Button layoutX="14.0" layoutY="343.0" mnemonicParsing="false" onAction="#onSaveRoomClick" text="Sichern" />
         <Text layoutX="13.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schlüssel auswählen, Räume ändern und dann Sichern klicken." wrappingWidth="216.0" />
-      <TableView fx:id="roomTableView" layoutX="263.0" prefHeight="400.0" prefWidth="337.0">
+      <TableView fx:id="roomTableView" layoutX="244.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="358.0">
         <columns>
-          <TableColumn fx:id="checkCol" prefWidth="27.0" />
-          <TableColumn fx:id="roomCol" prefWidth="88.0" text="Raum" />
-            <TableColumn fx:id="departmentCol" prefWidth="242.0" text="Abteilung" />
+          <TableColumn fx:id="checkCol" prefWidth="21.0" />
+          <TableColumn fx:id="roomCol" prefWidth="94.0" text="Raum" />
+            <TableColumn fx:id="departmentCol" prefWidth="227.0" text="Abteilung" />
         </columns>
       </TableView>
       <Button fx:id="selectKeyTypeButton" layoutX="188.0" layoutY="92.0" mnemonicParsing="false" onAction="#onSelectKeyTypeButtonClick" text="Select" />
