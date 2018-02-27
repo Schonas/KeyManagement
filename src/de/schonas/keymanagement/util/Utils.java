@@ -201,7 +201,7 @@ public class Utils {
         for(Room room : ksql.getAccessibleRooms(keyID)){
             rooms += room.getID().getValue() + ", ";
         }
-        rooms = rooms.substring(0, rooms.length()-2);
+        if(rooms.length() >= 3) rooms = rooms.substring(0, rooms.length()-2);
         if(rooms.isEmpty())rooms="keine";
         return rooms;
     }
