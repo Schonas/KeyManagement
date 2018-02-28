@@ -1,18 +1,11 @@
-package de.schonas.keymanagement.room;
+package de.schonas.keymanagement.roominfo;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import de.schonas.keymanagement.main.Key;
 import de.schonas.keymanagement.main.Room;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
-import org.controlsfx.control.CheckModel;
-import org.controlsfx.control.CheckTreeView;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 import org.controlsfx.glyphfont.FontAwesome;
@@ -22,14 +15,9 @@ import org.controlsfx.glyphfont.GlyphFontRegistry;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import static de.schonas.keymanagement.database.KeySQL.TABLE_ACCESS;
-import static de.schonas.keymanagement.main.MainPage.currentKey;
 import static de.schonas.keymanagement.main.MainPage.ksql;
-import static de.schonas.keymanagement.main.MainPage.u;
 
 public class RoomManagementController {
 
@@ -46,6 +34,9 @@ public class RoomManagementController {
 
     @FXML
     private TableColumn<Room, String> roomCol, departmentCol;
+
+    @FXML
+    private ProgressIndicator progressIndicator;
 
     @FXML
     protected void initialize() {
@@ -80,18 +71,23 @@ public class RoomManagementController {
     /**
      * Holt Werte aus checkTreeView und trägt sich in Tabelle ein
      */
-    //TODO: werte in DB mit Werte aus TableView überschreiben
     @FXML
     public void onSaveRoomClick(){
         String keyType = searchKeyField.getText();
-        for(int i=0;i<= roomTableView.getItems().size()-1;i++){
-            Room room = roomTableView.getItems().get(i);
-            if(room.getStatus().isSelected()){
-                ksql.insertIfNotExists(room.getID().getValue(), keyType);
-            } else if(!room.getStatus().isSelected()){
-                ksql.deleteIfExists(room.getID().getValue(), keyType);
+
+        new Thread(() -> {
+            progressIndicator.setVisible(true);
+            for(int i=0;i<= roomTableView.getItems().size()-1;i++){
+                Room room = roomTableView.getItems().get(i);
+                if(room.getStatus().isSelected()){
+                    ksql.insertIfNotExists(room.getID().getValue(), keyType);
+                } else if(!room.getStatus().isSelected()){
+                    ksql.deleteIfExists(room.getID().getValue(), keyType);
+                }
             }
-        }
+            progressIndicator.setVisible(false);
+        }).start();
+
     }
 
     /**
@@ -102,6 +98,7 @@ public class RoomManagementController {
 
         List<String> accessibleRooms = ksql.getAccessibleRoomIDs(searchKeyField.getText());
         clearCheckboxes();
+        progressIndicator.setVisible(false);
         for(int i=0;i<= roomTableView.getItems().size()-1;i++){
             Room room = roomTableView.getItems().get(i);
             if(accessibleRooms.contains(room.getID().getValue())){
@@ -110,6 +107,9 @@ public class RoomManagementController {
         }
     }
 
+    /**
+     * Unchecked alle Checkboxen
+     */
     private void clearCheckboxes(){
         for(Room r : roomTableView.getItems()){
             r.setStatus(false);

@@ -1,20 +1,18 @@
 ###Client
 
 TODO:
-addPage, editPage Abfangen wenn nicht alles ausgefüllt ist -> Schlüssel auch ohne Ablaufdatum?
 SQL Table als Konstante
 Scanned signature as link
-Dokuemnt über Abgabe/Annahme erstellen (Unterschriftenfeld, Keyinfos, etc)
+Dokument über Abgabe/Annahme erstellen (Unterschriftenfeld, Keyinfos, etc)
 CSS der verschiedenen Teile gleich halten, d.h. menubar und toolbar einheitlich gestalten
 inventory page überschrift
 edit/add Button möglichkeit für 1+ jahr geben
 Inventory: läuft diesen Monat ab
 wo wird die config gespeichert
 sichern in thread machen (raumverwaltung)
-src aufräumen
+src aufräumen & unbenutze methoden löschen
 
 WIP:
-Clear Table if keyType has no Access (muss noch gecheckt und dann ausgeführt werden, methode ist schon da)
 test con in settings
 Reload Progress Bar
 Expired? Col (View) in Tooltip, also as Column?
@@ -22,6 +20,8 @@ con state with icon, remove after 2 secs
 tabelle in raumverwaltung schöner machen
 
 ADDED/FIXED:
+Save Progress Bar
+Clear Table if keyType has no Access
 Komma bei Raumaufzählung
 Raumaufzählung auf Key-Info-Seite
 Möglichkeit zu Schlüsseltypen Räume hinzuzufügen

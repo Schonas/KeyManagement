@@ -1,6 +1,7 @@
-package de.schonas.keymanagement.main;
+package de.schonas.keymanagement.util;
 
 import de.schonas.keymanagement.keyinfo.KeyInfo;
+import de.schonas.keymanagement.main.Key;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -108,7 +109,7 @@ public class TableData {
             row.hoverProperty().addListener((observable) -> {
                 final Key key = row.getItem();
 
-                if (row.isHover() && !key.getExpDate().isEmpty()) {
+                if (row.isHover() && !row.isEmpty() && !key.getExpDate().isEmpty()) {
                     String dateString = String.valueOf(u.getDateDiff(key.getExpDate()));
                     long dif = u.getDateDiff(key.getExpDate());
                     row.setTooltip(new Tooltip(dif > 0 ? "Abgelaufen seit " + dateString + " Tagen" : "Läuft in " + Math.abs(dif) + " Tagen ab"));

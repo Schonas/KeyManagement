@@ -2,14 +2,12 @@ package de.schonas.keymanagement.util;
 
 import de.schonas.keymanagement.main.Key;
 import de.schonas.keymanagement.main.Room;
-import de.schonas.keymanagement.main.TableData;
 import javafx.print.PrinterJob;
 import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

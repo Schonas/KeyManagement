@@ -1,33 +1,16 @@
-###KONZEPT/Fragen
-
-Extra Fenster um Schlüssel mit Räumen zu verbinden
+###KONZEPT/Fragen über Fragen
 
 gleiche Key ID = immer gleiche Zimmer?
 
 Was soll im Log passieren?
-Bei Löschung,Edit wird dokumentiert wer es gemacht hat.
+Bei Löschung,Edit,Add wird dokumentiert wer es gemacht hat. Was noch?
 
-Schlüssel ohne Datum, Name oder Räume? Date in SQL als Varchar, kann null seine
+Schlüssel ohne Datum oder Name? Date in SQL als Varchar (done), kann null seine
 Add Room/Department?
+addPage, editPage Abfangen wenn nicht alles ausgefüllt ist -> Schlüssel auch ohne Ablaufdatum?
 
 ##KeyInfo Seite
 
 Zeigt genauere Infos über genauen Schlüssel an
 Name, UID, ID, Owner, Bisherige Owner, Ablaufdatum (aktuelles)
 Bisherige Owner? Bei Edit prüfen ob owner geändert wurde, neuer besitzer knopf, tag der erstellung merken
-
-
-Tabellen:
-
-#Keys
-id      |   ownerCol    | exp_date
-BV0404  |   Budde       | 02.12.2018
-#Access
-key_id      | room_id
-BQ9502      | 404
-BQ9502      | 403
-BQ9502      | 405
-#Rooms
-room_id     | area
-404         | Verwaltung
-001         | Empfang

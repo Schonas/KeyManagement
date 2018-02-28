@@ -1,4 +1,4 @@
-package de.schonas.keymanagement.room;
+package de.schonas.keymanagement.roominfo;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

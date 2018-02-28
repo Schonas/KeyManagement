@@ -1,9 +1,10 @@
 package de.schonas.keymanagement.main;
 
 import de.schonas.keymanagement.inventory.InventoryPage;
-import de.schonas.keymanagement.room.RoomManagementPage;
+import de.schonas.keymanagement.roominfo.RoomManagementPage;
 import de.schonas.keymanagement.settings.SettingsPage;
 import de.schonas.keymanagement.util.Print;
+import de.schonas.keymanagement.util.TableData;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -18,7 +19,6 @@ import org.controlsfx.glyphfont.GlyphFontRegistry;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.Timer;
 import java.util.TimerTask;
 
 import static de.schonas.keymanagement.database.KeySQL.TABLE_KEYS;
@@ -54,6 +54,13 @@ public class MainController {
     @FXML
     private MenuBar menuBar;
 
+    @FXML//ADD BOX
+    private TextField idAddField, ownerAddField;
+
+    @FXML//ADD BOX
+    private DatePicker expDateAddField;
+
+
     /**
      * init Methode die alles vorbereitet
      */
@@ -87,7 +94,7 @@ public class MainController {
         editTaskButton.setTooltip(new Tooltip("Bearbeite den ausgewählten Schlüssel"));
         searchField.setPromptText("Search...");
 
-        new Timer().schedule(new TimerTask() {
+        new Thread(new TimerTask() {
             @Override
             public void run() {
                 TableData tb = new TableData(keyTable, uidCol, idCol, ownerCol, expDateCol, searchField);
@@ -96,11 +103,9 @@ public class MainController {
                 //keyTable.getStylesheets().add("de/schonas/keymanagement/CSS/keyTableStylesheet");
                 currentKey = keyTable.getSelectionModel().getSelectedItem();
             }
-        }, 100);
+        }).start();
 
         //menuBar.getStylesheets().add("de/schonas/keymanagement/CSS/menuBarStylesheet");
-        //RoomData rm = new RoomData(AddBox);
-        //rm.load();
 
         quitMenuButton.setAccelerator(new KeyCodeCombination(KeyCode.Q, KeyCodeCombination.CONTROL_DOWN));
         roomManagementMenuButton.setAccelerator(new KeyCodeCombination(KeyCode.R, KeyCodeCombination.CONTROL_DOWN));
@@ -228,13 +233,6 @@ public class MainController {
         }
     }
 
-    // ADD BOX
-    @FXML
-    private TextField idAddField, ownerAddField;
-
-    @FXML
-    private DatePicker expDateAddField;
-
     /**
      * Hinzufügen Button auf der Add-Seite
      */
@@ -256,9 +254,6 @@ public class MainController {
         ownerAddField.setText(null);
         idAddField.setText(null);
     }
-
-
-    //REMOVE BOX
 
     /**
      * Greift wenn auf der Remove-Page auf ja geklickt wird
@@ -294,13 +289,13 @@ public class MainController {
      * Druckt Dokument für die Vergabe eines Schlüssels
      */
     @FXML
-    private void onAddKeyPrintClick(){
+    private void onAddKeyPrintClick() {
 
         Key key = keyTable.getSelectionModel().getSelectedItem();
 
         Stage printStage = new Stage();
         Print p = new Print();
-        p.printAllocationPaper("Vergabedokument " + key.getID(), key, printStage);
+        //p.printAllocationPaper(currentKey.getOwner(), currentKey.getID());
 
     }
 
@@ -313,8 +308,7 @@ public class MainController {
         Key key = keyTable.getSelectionModel().getSelectedItem();
 
         Stage printStage = new Stage();
-        Print p = new Print();
-        p.printRemovalPaper("Abgabedokument " + key.getID(), key, printStage);
+        //Print p = new Print();
 
     }
 

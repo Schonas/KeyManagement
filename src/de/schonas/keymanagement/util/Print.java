@@ -10,8 +10,10 @@ public class Print {
 
     private PrinterJob printerJob;
 
-    public Print(){
+    public Print() {
+
         this.printerJob = PrinterJob.createPrinterJob();
+
     }
 
     public void printAllocationPaper(String jobName, Key key, Stage stage){
@@ -20,7 +22,7 @@ public class Print {
 
         printerJob.getJobSettings().setJobName(jobName + key.getID());
 
-        initPrint(getAllocationPaper(key), printerJob, stage);
+        //initPrint(getAllocationPaper(key), printerJob, stage);
 
     }
 
@@ -32,11 +34,6 @@ public class Print {
 
         initPrint(getRemovalPaper(key), printerJob, stage);
 
-    }
-
-    private Node getAllocationPaper(Key key){
-
-        return new SwingNode();
     }
 
     private Node getRemovalPaper(Key key){

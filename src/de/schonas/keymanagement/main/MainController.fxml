@@ -13,7 +13,7 @@
             <TableColumn fx:id="uidCol" prefWidth="32.0" text="UID" />
                 <TableColumn fx:id="idCol" prefWidth="125.0" resizable="false" text="ID" />
                 <TableColumn fx:id="ownerCol" prefWidth="167.0" resizable="false" text="Besitzer" />
-                <TableColumn fx:id="expDateCol" prefWidth="196.0" resizable="false" text="Ablaufdatum" />
+                <TableColumn fx:id="expDateCol" prefWidth="197.0" resizable="false" text="Ablaufdatum" />
             </columns>
          <padding>
             <Insets right="1.0" />

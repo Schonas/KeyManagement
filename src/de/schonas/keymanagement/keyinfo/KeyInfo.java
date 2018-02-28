@@ -21,7 +21,7 @@ public class KeyInfo {
         stage.getIcons().add(LOGO);
         stage.resizableProperty().setValue(Boolean.FALSE);
         stage.setScene(scene);
-        stage.setTitle(TITLE + " Schlüsselinformationen");
+        stage.setTitle(TITLE + " | Schlüsselinformationen");
         stage.show();
     }
 }
