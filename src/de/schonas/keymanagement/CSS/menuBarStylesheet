@@ -1,20 +1,14 @@
-.menu-bar{
-    -fx-background-color: #f4f4f4;
-}
-
-.menu-bar:hover {
-    -fx-border-width: 5;
-    -fx-border-color: 23315;
+.menu:hover, .menu:focused, .menu:showing {
     -fx-text-fill: white;
     -fx-background-color: #233157;
 }
 
-.menu:hover {
-    -fx-background-color: #d8d5e2;
+.menu-item:hover, .menu-item:focused{
+    -fx-background-color: #233157;
 }
 
-.menu-item .label{
-
+.menu-bar{
+    -fx-background-color: f4f4f4;
 }
 /*
     f4f4f4 HINTERGRUND GRAU WEISS

@@ -4,12 +4,10 @@ TODO:
 SQL Table als Konstante
 Scanned signature as link
 Dokument über Abgabe/Annahme erstellen (Unterschriftenfeld, Keyinfos, etc)
-CSS der verschiedenen Teile gleich halten, d.h. menubar und toolbar einheitlich gestalten
 inventory page überschrift
 edit/add Button möglichkeit für 1+ jahr geben
 Inventory: läuft diesen Monat ab
 wo wird die config gespeichert
-sichern in thread machen (raumverwaltung)
 src aufräumen & unbenutze methoden löschen
 
 WIP:
@@ -20,6 +18,8 @@ con state with icon, remove after 2 secs
 tabelle in raumverwaltung schöner machen
 
 ADDED/FIXED:
+CSS der verschiedenen Teile gleich halten, d.h. menubar und toolbar einheitlich gestalten
+sichern in thread machen (raumverwaltung)
 Save Progress Bar
 Clear Table if keyType has no Access
 Komma bei Raumaufzählung

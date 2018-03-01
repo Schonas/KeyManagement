@@ -66,6 +66,7 @@ public class RoomManagementController {
 
         roomTableView.prefWidth(360);
         roomTableView.setItems(masterData);
+        roomTableView.getStylesheets().add("de/schonas/keymanagement/CSS/tableStylesheet");
     }
 
     /**

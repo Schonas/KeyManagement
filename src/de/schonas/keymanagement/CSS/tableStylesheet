@@ -1,0 +1,15 @@
+#keyTable .table-row-cell:hover {
+    -fx-background-color:#d8d5e2;
+}
+#keyTable .table-row-cell:focused {
+    -fx-background-color:#233157;
+    -fx-text-fill: white;
+    -fx-table-cell-border-color: transparent;
+}
+#keyTable .table-view {
+    -fx-focus-color: #d8d5e2;
+}
+
+#roomTableView .table-row-cell{
+    -fx-background-color: white;
+}

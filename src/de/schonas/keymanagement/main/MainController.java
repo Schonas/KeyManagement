@@ -100,12 +100,12 @@ public class MainController {
                 TableData tb = new TableData(keyTable, uidCol, idCol, ownerCol, expDateCol, searchField);
                 tb.load();
                 keyTable.getSelectionModel().select(0);
-                //keyTable.getStylesheets().add("de/schonas/keymanagement/CSS/keyTableStylesheet");
+                keyTable.getStylesheets().add("de/schonas/keymanagement/CSS/tableStylesheet");
                 currentKey = keyTable.getSelectionModel().getSelectedItem();
             }
         }).start();
 
-        //menuBar.getStylesheets().add("de/schonas/keymanagement/CSS/menuBarStylesheet");
+        menuBar.getStylesheets().add("de/schonas/keymanagement/CSS/menuBarStylesheet");
 
         quitMenuButton.setAccelerator(new KeyCodeCombination(KeyCode.Q, KeyCodeCombination.CONTROL_DOWN));
         roomManagementMenuButton.setAccelerator(new KeyCodeCombination(KeyCode.R, KeyCodeCombination.CONTROL_DOWN));
