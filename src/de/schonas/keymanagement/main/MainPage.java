@@ -1,5 +1,6 @@
 package de.schonas.keymanagement.main;
 
+import de.schonas.keymanagement.Key;
 import de.schonas.keymanagement.database.KeySQL;
 import de.schonas.keymanagement.util.Print;
 import de.schonas.keymanagement.util.Utils;
@@ -14,10 +15,6 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 public class MainPage extends Application {

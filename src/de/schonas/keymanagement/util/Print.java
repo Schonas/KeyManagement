@@ -1,6 +1,6 @@
 package de.schonas.keymanagement.util;
 
-import de.schonas.keymanagement.main.Key;
+import de.schonas.keymanagement.Key;
 import javafx.embed.swing.SwingNode;
 import javafx.print.PrinterJob;
 import javafx.scene.Node;

@@ -1,9 +1,10 @@
 package de.schonas.keymanagement.main;
 
+import de.schonas.keymanagement.Key;
 import de.schonas.keymanagement.inventory.InventoryPage;
 import de.schonas.keymanagement.roominfo.RoomManagementPage;
 import de.schonas.keymanagement.settings.SettingsPage;
-import de.schonas.keymanagement.util.Print;
+import de.schonas.keymanagement.util.Action;
 import de.schonas.keymanagement.util.TableData;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -291,12 +292,6 @@ public class MainController {
     @FXML
     private void onAddKeyPrintClick() {
 
-        Key key = keyTable.getSelectionModel().getSelectedItem();
-
-        Stage printStage = new Stage();
-        Print p = new Print();
-        //p.printAllocationPaper(currentKey.getOwner(), currentKey.getID());
-
     }
 
     /**
@@ -304,11 +299,6 @@ public class MainController {
      */
     @FXML
     private void onRemoveKeyPrintClick(){
-
-        Key key = keyTable.getSelectionModel().getSelectedItem();
-
-        Stage printStage = new Stage();
-        //Print p = new Print();
 
     }
 

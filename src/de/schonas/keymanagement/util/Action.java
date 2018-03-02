@@ -1,4 +1,4 @@
-package de.schonas.keymanagement.main;
+package de.schonas.keymanagement.util;
 
 public enum Action {
 

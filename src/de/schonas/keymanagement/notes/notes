@@ -3,21 +3,20 @@
 TODO:
 SQL Table als Konstante
 Scanned signature as link
-Dokument über Abgabe/Annahme erstellen (Unterschriftenfeld, Keyinfos, etc)
-inventory page überschrift
+Dokument über Abgabe/Annahme erstellen (Unterschriftenfeld, Keyinfos, etc) -> PRINT
 edit/add Button möglichkeit für 1+ jahr geben
-Inventory: läuft diesen Monat ab
-wo wird die config gespeichert
-src aufräumen & unbenutze methoden löschen
+wo wird die config gespeichert(exe auf desktop, config auf Server?)
 
 WIP:
-test con in settings
-Reload Progress Bar
+test con in settings (eventuell ganz entfernen?)
 Expired? Col (View) in Tooltip, also as Column?
 con state with icon, remove after 2 secs
 tabelle in raumverwaltung schöner machen
 
 ADDED/FIXED:
+Reload Progress Bar -> Indicator
+src aufräumen & unbenutze methoden löschen
+Inventory: läuft diesen Monat ab -> nicht nötig
 CSS der verschiedenen Teile gleich halten, d.h. menubar und toolbar einheitlich gestalten
 sichern in thread machen (raumverwaltung)
 Save Progress Bar

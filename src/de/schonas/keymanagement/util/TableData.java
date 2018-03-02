@@ -1,7 +1,7 @@
 package de.schonas.keymanagement.util;
 
 import de.schonas.keymanagement.keyinfo.KeyInfo;
-import de.schonas.keymanagement.main.Key;
+import de.schonas.keymanagement.Key;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;

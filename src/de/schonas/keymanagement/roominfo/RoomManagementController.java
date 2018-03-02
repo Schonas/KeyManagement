@@ -1,6 +1,6 @@
 package de.schonas.keymanagement.roominfo;
 
-import de.schonas.keymanagement.main.Room;
+import de.schonas.keymanagement.Room;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -78,7 +78,8 @@ public class RoomManagementController {
 
         new Thread(() -> {
             progressIndicator.setVisible(true);
-            for(int i=0;i<= roomTableView.getItems().size()-1;i++){
+            int loopsize = roomTableView.getItems().size()-1;
+            for(int i=0;i<= loopsize;i++){
                 Room room = roomTableView.getItems().get(i);
                 if(room.getStatus().isSelected()){
                     ksql.insertIfNotExists(room.getID().getValue(), keyType);
@@ -100,7 +101,8 @@ public class RoomManagementController {
         List<String> accessibleRooms = ksql.getAccessibleRoomIDs(searchKeyField.getText());
         clearCheckboxes();
         progressIndicator.setVisible(false);
-        for(int i=0;i<= roomTableView.getItems().size()-1;i++){
+        int loopsize = roomTableView.getItems().size()-1;
+        for(int i=0;i<= loopsize;i++){
             Room room = roomTableView.getItems().get(i);
             if(accessibleRooms.contains(room.getID().getValue())){
                 roomTableView.getItems().get(i).setStatus(true);

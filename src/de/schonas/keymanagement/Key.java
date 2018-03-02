@@ -1,4 +1,4 @@
-package de.schonas.keymanagement.main;
+package de.schonas.keymanagement;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

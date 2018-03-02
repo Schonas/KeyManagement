@@ -1,12 +1,11 @@
 package de.schonas.keymanagement.database;
 
-import de.schonas.keymanagement.main.Action;
-import de.schonas.keymanagement.main.Key;
-import de.schonas.keymanagement.main.Room;
+import de.schonas.keymanagement.util.Action;
+import de.schonas.keymanagement.Key;
+import de.schonas.keymanagement.Room;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
