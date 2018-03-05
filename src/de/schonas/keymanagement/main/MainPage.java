@@ -2,7 +2,7 @@ package de.schonas.keymanagement.main;
 
 import de.schonas.keymanagement.Key;
 import de.schonas.keymanagement.database.KeySQL;
-import de.schonas.keymanagement.util.Print;
+import de.schonas.keymanagement.util.print.Print;
 import de.schonas.keymanagement.util.Utils;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -22,7 +22,7 @@ public class MainPage extends Application {
     public static Utils u;
     public static KeySQL ksql;
     public static Properties prop;
-    public static Print printer;
+    //public static Print printer;
     public static Key currentKey;
 
     public static Image LOGO = new Image("de/schonas/keymanagement/images/icon.png");
@@ -61,7 +61,7 @@ public class MainPage extends Application {
         u = new Utils();
         ksql = new KeySQL();
         //ksql.createTables();
-        printer = new Print();
+        //printer = new Print();
     }
 
 }
