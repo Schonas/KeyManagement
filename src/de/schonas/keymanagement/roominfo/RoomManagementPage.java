@@ -21,6 +21,8 @@ public class RoomManagementPage {
         stage.getIcons().add(LOGO);
         stage.resizableProperty().setValue(Boolean.FALSE);
         stage.setScene(scene);
+        stage.setHeight(400);
+        stage.setWidth(600);
         stage.setTitle(TITLE + " | Raumverwaltung");
         stage.show();
     }

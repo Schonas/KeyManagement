@@ -23,7 +23,7 @@ public class KeySQL extends MySQL {
      */
     public ResultSet getKeys(){
 
-        statement = "SELECT * FROM KEYMANAGEMENT.Openers";
+        statement = ("SELECT * FROM " + TABLE_KEYS);
         try {
             pStmt= conn.prepareStatement(statement);
             //pStmt.setString(1, TABLE_KEYS);
@@ -40,7 +40,7 @@ public class KeySQL extends MySQL {
      * @param key Schlüssel
      */
     public void insertKey(Key key){
-        Map map = u.getDBMap("id", key.getID());
+        Map<String, Object> map = u.getDBMap("id", key.getID());
         map.put("owner", key.getOwner());
         map.put("exp_date", u.getDateString(key.getExpDate()));
         ksql.insert(TABLE_KEYS, map);
@@ -59,11 +59,7 @@ public class KeySQL extends MySQL {
         String url = "jdbc:mysql://" + serverName + "/" + schema;
         try {
             conn = DriverManager.getConnection(url, username, password);
-            if(conn.isClosed()){
-                return false;
-            } else {
-                return true;
-            }
+            return !conn.isClosed();
         } catch (SQLException e) {
             return false;
         }
@@ -76,11 +72,12 @@ public class KeySQL extends MySQL {
      */
     public ResultSet getRooms(String keyID){
 
-        statement = "SELECT * FROM Openers o JOIN Access a ON o.id = a.key_id RIGHT OUTER JOIN Rooms r ON r.uid = a.room_id " +
+        statement = "SELECT * FROM ? o JOIN Access a ON o.id = a.key_id RIGHT OUTER JOIN Rooms r ON r.uid = a.room_id " +
                 "RIGHT OUTER JOIN Departments d ON d.uid = r.department_id WHERE o.id = ?";
         try {
             pStmt = conn.prepareStatement(statement);
-            pStmt.setString(1, keyID);
+            pStmt.setString(1, TABLE_KEYS);
+            pStmt.setString(2, keyID);
             return pStmt.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();

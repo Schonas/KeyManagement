@@ -76,6 +76,8 @@ public class RoomManagementController {
     public void onSaveRoomClick(){
         String keyType = searchKeyField.getText();
 
+        System.out.println(keyType);
+        if(keyType.isEmpty())return;
         new Thread(() -> {
             progressIndicator.setVisible(true);
             int loopsize = roomTableView.getItems().size()-1;
