@@ -4,6 +4,9 @@ import de.schonas.keymanagement.util.Action;
 import de.schonas.keymanagement.Key;
 import de.schonas.keymanagement.Room;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +19,8 @@ public class KeySQL extends MySQL {
 
     public static final String TABLE_KEYS = "KEYMANAGEMENT.Openers";
     public static final String TABLE_ACCESS = "KEYMANAGEMENT.Access";
+    private static final String TABLE_ROOMS = "KEYMANAGEMENT.Rooms";
+    private static final String TABLE_DEPARTMENTS = "KEYMANAGEMENT.Departments";
 
     /**
      * Liefer alle Schlüssel als RS
@@ -72,8 +77,8 @@ public class KeySQL extends MySQL {
      */
     public ResultSet getRooms(String keyID){
 
-        statement = "SELECT * FROM ? o JOIN Access a ON o.id = a.key_id RIGHT OUTER JOIN Rooms r ON r.uid = a.room_id " +
-                "RIGHT OUTER JOIN Departments d ON d.uid = r.department_id WHERE o.id = ?";
+        statement = "SELECT * FROM ? o JOIN " + TABLE_ACCESS + " a ON o.id = a.key_id RIGHT OUTER JOIN " + TABLE_ROOMS
+                + " r ON r.uid = a.room_id RIGHT OUTER JOIN " + TABLE_DEPARTMENTS + " d ON d.uid = r.department_id WHERE o.id = ?";
         try {
             pStmt = conn.prepareStatement(statement);
             pStmt.setString(1, TABLE_KEYS);
@@ -91,7 +96,7 @@ public class KeySQL extends MySQL {
      * @return ResultSet Raum, Department
      */
     public ResultSet getRooms(){
-        statement = "SELECT r.uid AS id, name FROM Rooms r JOIN Departments d ON d.uid = r.department_id;";
+        statement = "SELECT r.uid AS id, name FROM " + TABLE_ROOMS + " r JOIN " + TABLE_DEPARTMENTS + " d ON d.uid = r.department_id;";
         try {
             pStmt = conn.prepareStatement(statement);
             return pStmt.executeQuery();
@@ -107,7 +112,7 @@ public class KeySQL extends MySQL {
      */
     public List<String> getDepartments(){
         List<String> departments = new ArrayList<>();
-        statement = "SELECT DISTINCT name FROM Departments";
+        statement = "SELECT DISTINCT name FROM " + TABLE_DEPARTMENTS;
         ResultSet rs;
         try{
             pStmt = conn.prepareStatement(statement);
@@ -147,7 +152,7 @@ public class KeySQL extends MySQL {
      */
     private ResultSet getResultTypes(){
 
-        statement = "SELECT id FROM KEYMANAGEMENT.Openers";
+        statement = "SELECT id FROM " + TABLE_KEYS;
         try {
             pStmt= conn.prepareStatement(statement);
             //pStmt.setString(1, TABLE_KEYS);
@@ -187,7 +192,7 @@ public class KeySQL extends MySQL {
      * @return
      */
     public int getKeyUID(Key key){
-        statement = "SELECT uid FROM Openers WHERE id = ?";
+        statement = "SELECT uid FROM " + TABLE_KEYS + " WHERE id = ?";
         ResultSet rs;
         try {
             pStmt = conn.prepareStatement(statement);
@@ -244,7 +249,7 @@ public class KeySQL extends MySQL {
      */
     public List<Room> getAccessibleRooms(String keyID){
         List<Room> rooms = new ArrayList<>();
-        statement = "SELECT * FROM Access WHERE key_id = ?";
+        statement = "SELECT * FROM " + TABLE_ACCESS + " WHERE key_id = ?";
         ResultSet rs;
         try {
             pStmt = conn.prepareStatement(statement);
@@ -268,7 +273,7 @@ public class KeySQL extends MySQL {
      */
     public List<String> getAccessibleRoomIDs(String keyID){
         List<String> room_ids = new ArrayList<>();
-        statement = "SELECT * FROM Access WHERE key_id = ?";
+        statement = "SELECT * FROM " + TABLE_ACCESS + " WHERE key_id = ?";
         ResultSet rs;
         try {
             pStmt = conn.prepareStatement(statement);
@@ -281,27 +286,6 @@ public class KeySQL extends MySQL {
             e.printStackTrace();
         }
         return room_ids;
-    }
-
-    /**
-     * Setzt Räume die noch nicht für einen Schlüssel gesetzt waren, wenn der Eintrag noch nicht existiert
-     * @param keyID KeyType
-     * @param roomID RoomID
-     */
-    public void setNewRoomIDs(String keyID, String roomID){
-        statement = "INSERT INTO Access(?, ?) SELECT Access.key_id, Access.room_id FROM Access WHERE NOT EXISTS (SELECT * FROM Access WHERE key_id = ? AND room_id = ?)";
-        try {
-            pStmt = conn.prepareStatement(statement);
-            System.out.println(statement);
-            pStmt.setString(1, keyID);
-            pStmt.setString(2, roomID);
-            pStmt.setString(3, keyID);
-            pStmt.setString(4, roomID);
-            System.out.println(pStmt);
-            pStmt.executeUpdate();
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -335,33 +319,34 @@ public class KeySQL extends MySQL {
      * @throws SQLException
      */
     public void createTables() throws SQLException {
-        String keysTable = "CREATE TABLE IF NOT EXISTS Openers" +
-                "(uid INT PRIMARY KEY AUTO_INCREMENT," +
-                "    id VARCHAR(30) NOT NULL," +
-                "    owner VARCHAR(50)," +
-                "    exp_date VARCHAR(10));" +
-                "CREATE UNIQUE INDEX Openers_uid_uindex ON Openers(uid);";
-        String roomsTable = "CREATE TABLE IF NOT EXISTS Rooms" +
-                "(uid VARCHAR(30) PRIMARY KEY," +
-                "  department_id INT);" +
-                "CREATE UNIQUE INDEX Rooms_uid_uindex ON Rooms (uid);";
-        String departmentsTable = "CREATE TABLE IF NOT EXISTS Departments" +
-                "(uid INT PRIMARY KEY AUTO_INCREMENT," +
-                "    name VARCHAR(50));" +
-                "CREATE UNIQUE INDEX Departments_uid_uindex ON Departments(uid);";
-        String accessTable = "CREATE TABLE IF NOT EXISTS Access" +
-                "(key_id VARCHAR(50)," +
-                "    room_id VARCHAR(50));";
-        String logTable = "CREATE TABLE Log" +
-                "(time TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
-                "    user VARCHAR(30) NOT NULL," +
-                "    action VARCHAR(300) NOT NULL);";
-        Statement stmt = conn.createStatement();
-        stmt.execute(keysTable);
-        stmt.execute(roomsTable);
-        stmt.execute(departmentsTable);
-        stmt.execute(accessTable);
-        stmt.execute(logTable);
+        String s;
+        StringBuffer sb = new StringBuffer();
+
+        try {
+            FileReader fr = new FileReader(new File("de/schonas/keymanagement/database/tables.sql"));
+            // be sure to not have line starting with "--" or "/*" or any other non aplhabetical character
+            BufferedReader br = new BufferedReader(fr);
+
+            while ((s = br.readLine()) != null) {
+                sb.append(s);
+            }
+
+            br.close();
+
+            String[] inst = sb.toString().split(";");
+            Statement stmt = conn.createStatement();
+            for (int i = 0; i < inst.length; i++) {
+                // we ensure that there is no spaces before or after the request string
+                // in order to not execute empty statements
+                if (!inst[i].trim().equals("")) {
+                    stmt.executeUpdate(inst[i]);
+                    System.out.println(">>" + inst[i]);
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("[Error] " + e.toString());
+        }
     }
 
 }

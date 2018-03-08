@@ -55,12 +55,11 @@ public class MainController {
     @FXML
     private MenuBar menuBar;
 
-    @FXML//ADD BOX
+    @FXML //ADD BOX
     private TextField idAddField, ownerAddField;
 
-    @FXML//ADD BOX
+    @FXML //ADD BOX
     private DatePicker expDateAddField;
-
 
     /**
      * init Methode die alles vorbereitet
@@ -119,7 +118,6 @@ public class MainController {
      */
     @FXML
     private void onSettingsClick() throws IOException {
-        //TODO: Letzter Aufruf sollte Exception immer handlen
         SettingsPage s = new SettingsPage();
         s.start();
     }

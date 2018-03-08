@@ -1,10 +1,11 @@
 ###Client
 
 TODO:
-SQL Table als Konstante
+execute sql script on startup
 Scanned signature as link
 Dokument über Abgabe/Annahme erstellen (Unterschriftenfeld, Keyinfos, etc) -> PRINT
-wo wird die config gespeichert(exe auf desktop, config auf Server?)
+wo wird die config gespeichert(exe auf desktop, config auf (K)Server?)
+Blauer Strich an Seite von Tabelle
 
 WIP:
 test con in settings (eventuell ganz entfernen?)
@@ -13,6 +14,7 @@ con state with icon, remove after 2 secs
 tabelle in raumverwaltung schöner machen
 
 ADDED/FIXED:
+SQL Table als Konstante
 Reload Progress Bar -> Indicator
 src aufräumen & unbenutze methoden löschen
 Inventory: läuft diesen Monat ab -> nicht nötig

@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.Properties;
 
 public class MainPage extends Application {
@@ -50,7 +51,7 @@ public class MainPage extends Application {
     }
 
     @Override
-    public void init() {
+    public void init() throws SQLException {
         prop = new Properties();
         try {
             InputStream input = new FileInputStream("config");
@@ -60,7 +61,7 @@ public class MainPage extends Application {
         }
         u = new Utils();
         ksql = new KeySQL();
-        //ksql.createTables();
+        ksql.createTables();
         //printer = new Print();
     }
 

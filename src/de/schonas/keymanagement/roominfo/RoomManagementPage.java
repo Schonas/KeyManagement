@@ -25,5 +25,6 @@ public class RoomManagementPage {
         stage.setWidth(600);
         stage.setTitle(TITLE + " | Raumverwaltung");
         stage.show();
+
     }
 }
