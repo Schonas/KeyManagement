@@ -9,7 +9,6 @@
 #keyTable .table-view {
     -fx-focus-color: #d8d5e2;
 }
-
 #roomTableView .table-row-cell{
     -fx-background-color: white;
 }

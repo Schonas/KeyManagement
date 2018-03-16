@@ -101,7 +101,7 @@ public class MainController {
                 tb.load();
                 keyTable.getSelectionModel().select(0);
                 keyTable.getStylesheets().add("de/schonas/keymanagement/CSS/tableStylesheet");
-                currentKey = keyTable.getSelectionModel().getSelectedItem();
+                CURRENT_KEY = keyTable.getSelectionModel().getSelectedItem();
             }
         }).start();
 
@@ -148,7 +148,7 @@ public class MainController {
                 RemoveBox.setVisible(false);
                 idEditField.setText(key.getID());
                 ownerEditField.setText(key.getOwner());
-                currentKey = key;
+                CURRENT_KEY = key;
                 if (!key.getExpDate().isEmpty()) dateEditField.setValue(u.getLocalDateFromString(key.getExpDate()));
             }
         } else {
@@ -202,9 +202,9 @@ public class MainController {
     private void onUpdateClick(){
         Key key;
         if(ownerEditField.getText() == null || dateEditField.getValue()== null){
-            key = new Key(currentKey.getUID(), idEditField.getText());
+            key = new Key(CURRENT_KEY.getUID(), idEditField.getText());
         } else {
-            key = new Key(currentKey.getUID(), idEditField.getText(), ownerEditField.getText(), dateEditField.getValue().toString());
+            key = new Key(CURRENT_KEY.getUID(), idEditField.getText(), ownerEditField.getText(), dateEditField.getValue().toString());
         }
         Map<String, Object> data = u.getDBMap("owner", key.getOwner());
         data.put("exp_date", u.getDateString(key.getExpDate()));
@@ -239,9 +239,9 @@ public class MainController {
     private void onAddKeyClick(){
         Key key;
         if(ownerAddField.getText() == null || expDateAddField.getValue()== null){
-            key = new Key(currentKey.getUID(), idAddField.getText());
+            key = new Key(CURRENT_KEY.getUID(), idAddField.getText());
         } else {
-            key = new Key(currentKey.getUID(), idAddField.getText(), ownerAddField.getText(), expDateAddField.getValue().toString());
+            key = new Key(CURRENT_KEY.getUID(), idAddField.getText(), ownerAddField.getText(), expDateAddField.getValue().toString());
         }
         ksql.insertKey(key);
         u.sendAlert(statusBar, "Key " + key.getID() + " wurde \nerfolgreich hinzugefügt.");

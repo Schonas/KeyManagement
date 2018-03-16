@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static de.schonas.keymanagement.main.MainPage.currentKey;
+import static de.schonas.keymanagement.main.MainPage.CURRENT_KEY;
 import static de.schonas.keymanagement.main.MainPage.ksql;
 import static de.schonas.keymanagement.main.MainPage.u;
 
@@ -122,7 +122,7 @@ public class TableData {
                     Key key = row.getItem();
                     KeyInfo keyInfo = new KeyInfo();
                     try {
-                        currentKey = key;
+                        CURRENT_KEY = key;
                         keyInfo.start();
                     } catch (IOException e) {
                         e.printStackTrace();

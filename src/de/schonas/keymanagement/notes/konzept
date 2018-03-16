@@ -8,6 +8,7 @@ Bei Löschung,Edit,Add wird dokumentiert wer es gemacht hat. Was noch?
 Schlüssel ohne Datum oder Name? Date in SQL als Varchar (done), kann null seine
 Add Room/Department?
 addPage, editPage Abfangen wenn nicht alles ausgefüllt ist -> Schlüssel auch ohne Ablaufdatum?
+mehrere emails angeben
 
 ##KeyInfo Seite
 

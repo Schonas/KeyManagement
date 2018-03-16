@@ -1,14 +1,8 @@
 package de.schonas.keymanagement.keyinfo;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TableView;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-
-import java.io.IOException;
 
 import static de.schonas.keymanagement.main.MainPage.*;
 
@@ -28,22 +22,22 @@ public class KeyInfoController {
 
         historyTable.getStylesheets().add("de/schonas/keymanagement/CSS/tableStylesheet");
 
-        keyInfoIDField.setText(currentKey.getID());
-        keyInfoUIDField.setText(currentKey.getUID());
+        keyInfoIDField.setText(CURRENT_KEY.getID());
+        keyInfoUIDField.setText(CURRENT_KEY.getUID());
 
-        if(currentKey.getOwner() != null) {
-            keyInfoOwnerField.setText(currentKey.getOwner());
+        if(CURRENT_KEY.getOwner() != null) {
+            keyInfoOwnerField.setText(CURRENT_KEY.getOwner());
         } else {
             keyInfoOwnerField.setText("-");
         }
 
-        if(!currentKey.getExpDate().isEmpty()) {
-            keyInfoExpDateField.setText(currentKey.getExpDate());
+        if(!CURRENT_KEY.getExpDate().isEmpty()) {
+            keyInfoExpDateField.setText(CURRENT_KEY.getExpDate());
         } else {
             keyInfoExpDateField.setText("-");
         }
 
-        roomView.setText(u.getAccessibleKeyList(currentKey.getID()));
+        roomView.setText(u.getAccessibleKeyList(CURRENT_KEY.getID()));
     }
 
 }

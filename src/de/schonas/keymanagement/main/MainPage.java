@@ -23,8 +23,7 @@ public class MainPage extends Application {
     public static Utils u;
     public static KeySQL ksql;
     public static Properties prop;
-    //public static Print printer;
-    public static Key currentKey;
+    public static Key CURRENT_KEY;
 
     public static Image LOGO = new Image("de/schonas/keymanagement/images/icon.png");
     public static String TITLE = "Key Management";
