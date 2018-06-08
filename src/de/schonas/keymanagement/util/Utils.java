@@ -96,8 +96,7 @@ public class Utils {
      * @return Differenz in Tagen
      */
     public long getDateDiff(String dateString){
-        LocalDate current = LocalDate.now();
-        return DAYS.between(getLocalDateFromString(dateString), current);
+        return DAYS.between(getLocalDateFromString(dateString), LocalDate.now());
     }
 
     /**
