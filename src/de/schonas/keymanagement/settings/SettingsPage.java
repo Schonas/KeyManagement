@@ -12,7 +12,6 @@ import static de.schonas.keymanagement.main.MainPage.TITLE;
 
 public class SettingsPage {
 
-    //TODO: Vererbungshierarchie nutzen -> Redundanzen wie setzen der Szene oder anderer Merkmale wie resize LOGO .. vermeiden
     public void start () throws IOException {
 
         Stage stage = new Stage();

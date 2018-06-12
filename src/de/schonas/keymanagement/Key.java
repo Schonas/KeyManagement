@@ -17,14 +17,12 @@ public class Key {
         this.UID = new SimpleStringProperty(uid);
     }
 
-    /*
-    public Key(String id, String owner){
-        this.UID = new SimpleStringProperty(null);
+    public Key(String uid, String id, String owner){
+        this.UID = new SimpleStringProperty(uid);
         this.ID = new SimpleStringProperty(id);
         this.Owner = new SimpleStringProperty(owner);
         this.expDate = new SimpleStringProperty(null);
     }
-    */
 
     public Key(String uid, String id){
         this.UID = new SimpleStringProperty(uid);

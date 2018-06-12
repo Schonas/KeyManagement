@@ -113,6 +113,16 @@ public class RoomManagementController {
     }
 
     /**
+     * Wählt alle Räume aus
+     */
+    @FXML
+    public void onMasterKeyClick(){
+        for(Room r : roomTableView.getItems()){
+            r.setStatus(true);
+        }
+    }
+
+    /**
      * Unchecked alle Checkboxen
      */
     private void clearCheckboxes(){

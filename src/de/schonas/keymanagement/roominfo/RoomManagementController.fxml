@@ -28,5 +28,6 @@
       </TableView>
       <Button fx:id="selectKeyTypeButton" layoutX="181.0" layoutY="94.0" mnemonicParsing="false" onAction="#onSelectKeyTypeButtonClick" text="Select" />
       <ProgressIndicator fx:id="progressIndicator" layoutX="78.0" layoutY="331.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="25.0" visible="false" />
+      <Button layoutX="13.0" layoutY="133.0" mnemonicParsing="false" onAction="#onMasterKeyClick" text="Hauptschlüssel" />
     </children>
 </AnchorPane>

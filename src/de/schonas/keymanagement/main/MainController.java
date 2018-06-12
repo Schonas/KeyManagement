@@ -201,8 +201,10 @@ public class MainController {
     @FXML
     private void onUpdateClick(){
         Key key;
-        if(ownerEditField.getText() == null || dateEditField.getValue()== null){
+        if(ownerEditField.getText() == null){
             key = new Key(CURRENT_KEY.getUID(), idEditField.getText());
+        } else if(dateEditField.getValue()== null){
+            key = new Key(CURRENT_KEY.getUID(), idEditField.getText(), ownerEditField.getText());
         } else {
             key = new Key(CURRENT_KEY.getUID(), idEditField.getText(), ownerEditField.getText(), dateEditField.getValue().toString());
         }
@@ -211,7 +213,7 @@ public class MainController {
         ksql.update("KEYMANAGEMENT.Openers", u.getDBMap("id", key.getID()), data);
         u.reloadTable(keyTable, uidCol, idCol, ownerCol, expDateCol, searchField);
         ksql.addLog(key, Action.UPDATEKEY);
-        u.sendAlert(statusBar, "Key " + key.getID() + " wurde erfolgreich geändert.");
+        u.sendAlert(statusBar, "Key " + key.getUID() + " wurde erfolgreich geändert.");
         EditBox.setVisible(false);
     }
 
@@ -238,13 +240,15 @@ public class MainController {
     @FXML
     private void onAddKeyClick(){
         Key key;
-        if(ownerAddField.getText() == null || expDateAddField.getValue()== null){
+        if(ownerAddField.getText() == null){
             key = new Key(CURRENT_KEY.getUID(), idAddField.getText());
+        } else if(expDateAddField.getValue()== null){
+            key = new Key(CURRENT_KEY.getUID(), idAddField.getText(), ownerAddField.getText());
         } else {
             key = new Key(CURRENT_KEY.getUID(), idAddField.getText(), ownerAddField.getText(), expDateAddField.getValue().toString());
         }
         ksql.insertKey(key);
-        u.sendAlert(statusBar, "Key " + key.getID() + " wurde \nerfolgreich hinzugefügt.");
+        u.sendAlert(statusBar, "Key " + key.getUID() + " wurde \nerfolgreich hinzugefügt.");
         u.reloadTable(keyTable, uidCol, idCol, ownerCol, expDateCol, searchField);
         keyTable.getSelectionModel().select(key);
         ksql.addLog(keyTable.getSelectionModel().getSelectedItem(), Action.ADDKEY);

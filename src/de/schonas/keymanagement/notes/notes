@@ -6,15 +6,15 @@ Scanned signature as link
 Dokument über Abgabe/Annahme erstellen (Unterschriftenfeld, Keyinfos, etc) -> PRINT
 wo wird die config gespeichert(exe auf desktop, config auf (K)Server?)
 Blauer Strich an Seite von Tabelle
-auswertung / sele (hs, abteilung)
+auswertung / sele (abteilung)
 
 WIP:
 test con in settings (eventuell ganz entfernen?)
-Expired? Col (View) in Tooltip, also as Column?
 con state with icon, remove after 2 secs
 tabelle in raumverwaltung schöner machen
 
 ADDED/FIXED:
+Hauptschlüssel
 SQL Table als Konstante
 Reload Progress Bar -> Indicator
 src aufräumen & unbenutze methoden löschen
