@@ -4,6 +4,7 @@ import de.schonas.keymanagement.util.Action;
 import de.schonas.keymanagement.Key;
 import de.schonas.keymanagement.Room;
 
+import javax.xml.transform.Result;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -347,6 +348,44 @@ public class KeySQL extends MySQL {
         } catch (Exception e) {
             System.out.println("[Error] " + e.toString());
         }
+    }
+
+    public List<String> getOwners(){
+        List<String> owners = new ArrayList<>();
+        statement = "SELECT owner FROM Openers WHERE owner IS NOT NULL GROUP BY owner;";
+        ResultSet rs;
+        try {
+            pStmt = conn.prepareStatement(statement);
+            rs = pStmt.executeQuery();
+            String owner;
+            while (rs.next()){
+                owner = rs.getString("owner");
+                owners.add(owner);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return owners;
+    }
+
+    public List<Room> getAccessibleRoomsByOwner(String Owner){
+        List<Room> rooms = new ArrayList<>();
+        statement = "SELECT DISTINCT room_id, name FROM Openers o JOIN Access a ON o.id = a.key_id JOIN Rooms r ON " +
+                "a.room_id = r.uid JOIN Departments d ON r.department_id = d.uid WHERE o.owner = ?";
+        ResultSet rs;
+        try {
+            pStmt = conn.prepareStatement(statement);
+            pStmt.setString(1, Owner);
+            rs = pStmt.executeQuery();
+            Room r;
+            while (rs.next()){
+                r = new Room(rs.getString("room_id"), rs.getString("name"));
+                rooms.add(r);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rooms;
     }
 
 }

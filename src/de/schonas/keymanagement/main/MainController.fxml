@@ -36,6 +36,7 @@
             <items>
               <MenuItem mnemonicParsing="false" onAction="#onSettingsClick" text="Einstellungen" />
                   <MenuItem fx:id="roomManagementMenuButton" mnemonicParsing="false" onAction="#onRoomManagementClick" text="Raumverwaltung" />
+                  <MenuItem mnemonicParsing="false" onAction="#onSeleSearchClick" text="Selektion" />
                   <MenuItem fx:id="inventoryMenuButton" mnemonicParsing="false" onAction="#onInventoryClick" text="Inventar" />
                   <MenuItem fx:id="quitMenuButton" mnemonicParsing="false" onAction="#onQuitClick" text="Beenden" />
             </items>

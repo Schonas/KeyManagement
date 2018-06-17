@@ -3,6 +3,7 @@ package de.schonas.keymanagement.main;
 import de.schonas.keymanagement.Key;
 import de.schonas.keymanagement.inventory.InventoryPage;
 import de.schonas.keymanagement.roominfo.RoomManagementPage;
+import de.schonas.keymanagement.sele.SelePage;
 import de.schonas.keymanagement.settings.SettingsPage;
 import de.schonas.keymanagement.util.Action;
 import de.schonas.keymanagement.util.TableData;
@@ -286,6 +287,12 @@ public class MainController {
     private void onRoomManagementClick() throws IOException {
         RoomManagementPage rm = new RoomManagementPage();
         rm.start();
+    }
+
+    @FXML
+    private void onSeleSearchClick() throws IOException {
+        SelePage sp = new SelePage();
+        sp.start();
     }
 
     /**
