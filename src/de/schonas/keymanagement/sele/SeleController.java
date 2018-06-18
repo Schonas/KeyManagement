@@ -33,7 +33,7 @@ public class SeleController {
     public void onSearchRoomsClick(){
         String list="";
         for(Room room : ksql.getAccessibleRoomsByOwner(seleSearchField.getText())){
-            list += room.getID().getValue() + room.getDepartment().getValue() + "\n";
+            list += room.getID().getValue() + " | "+ room.getDepartment().getValue() + "\n";
         }
         aRooms.setText(list);
     }

@@ -16,7 +16,6 @@ public class InventoryController {
      */
     @FXML
     protected void initialize() {
-        //DATEN AUS DB ABRUFEN UND AUF TEXTE SCHREIBEN
         allKeys.setText(String.valueOf(ksql.getKeyAmount("SELECT COUNT(id) FROM " + KeySQL.TABLE_KEYS)));
         occupiedKeys.setText(String.valueOf(ksql.getKeyAmount("SELECT COUNT(id) FROM " + KeySQL.TABLE_KEYS + " WHERE owner IS NOT NULL")));
         freeKeys.setText(String.valueOf(ksql.getKeyAmount("SELECT COUNT(id) FROM " + KeySQL.TABLE_KEYS + " WHERE owner IS NULL")));

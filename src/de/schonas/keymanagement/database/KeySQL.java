@@ -371,7 +371,7 @@ public class KeySQL extends MySQL {
     public List<Room> getAccessibleRoomsByOwner(String Owner){
         List<Room> rooms = new ArrayList<>();
         statement = "SELECT DISTINCT room_id, name FROM Openers o JOIN Access a ON o.id = a.key_id JOIN Rooms r ON " +
-                "a.room_id = r.uid JOIN Departments d ON r.department_id = d.uid WHERE o.owner = ?";
+                "a.room_id = r.uid JOIN Departments d ON r.department_id = d.uid WHERE o.owner = ? ORDER BY name";
         ResultSet rs;
         try {
             pStmt = conn.prepareStatement(statement);

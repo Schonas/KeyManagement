@@ -4,11 +4,13 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="183.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.schonas.keymanagement.sele.SeleController">
+<AnchorPane prefHeight="400.0" prefWidth="271.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.schonas.keymanagement.sele.SeleController">
    <children>
-      <TextField fx:id="seleSearchField" layoutX="14.0" layoutY="37.0" onAction="#onSeleSearch" prefHeight="25.0" prefWidth="128.0" />
-      <Button layoutX="142.0" layoutY="37.0" mnemonicParsing="false" onAction="#onSearchRoomsClick" prefHeight="25.0" prefWidth="28.0" />
-      <TextArea fx:id="aRooms" layoutX="14.0" layoutY="76.0" prefHeight="309.0" prefWidth="158.0" />
+      <TextField fx:id="seleSearchField" layoutX="14.0" layoutY="37.0" onAction="#onSeleSearch" prefHeight="25.0" prefWidth="144.0" promptText="Mitarbeiter..." />
+      <Button layoutX="193.0" layoutY="37.0" mnemonicParsing="false" onAction="#onSearchRoomsClick" prefHeight="25.0" prefWidth="54.0" text="Suche" />
+      <TextArea fx:id="aRooms" editable="false" layoutX="14.0" layoutY="76.0" prefHeight="309.0" prefWidth="233.0" />
+      <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Raumzugriff" />
    </children>
 </AnchorPane>

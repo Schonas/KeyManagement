@@ -22,7 +22,7 @@ public class SelePage {
         stage.getIcons().add(LOGO);
         stage.resizableProperty().setValue(Boolean.FALSE);
         stage.setScene(scene);
-        stage.setTitle(TITLE + " | Selektion");
+        stage.setTitle(TITLE);
         stage.show();
 
     }
