@@ -1,5 +1,8 @@
 package de.schonas.keymanagement.database;
 
+import de.schonas.keymanagement.main.MainController;
+import de.schonas.keymanagement.main.MainPage;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +42,7 @@ public class MySQL {
 
         String serverName = prop.getProperty("host");
         String schema = prop.getProperty("database");
-        String url = "jdbc:mysql://" + serverName + "/" + schema + "?autoReconnect=true";
+        String url = "jdbc:mysql://" + serverName + "/" + schema + "?autoReconnect=true&verifyServerCertificate=false&useSSL=true";
         String username = prop.getProperty("username");
         String password = prop.getProperty("password");
         try {
@@ -98,6 +101,7 @@ public class MySQL {
             interrupt();
         } catch (SQLException e) {
             e.printStackTrace();
+            MainPage.u.sendAlert(MainController.statusBar, "DB Fehler beim Hinzufügen.");
         }
 
     }

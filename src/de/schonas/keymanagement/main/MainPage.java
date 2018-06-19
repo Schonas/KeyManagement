@@ -52,15 +52,17 @@ public class MainPage extends Application {
     @Override
     public void init() throws SQLException {
         prop = new Properties();
+        u = new Utils();
         try {
             InputStream input = new FileInputStream("config");
             prop.load(input);
         } catch (IOException e) {
             e.printStackTrace();
+            u.sendAlert(MainController.statusBar, "Fehler beim Aufrufen\n der Config");
+
         }
-        u = new Utils();
         ksql = new KeySQL();
-        ksql.createTables();
+        //ksql.createTables();
         //printer = new Print();
     }
 

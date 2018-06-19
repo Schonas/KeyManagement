@@ -31,10 +31,10 @@ public class SeleController {
     }
     @FXML
     public void onSearchRoomsClick(){
-        String list="";
+        StringBuilder list= new StringBuilder();
         for(Room room : ksql.getAccessibleRoomsByOwner(seleSearchField.getText())){
-            list += room.getID().getValue() + " | "+ room.getDepartment().getValue() + "\n";
+            list.append(room.getID().getValue()).append(" | ").append(room.getDepartment().getValue()).append("\n");
         }
-        aRooms.setText(list);
+        aRooms.setText(list.toString());
     }
 }

@@ -7,7 +7,6 @@ import de.schonas.keymanagement.sele.SelePage;
 import de.schonas.keymanagement.settings.SettingsPage;
 import de.schonas.keymanagement.util.Action;
 import de.schonas.keymanagement.util.TableData;
-import de.schonas.keymanagement.util.print.Print;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -49,7 +48,9 @@ public class MainController {
     private VBox EditBox, AddBox, RemoveBox;
 
     @FXML //
-    public Text statusBar, RemoveText;
+    public static Text statusBar;
+    @FXML //
+    public Text RemoveText;
 
     @FXML
     private Button addTaskButton, removeTaskButton, editTaskButton, reloadTaskButton;
@@ -116,7 +117,7 @@ public class MainController {
 
     /**
      * Öffnet Settings Page
-     * @throws IOException
+     * @throws IOException e
      */
     @FXML
     private void onSettingsClick() throws IOException {
