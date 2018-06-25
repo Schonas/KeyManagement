@@ -7,6 +7,7 @@ import de.schonas.keymanagement.sele.SelePage;
 import de.schonas.keymanagement.settings.SettingsPage;
 import de.schonas.keymanagement.util.Action;
 import de.schonas.keymanagement.util.TableData;
+import de.schonas.keymanagement.util.print.PrintObject;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -19,6 +20,8 @@ import org.controlsfx.glyphfont.Glyph;
 import org.controlsfx.glyphfont.GlyphFont;
 import org.controlsfx.glyphfont.GlyphFontRegistry;
 
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.io.IOException;
 import java.util.Map;
 import java.util.TimerTask;
@@ -301,8 +304,14 @@ public class MainController {
      * Druckt Dokument für die Vergabe eines Schlüssels
      */
     @FXML
-    private void onAddKeyPrintClick() {
+    private void onAddKeyPrintClick() throws PrinterException {
+        PrinterJob pjob = PrinterJob.getPrinterJob();
 
+        if (!pjob.printDialog())
+            return;
+        pjob.setPrintable(new PrintObject("Hiermit hat Herr/Frau " +  CURRENT_KEY.getOwner()
+                + " den Schlüssel " + CURRENT_KEY.getID() + " erhalten."));
+        pjob.print();
     }
 
     /**
