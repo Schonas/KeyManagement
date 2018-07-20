@@ -54,12 +54,10 @@ public class MainPage extends Application {
         prop = new Properties();
         u = new Utils();
         try {
-            InputStream input = new FileInputStream("config");
+            InputStream input = new FileInputStream("config.properties");
             prop.load(input);
         } catch (IOException e) {
             e.printStackTrace();
-            u.sendAlert(MainController.statusBar, "Fehler beim Aufrufen\n der Config");
-
         }
         ksql = new KeySQL();
         //ksql.createTables();

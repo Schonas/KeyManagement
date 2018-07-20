@@ -9,6 +9,7 @@ import de.schonas.keymanagement.util.Action;
 import de.schonas.keymanagement.util.TableData;
 import de.schonas.keymanagement.util.print.PrintObject;
 import javafx.fxml.FXML;
+import javafx.print.PrinterJob;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -21,7 +22,6 @@ import org.controlsfx.glyphfont.GlyphFont;
 import org.controlsfx.glyphfont.GlyphFontRegistry;
 
 import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
 import java.io.IOException;
 import java.util.Map;
 import java.util.TimerTask;
@@ -51,7 +51,8 @@ public class MainController {
     private VBox EditBox, AddBox, RemoveBox;
 
     @FXML //
-    public static Text statusBar;
+    public Text statusBar;
+
     @FXML //
     public Text RemoveText;
 
@@ -216,7 +217,7 @@ public class MainController {
         }
         Map<String, Object> data = u.getDBMap("owner", key.getOwner());
         data.put("exp_date", u.getDateString(key.getExpDate()));
-        ksql.update("KEYMANAGEMENT.Openers", u.getDBMap("id", key.getID()), data);
+        ksql.update("KEYMANAGEMENT.Openers", u.getDBMap("uid", key.getUID()), data);
         u.reloadTable(keyTable, uidCol, idCol, ownerCol, expDateCol, searchField);
         ksql.addLog(key, Action.UPDATEKEY);
         u.sendAlert(statusBar, "Key " + key.getUID() + " wurde erfolgreich geändert.");
@@ -247,11 +248,11 @@ public class MainController {
     private void onAddKeyClick(){
         Key key;
         if(ownerAddField.getText() == null){
-            key = new Key(CURRENT_KEY.getUID(), idAddField.getText());
+            key = new Key(idAddField.getText(), idAddField.getText());
         } else if(expDateAddField.getValue()== null){
-            key = new Key(CURRENT_KEY.getUID(), idAddField.getText(), ownerAddField.getText());
+            key = new Key(idAddField.getText(), idAddField.getText(), ownerAddField.getText());
         } else {
-            key = new Key(CURRENT_KEY.getUID(), idAddField.getText(), ownerAddField.getText(), expDateAddField.getValue().toString());
+            key = new Key(idAddField.getText(), idAddField.getText(), ownerAddField.getText(), expDateAddField.getValue().toString());
         }
         ksql.insertKey(key);
         u.sendAlert(statusBar, "Key " + key.getUID() + " wurde \nerfolgreich hinzugefügt.");
@@ -304,14 +305,20 @@ public class MainController {
      * Druckt Dokument für die Vergabe eines Schlüssels
      */
     @FXML
-    private void onAddKeyPrintClick() throws PrinterException {
-        PrinterJob pjob = PrinterJob.getPrinterJob();
+    private void onAddKeyPrintClick() {
+        /*
+        PrinterJob pjob = PrinterJob.createPrinterJob();
 
-        if (!pjob.printDialog())
-            return;
+        if (!pjob.printDialog()) return;
+        pjob.printPage(new PrintObject("Hiermit hat Herr/Frau " +  CURRENT_KEY.getOwner()
+                + " den Schlüssel " + CURRENT_KEY.getID() + " erhalten."));
         pjob.setPrintable(new PrintObject("Hiermit hat Herr/Frau " +  CURRENT_KEY.getOwner()
                 + " den Schlüssel " + CURRENT_KEY.getID() + " erhalten."));
+        pjob.setJobName("Schlüsselvergabe " + CURRENT_KEY.getOwner());
         pjob.print();
+        u.sendAlert(statusBar, "Vergabedokument \nwird gedruckt.");
+        pjob.cancel();
+        */
     }
 
     /**

@@ -1,5 +1,7 @@
 package de.schonas.keymanagement.util.print;
 
+import javafx.scene.Node;
+
 import java.awt.*;
 import java.awt.print.*;
 
@@ -12,9 +14,14 @@ public class PrintObject implements Printable {
 
     private String text;
 
+    /**
+     * Objekt für Druck
+     * @param text Text der zwischen Über- und Unterschrift steht
+     */
     public PrintObject (String text){
         this.text = text;
     }
+
     @Override
     public int print(Graphics g, PageFormat pageFormat, int pageIndex) {
         g.setFont(topic);

@@ -229,7 +229,7 @@ public class KeySQL extends MySQL {
      * @return
      */
     public String getActionLog(Key key, Action action){
-        String actionString = ("Key (UID: " + key.getUID() + ") wurde ");
+        String actionString = ("Key mit der UID " + key.getUID() + " wurde ");
         switch (action){
             case ADDKEY:    actionString += "hinzugefügt.";
                             break;

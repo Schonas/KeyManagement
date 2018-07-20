@@ -101,7 +101,6 @@ public class MySQL {
             interrupt();
         } catch (SQLException e) {
             e.printStackTrace();
-            MainPage.u.sendAlert(MainController.statusBar, "DB Fehler beim Hinzufügen.");
         }
 
     }
