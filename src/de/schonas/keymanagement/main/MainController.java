@@ -271,7 +271,7 @@ public class MainController {
     @FXML
     private void onRemoveYesClick(){
         Key key = keyTable.getSelectionModel().getSelectedItem();
-        ksql.delete(TABLE_KEYS, u.getDBMap("id", key.getID()));
+        ksql.delete(TABLE_KEYS, u.getDBMap("uid", key.getUID()));
         u.reloadTable(keyTable, uidCol, idCol, ownerCol, expDateCol, searchField);
         ksql.addLog(key, Action.REMOVEKEY);
         u.sendAlert(statusBar, "Key " +  key.getID() + " wurde gelöscht.");
