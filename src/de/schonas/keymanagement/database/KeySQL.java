@@ -97,7 +97,7 @@ public class KeySQL extends MySQL {
      * @return ResultSet Raum, Department
      */
     public ResultSet getRooms(){
-        statement = "SELECT r.uid AS id, name FROM " + TABLE_ROOMS + " r JOIN " + TABLE_DEPARTMENTS + " d ON d.uid = r.department_id;";
+        statement = "SELECT r.uid AS id, r.cylinder AS cylinder, name  FROM " + TABLE_ROOMS + " r JOIN " + TABLE_DEPARTMENTS + " d ON d.uid = r.department_id;";
         try {
             pStmt = conn.prepareStatement(statement);
             return pStmt.executeQuery();
