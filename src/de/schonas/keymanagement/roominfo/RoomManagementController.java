@@ -33,7 +33,7 @@ public class RoomManagementController {
     private TableColumn<Room, Boolean> checkCol;
 
     @FXML
-    private TableColumn<Room, String> roomCol, departmentCol;
+    private TableColumn<Room, String> roomCol, departmentCol, cylinderCol;
 
     @FXML
     private ProgressIndicator progressIndicator;
@@ -44,6 +44,7 @@ public class RoomManagementController {
         checkCol.setCellValueFactory(new PropertyValueFactory<>("status"));
         roomCol.setCellValueFactory(cellData -> cellData.getValue().getID());
         departmentCol.setCellValueFactory(cellData -> cellData.getValue().getDepartment());
+        cylinderCol.setCellValueFactory(cellData -> cellData.getValue().getCylinder());
         GlyphFont fontAwesome= GlyphFontRegistry.font("FontAwesome");
         Glyph checkIcon = fontAwesome.create(FontAwesome.Glyph.CHECK_SQUARE);
         checkIcon.setFontSize(14);
@@ -53,7 +54,7 @@ public class RoomManagementController {
         try {
             Room r;
             while (rs.next()) {
-                r = new Room(rs.getString("id"), rs.getString("name"));
+                r = new Room(rs.getString("id"), rs.getString("name"), rs.getString("cylinder"));
                 masterData.add(r);
             }
         } catch (SQLException e){

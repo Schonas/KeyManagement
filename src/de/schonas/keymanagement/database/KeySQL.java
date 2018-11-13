@@ -258,7 +258,7 @@ public class KeySQL extends MySQL {
             rs = pStmt.executeQuery();
             Room r;
             while (rs.next()){
-                r = new Room(rs.getString("room_id"), "Verwaltung, Recht und Steuern");
+                r = new Room(rs.getString("room_id"), rs.getString("department"), rs.getString("cylinder"));
                 rooms.add(r);
             }
         } catch (SQLException e) {
@@ -379,7 +379,7 @@ public class KeySQL extends MySQL {
             rs = pStmt.executeQuery();
             Room r;
             while (rs.next()){
-                r = new Room(rs.getString("room_id"), rs.getString("name"));
+                r = new Room(rs.getString("room_id"), rs.getString("name"), rs.getString("cylinder"));
                 rooms.add(r);
             }
         } catch (SQLException e) {

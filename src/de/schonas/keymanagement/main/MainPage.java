@@ -54,7 +54,7 @@ public class MainPage extends Application {
         prop = new Properties();
         u = new Utils();
         try {
-            InputStream input = new FileInputStream("config.properties");
+            InputStream input = new FileInputStream("config");
             prop.load(input);
         } catch (IOException e) {
             e.printStackTrace();
