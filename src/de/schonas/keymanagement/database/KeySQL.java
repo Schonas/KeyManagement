@@ -43,13 +43,24 @@ public class KeySQL extends MySQL {
 
     /**
      * Trägt Schlüssel in Datenbank ein
-     * @param key Schlüssel
+     * @param key Schlüsselobjekt
      */
     public void insertKey(Key key){
         Map<String, Object> map = u.getDBMap("id", key.getID());
         map.put("owner", key.getOwner());
         map.put("exp_date", u.getDateString(key.getExpDate()));
         ksql.insert(TABLE_KEYS, map);
+    }
+
+    /**
+     * Trägt Raum in DB ein
+     * @param room Raumobjekt
+     */
+    public void insertRoom(Room room){
+        Map<String, Object> map = u.getDBMap("uid", room.getID().getValue());
+        map.put("department_id", room.getDepartment().getValue());
+        map.put("cylinder", room.getCylinder().getValue());
+        ksql.insert(TABLE_ROOMS, map);
     }
 
     /**
@@ -105,6 +116,38 @@ public class KeySQL extends MySQL {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * Gibt Liste aller verfügbarer Raumobjekte zurück
+     * @return Liste aller Räume
+     * @throws SQLException
+     */
+    public List<Room> getRoomObjects() throws SQLException {
+        List<Room> rooms = new ArrayList<>();
+        statement = "SELECT uid AS id, cylinder, department_id FROM " + TABLE_ROOMS;
+        pStmt = conn.prepareStatement(statement);
+        ResultSet rs = pStmt.executeQuery();
+        while(rs.next()){
+            rooms.add(new Room(rs.getString("id"), rs.getString("department_id"), rs.getString("cylinder")));
+        }
+        return rooms;
+    }
+
+    /**
+     * Gibt Liste aller UIDs zurück
+     * @return Liste aller UIDs
+     * @throws SQLException
+     */
+    public List<String> getRoomIDs() throws SQLException  {
+        List<String> rooms = new ArrayList<>();
+        statement = "SELECT uid FROM " + TABLE_ROOMS;
+        pStmt = conn.prepareStatement(statement);
+        ResultSet rs = pStmt.executeQuery();
+        while(rs.next()){
+            rooms.add(rs.getString("uid"));
+        }
+        return rooms;
     }
 
     /**

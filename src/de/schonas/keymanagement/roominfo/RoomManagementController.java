@@ -1,6 +1,7 @@
 package de.schonas.keymanagement.roominfo;
 
 import de.schonas.keymanagement.Room;
+import de.schonas.keymanagement.roomadd.RoomAddPage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import org.controlsfx.glyphfont.Glyph;
 import org.controlsfx.glyphfont.GlyphFont;
 import org.controlsfx.glyphfont.GlyphFontRegistry;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -121,6 +123,22 @@ public class RoomManagementController {
         for(Room r : roomTableView.getItems()){
             r.setStatus(true);
         }
+    }
+
+    /**
+     * Ruft neues Fenster zum Erstellen von Räumen auf
+     * @throws IOException
+     */
+    @FXML
+    public void onAddRoomClick() throws IOException {
+        RoomAddPage roomAddPage = new RoomAddPage();
+        roomAddPage.start();
+    }
+
+
+    @FXML
+    public void onDelRoomClick(){
+
     }
 
     /**

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="251.0" prefWidth="391.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.schonas.keymanagement.roomadd.RoomAddController">
+   <children>
+      <TextField fx:id="idField" layoutX="14.0" layoutY="72.0" prefHeight="25.0" prefWidth="89.0" promptText="UID" />
+      <TextField fx:id="depField" layoutX="110.0" layoutY="72.0" prefHeight="25.0" prefWidth="80.0" promptText="Zylinder" />
+      <TextField fx:id="cylField" layoutX="14.0" layoutY="121.0" prefHeight="25.0" prefWidth="89.0" promptText="ID Abteilung" />
+      <Text layoutX="17.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UID" />
+      <Button layoutX="110.0" layoutY="121.0" mnemonicParsing="false" onAction="#onAddRoomClick" prefHeight="25.0" prefWidth="80.0" text="Hinzufügen" />
+      <Text layoutX="17.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Abteilung (ID)" />
+      <Text layoutX="110.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zylinder" />
+      <TextArea layoutX="199.0" layoutY="14.0" prefHeight="127.0" prefWidth="187.0" text="1 Verwaltung, Recht und Steuern&#10;2 International&#10;3 Geschäftsleitung&#10;4 Handel, Dienstleistungen und Unternhemensförderung&#10;5 Industrie und Infrastruktur&#10;6 Berfusbildung&#10;7 IHK Bildungsakademie Magdeburg GmbH">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </TextArea>
+      <Text layoutX="11.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Raum Hinzufügen" wrappingWidth="153.6484375">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="alertField" fill="RED" layoutX="190.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="187.00000530388206">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Text>
+      <Text layoutX="11.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Raum Löschen" wrappingWidth="153.6484375">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Text>
+      <TextField fx:id="idField2" layoutX="14.0" layoutY="199.0" prefHeight="25.0" prefWidth="80.0" promptText="UID" />
+      <Text layoutX="17.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UID" />
+      <Button layoutX="110.0" layoutY="199.0" mnemonicParsing="false" onAction="#onDelRoomClick" prefHeight="25.0" prefWidth="80.0" text="Löschen" />
+   </children>
+</AnchorPane>
