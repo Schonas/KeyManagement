@@ -23,8 +23,8 @@
         <columns>
           <TableColumn fx:id="checkCol" prefWidth="22.0" />
           <TableColumn fx:id="roomCol" prefWidth="94.0" style="-fx-text-alignment: right;" text="Raum" />
-            <TableColumn fx:id="departmentCol" prefWidth="159.0" text="Abteilung" />
-            <TableColumn fx:id="cylinderCol" prefWidth="56.0" text="Zylinder" />
+            <TableColumn fx:id="departmentCol" prefWidth="170.0" text="Abteilung" />
+            <TableColumn fx:id="cylinderCol" prefWidth="54.0" text="Zylinder" />
         </columns>
       </TableView>
       <Button fx:id="selectKeyTypeButton" layoutX="181.0" layoutY="94.0" mnemonicParsing="false" onAction="#onSelectKeyTypeButtonClick" text="Select" />
